@@ -10,10 +10,10 @@ const SignUp = ({ showLoginCB, clear }) => {
 
   const { loading, signUp } = useSignUp();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     clear();
-    signUp(inputs);
+    await signUp(inputs);
   };
 
   return (

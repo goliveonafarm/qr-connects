@@ -5,19 +5,18 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 export const signup = async (req, res) => {
     try {
         const usersCount = await User.countDocuments({});
-        console.log(usersCount)
         if (usersCount >= 200) {
-            return res.status(400).json({ message: "Maximum number of users reached" });
+            return res.status(400).json({ error: "Maximum number of users reached" });
         }
 
         const { username, password, confirmPassword } = req.body;
         if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Passwords don't match" });
+            return res.status(400).json({ error: "Passwords don't match" });
         }
         const user = await User.findOne({ username });
 
         if (user) {
-            return res.status(400).json({ message: "User already exists" });
+            return res.status(400).json({ error: "User already exists" });
         }
 
         // hash password here

@@ -7,7 +7,7 @@ const useSignUp = () => {
     const { setAuthUser } = useAuthContext();
 
     const signUp = async ({ username, password, confirmPassword }) => {
-        const success = handleInputErros({ username, password, confirmPassword });
+        const success = handleInputErrors({ username, password, confirmPassword });
         if (!success) return;
 
         setLoading(true);
@@ -18,7 +18,7 @@ const useSignUp = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ username, password, confirmPassword })
-            })
+            });
 
             const data = await res.json();
             if (data.error) throw new Error(data.error)
@@ -38,8 +38,7 @@ const useSignUp = () => {
 
 export default useSignUp;
 
-function handleInputErros({ username, password, confirmPassword }) {
-    console.log(username, password, confirmPassword)
+function handleInputErrors({ username, password, confirmPassword }) {
     if (!username || !password || !confirmPassword) {
         toast.error('Please fill in all fields');
         return false;

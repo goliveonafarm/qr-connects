@@ -33,7 +33,7 @@ export const useLogin = () => {
             setLoading(false);
         }
     }
-    return { loading, login }
+    return { loading, login };
 }
 
 export default useLogin;

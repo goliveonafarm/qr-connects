@@ -11,12 +11,24 @@ const userEventSchema = new mongoose.Schema({
         required: true,
         enum: ['potluck', 'poll', 'afterparty', 'survey']
     },
-    formData: {
-        type: [String],
+    shareResults: {
+        type: Boolean,
+        default: true
+    },
+    privateResults: {
+        type: Boolean,
+        default: false
+    },
+    shareable: {
+        type: Boolean,
+        default: true
     },
     active: {
         type: Boolean,
         default: true
+    },
+    formData: {
+        type: [String],
     }
     //createdAt, updatedAt
 }, { timestamps: true });

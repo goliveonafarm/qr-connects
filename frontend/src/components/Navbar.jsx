@@ -44,9 +44,11 @@ const Navbar = () => {
 
   return (
     <div className="relative w-full" onKeyDown={(e) => handleKeyDown(e)}>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-200">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">QR-Connects</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            QR-Connects
+          </Link>
 
           {authUser && (
             <div className="flex-none">
@@ -85,7 +87,9 @@ const Navbar = () => {
             <div className="pr-5">@{authUser.username}</div>
             <button
               className="btn btn-xs btn-outline btn-accent"
-              onClick={logout}
+              onClick={async () => {
+                await logout();
+              }}
             >
               Logout
             </button>

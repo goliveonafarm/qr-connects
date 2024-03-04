@@ -7,9 +7,9 @@ const Login = ({ showSignupCB, clear }) => {
 
   const { loading, login } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password);
+    await login(username, password);
     clear();
   };
 

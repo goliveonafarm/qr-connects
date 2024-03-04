@@ -2,20 +2,23 @@ import UserEvent from "../models/userEvent.model.js";
 
 export const createUserEvent = async (req, res) => {
     try {
-        const { formType, formData } = req.body;
+        const { formType, shareResults, privateResults, shareable, formData } = req.body;
         const userId = req.userId._id;
 
         const userEventCount = await UserEvent.countDocuments({ userId });
 
         if (userEventCount >= 5) {
-            return res.status(400).json({ message: "Maximum number of events reached" });
+            return res.status(400).json({ error: "Maximum number of events reached" });
         }
 
         const newUserEvent = await UserEvent.create({
             userId,
             formType,
-            formData,
-            active: true
+            shareResults,
+            privateResults,
+            shareable,
+            active: true,
+            formData
         });
 
         res.status(201).json({ newUserEvent });

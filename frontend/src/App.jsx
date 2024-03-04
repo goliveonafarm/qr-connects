@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/home/Home";
-import UserEvents from "./pages/userEvents/UserEvents";
+import CurrentUserEvents from "./pages/currentUserEvents/CurrentUserEvents";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route
           path="/connects"
-          element={authUser ? <UserEvents /> : <Home />}
+          element={authUser ? <CurrentUserEvents /> : <Home />}
         ></Route>
       </Routes>
       <Toaster />
