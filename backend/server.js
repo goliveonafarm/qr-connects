@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import rateLimit from 'express-rate-limit';
 
 import authRoutes from './routes/auth.routes.js';
 import userEventRoutes from './routes/userEvent.routes.js';
@@ -16,9 +17,20 @@ const __dirname = path.resolve();
 
 dotenv.config();
 
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
+app.set('trust proxy', 1); // trust first proxy
+
+// Auth & Guest Cookie
 app.use(express.json()); // to parse the incoming request with JSON payloads (from req.body)
 app.use(cookieParser()); // to parse the incoming request cookies
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/events", userEventRoutes);
 app.use("/api/responses", responseRoutes);

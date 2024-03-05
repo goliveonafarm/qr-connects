@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const useDeleteUserEvent = () => {
     const [loading, setLoading] = useState(false);

@@ -8,7 +8,7 @@ export const createUserEvent = async (req, res) => {
         const userEventCount = await UserEvent.countDocuments({ userId });
 
         if (userEventCount >= 5) {
-            return res.status(400).json({ error: "Maximum number of events reached" });
+            return res.status(400).json({ error: "You are limited to 5 Connects" });
         }
 
         const newUserEvent = await UserEvent.create({

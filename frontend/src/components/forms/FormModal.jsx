@@ -45,12 +45,12 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
   };
 
   return (
-    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
+    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  border-gray-200">
       <div className="flex justify-end pb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          height="20"
-          width="20"
+          height="25"
+          width="25"
           viewBox="0 0 512 512"
           fill="currentColor"
           className="cursor-pointer hover:text-blue-500"
