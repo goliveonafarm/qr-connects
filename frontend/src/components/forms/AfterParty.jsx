@@ -1,12 +1,12 @@
 //allows user to create form displaying location and time to meet with yes (thumbs up) or no (thumbs down) options
 //fields - location, time
-const AfterParty = ({ handleFormData }) => {
+const AfterParty = ({ handleInputs }) => {
   const handleChange = (e) => {
     
   }
   return (
     <div>
-      <div className="pb-1">Meet up later at:</div>
+      <div className="pb-1 pt-1">Meet up later at:</div>
       <form>
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <svg
@@ -25,7 +25,9 @@ const AfterParty = ({ handleFormData }) => {
             type="text"
             className="grow"
             placeholder="Location"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) =>{ 
+              console.log(e.target.value)
+              handleChange('formData', e.target.value)}}
           />
         </label>
       </form>

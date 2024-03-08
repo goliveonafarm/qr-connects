@@ -6,7 +6,6 @@ const useGetUserEvents = () => {
     
     const getUserEvents = async () => {
         setLoading(true);
-        console.log('ran here')
         try {
             const res = await fetch('api/events/', {
                 method: 'GET',
@@ -14,7 +13,6 @@ const useGetUserEvents = () => {
                     'Content-Type': 'application/json',
                 },
             });
-
             const data = await res.json();
             if(data.error) throw new Error(data.error);
 

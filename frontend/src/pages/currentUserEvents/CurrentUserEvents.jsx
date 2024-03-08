@@ -1,13 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import useGetUserEvents from "../../hooks/useGetUserEvents";
+import useClickOutside from "../../hooks/useClickOutside";
 import useDeleteUserEvent from "../../hooks/useDeleteUserEvent";
 import FormModal from "../../components/forms/FormModal";
-import useClickOutside from "../../hooks/useClickOutside";
+import UserEventCard from "../../components/forms/UserEventCard";
 
 const UserEvents = () => {
   const [showFormModal, setShowFormModal] = useState(false);
+  //kinda left off here, when we run getusereevents was thinking about setting the userEvents below to some loading state and then setting it to the actual userEvents after the fetch request is done
   const { userEvents, getUserEvents } = useGetUserEvents();
-  const { loading, deleteUserEvent } = useDeleteUserEvent();
+
+  const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
 
   const formModalRef = useRef(null);
   useClickOutside(formModalRef, () => setShowFormModal(false));
@@ -17,15 +20,10 @@ const UserEvents = () => {
   }, []);
 
   return (
-    <div>
-      <div>Connects</div>
-      <button className="btn btn-outline" onClick={async () => {
-
-        await getUserEvents();
-
-
-      }}>TEST</button>
-      <div>
+    <div style={{ textShadow: "1px 1px 2px black" }}>
+      <h1 className="text-4xl pb-5 pt-5">Your Connects</h1>
+      <div className="pb-5">
+        {/** Revisit later - change button logic if user reached max number of connects */}
         {true && (
           <button
             className="btn btn-outline btn-info btn-lg btn-wide"
@@ -36,29 +34,25 @@ const UserEvents = () => {
         )}
       </div>
       {showFormModal === true && (
-        <div ref={formModalRef} className="absolute top-10">
-          <FormModal getUserEvents={getUserEvents} setShowFormModal={setShowFormModal} />
+        <div ref={formModalRef} className="absolute top-10 z-30">
+          <FormModal
+            getUserEvents={getUserEvents}
+            setShowFormModal={setShowFormModal}
+          />
         </div>
       )}
-      {userEvents.map((event) => {
-        return (
-          <div key={event._id} className="bg-base-200 p-2 my-2">
-            <div>{event.formType}</div>
-            <div>{event.shareResults ? "Shareable" : "Not Shareable"}</div>
-            <div>{event.privateResults ? "Private" : "Public"}</div>
-            <div>{event.shareable ? "Shareable" : "Not Shareable"}</div>
-            <button
-              className="btn btn-outline btn-danger"
-              onClick={async () => {
-                await deleteUserEvent(event._id);
-                await getUserEvents();
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        );
-      })}
+      <div className="z-0">
+        {userEvents.map((event) => {
+          return (
+            <UserEventCard
+              key={`user-event-card-${event._id}`}
+              event={event}
+              deleteUserEvent={deleteUserEvent}
+              getUserEvents={getUserEvents}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

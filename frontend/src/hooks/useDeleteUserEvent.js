@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
+// need some way to handle errors here (going into, or just in, UserEventCard.jsx)
 const useDeleteUserEvent = () => {
-    const [loading, setLoading] = useState(false);
+    const [isDeletingEvent, setIsDeletingEvent] = useState(false);
 
     const deleteUserEvent = async (id) => {
-        setLoading(true);
+        setIsDeletingEvent(true);
         try {
             const res = await fetch(`/api/events/delete/${id}`, {
                 method: 'DELETE',
@@ -20,10 +21,10 @@ const useDeleteUserEvent = () => {
         } catch (error) {
             toast.error(error.message);
         } finally {
-            setLoading(false);
+            setIsDeletingEvent(false);
         }
     }
-    return { loading, deleteUserEvent };
+    return { isDeletingEvent, deleteUserEvent };
 }
 
 export default useDeleteUserEvent;

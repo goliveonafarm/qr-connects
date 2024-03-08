@@ -52,60 +52,6 @@ const Navbar = () => {
           <Link to="/" className="btn btn-ghost text-xl">
             QR-Connects
           </Link>
-
-          {authUser && (
-            <div className="flex-none">
-              <ul className="menu menu-horizontal px-1">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/connects">Connects</Link>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {!authUser && (
-          <div>
-            <div className="pr-1">
-              <button
-                className="btn btn-xs btn-outline btn-secondary"
-                onClick={showLoginCB}
-              >
-                Login
-              </button>
-            </div>
-            <button
-              className="btn btn-xs btn-outline btn-accent"
-              onClick={showSignupCB}
-            >
-              Sign Up
-            </button>
-          </div>
-        )}
-        {authUser && (
-          <div>
-            <div className="pr-5">@{authUser.username}</div>
-            <button
-              className="btn btn-xs btn-outline btn-accent"
-              onClick={async () => {
-                await logout();
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        )}
-
-      </div>
-
-      <div className="navbar bg-base-200">
-        <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl">
-            QR-Connects
-          </Link>
           {authUser && (
             <div className="flex-none">
               <ul className="menu menu-horizontal px-1">
@@ -146,8 +92,9 @@ const Navbar = () => {
               </button>
             </>
           ) : (
+            //revisit this later - make this whole section hidden on md for accordian above
             <>
-              <span className="hidden sm:flex pr-5">@{authUser.username}</span>
+              <span className="hidden md:flex pr-5">@{authUser.username}</span>
               <button
                 className="btn btn-xs btn-outline btn-accent"
                 onClick={async () => await logout()}

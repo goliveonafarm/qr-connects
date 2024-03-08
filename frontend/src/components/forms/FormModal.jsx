@@ -7,22 +7,26 @@ import SurveyForm from "./Survey";
 import PollForm from "./Poll";
 import PollType from "./PollType";
 
+import CheckBox from "./CheckBox";
+
 const FormModal = ({ setShowFormModal, getUserEvents }) => {
   const { loading, submitUserEvent } = useSubmitUserEvent();
 
   const [inputs, setInputs] = useState({
     formType: null,
-    showResults: true,
+    shareResults: true,
     privateResults: false,
     shareable: true,
     formData: [],
   });
 
   const handleInputs = (prop, newVal) => {
+    console.log("prop", prop, "newVal", newVal);
     setInputs({ ...inputs, [prop]: newVal });
   };
 
   const handleSubmit = async (e) => {
+    console.log(inputs);
     e.preventDefault();
     setShowFormModal(false);
     await submitUserEvent(inputs);
@@ -45,8 +49,8 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
   };
 
   return (
-    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  border-gray-200">
-      <div className="flex justify-end pb-2">
+    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-0  border  border-gray-200">
+      <div className="flex justify-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="25"
@@ -59,6 +63,28 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
           <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
         </svg>
       </div>
+
+      {/* working here atm */}
+      <CheckBox
+        label="Show results to participants"
+        variant="secondary"
+        handleChange={handleInputs}
+        propValue={"shareResults"}
+      />
+
+      <CheckBox
+        label="Share names in results to participants"
+        variant="secondary"
+        handleChange={handleInputs}
+        propValue={"privateResults"}
+      />
+      <CheckBox
+        label="Let participants share QR code"
+        variant="secondary"
+        handleChange={handleInputs}
+        propValue={"shareable"}
+      />
+
       {renderForm()}
       {inputs.formType !== null && (
         <div className="mt-5">
@@ -67,11 +93,18 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
               className="btn btn-outline btn-success"
               onClick={(e) => handleSubmit(e)}
             >
-              submit
+              Submit
             </button>
           </div>
         </div>
       )}
+
+      <button
+        className="btn btn-outline btn-success"
+        onClick={() => console.log(inputs)}
+      >
+        Check form values
+      </button>
     </div>
   );
 };
