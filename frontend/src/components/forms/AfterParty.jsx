@@ -26,8 +26,7 @@ const AfterParty = ({ handleInputs }) => {
             className="grow"
             placeholder="Location"
             onChange={(e) =>{ 
-              console.log(e.target.value)
-              handleChange('formData', e.target.value)}}
+              handleInputs('formData', e.target.value)}}
           />
         </label>
       </form>

@@ -4,7 +4,7 @@ import pollImage from "../../assets/pollImage.png";
 const UserEventCard = ({ event, getUserEvents,  deleteUserEvent}) => {
     return (
       <div>
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
+        <div className="card w-96 bg-base-100 shadow-xl image-full pb-3">
           <figure>
             <img
               src={pollImage}

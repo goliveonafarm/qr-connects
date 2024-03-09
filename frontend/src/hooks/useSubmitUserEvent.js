@@ -22,6 +22,7 @@ const useSubmitUserEvent = () => {
             const data = await res.json();
             if (data.error) throw new Error(data.error);
         } catch (error) {
+            console.log('Error in useSubmitUserEvent', error.message)
             toast.error(error.message)
         } finally {
             setLoading(false);

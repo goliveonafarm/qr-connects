@@ -1,5 +1,5 @@
-//allows user to create a form with n number of radio buttons
-//fields - n number of radio buttons
+//TO DO!!!!!!!!!!!!!!!!
+//incoroporate handleInputs to change formData
 import useDynamicInputs from "../../hooks/useDynamicInputs";
 
 const Poll = ({ handleInputs }) => {
