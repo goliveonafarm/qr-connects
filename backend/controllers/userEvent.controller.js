@@ -4,7 +4,6 @@ export const createUserEvent = async (req, res) => {
     try {
         const { formType, shareResults, privateResults, shareable, formData } = req.body;
         const userId = req.userId._id;
-        console.log(formData)
         const userEventCount = await UserEvent.countDocuments({ userId });
 
         if (userEventCount >= 5) {

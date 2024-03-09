@@ -1,7 +1,7 @@
 import generateUID from "../utils/generateUID.js";
 
 const participantProtectRoutes = async (req, res, next) =>{
-    console.log('this ran - participantRoutes')
+    console.log('reached participantProtectRoutes')
     try {
         let participantId = req.cookies.participantId;
         if (!participantId){
@@ -14,7 +14,6 @@ const participantProtectRoutes = async (req, res, next) =>{
         }
 
         req.participantId = participantId;
-
         next();
     } catch (error) {
         console.log("Error in participantRoute middleware", error.message)

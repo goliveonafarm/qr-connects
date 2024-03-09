@@ -2,10 +2,13 @@ import Response from "../models/response.model.js";
 import UserEvent from "../models/userEvent.model.js";
 
 export const getParticipantResponses = async (req, res) => {
-    try {
+    console.log('reached getParticipantResponses')
+    try {//if check here for 
         const { participantId } = req.cookies;
+        //const userId = req.userId._id;
+        console.log('is this running?')
+
         const participantResponses = await Response.find({ participantId });
-        console.log(participantResponses)
         res.status(200).json({ participantResponses });
     } catch (error) {
         console.log("Error in response controller (getParticipantResponses)", error.message)
@@ -15,6 +18,7 @@ export const getParticipantResponses = async (req, res) => {
 
 export const createParticipantResponse = async (req, res) => {
     try {
+        console.log(req.body)
         const { eventId } = req.params;
         const { responseData } = req.body;
         const { participantId } = req.cookies;
@@ -24,6 +28,8 @@ export const createParticipantResponse = async (req, res) => {
         if (!userEvent) {
             return res.status(400).json({ message: "Invalid event" });
         }
+        console.log(userEvent)
+
 
         if (userEvent.formData.length !== responseData.length) {
             return res.status(400).json({ message: "Invalid response data" });
@@ -43,7 +49,7 @@ export const createParticipantResponse = async (req, res) => {
 
         res.status(201).json({ newResponse });
     } catch (error) {
-        console.log("Error in response controller (createParticipantResponse)", error.message)
+        console.log("Error in participant controller (createParticipantResponse)", error.message)
         res.status(500).json({ error: "Internal server error" });
     }
 }
@@ -55,7 +61,7 @@ export const updateParticipantResponse = async (req, res) => {
         const { participantId } = req.cookies;
 
         const updatedResponse = await Response.findByIdAndUpdate(
-            { _id: responseId, participantId: participantId},
+            { _id: responseId, participantId: participantId },
             { $set: { responseData: responseData } },
             { new: true }
         );
@@ -64,7 +70,7 @@ export const updateParticipantResponse = async (req, res) => {
             return res.status(400).json({ message: "Invalid response" });
         }
 
-        res.json({message:"Response updated", data: updatedResponse})
+        res.json({ message: "Response updated", data: updatedResponse })
     } catch (error) {
         console.log("Error in response controller (updateParticipantResponse)", error.message)
         res.status(500).json({ error: "Internal server error" });
