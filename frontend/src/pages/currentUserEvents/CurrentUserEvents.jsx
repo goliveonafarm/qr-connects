@@ -2,18 +2,18 @@ import { useState, useRef, useEffect } from "react";
 import useGetUserEvents from "../../hooks/useGetUserEvents";
 import useClickOutside from "../../hooks/useClickOutside";
 import useDeleteUserEvent from "../../hooks/useDeleteUserEvent";
-import FormModal from "../../components/forms/FormModal";
+import EventModal from "../../components/forms/EventModal";
 import UserEventCard from "../../components/forms/UserEventCard";
 
 const UserEvents = () => {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const [showEventModal, setShowEventModal] = useState(false);
   //kinda left off here, when we run getusereevents was thinking about setting the userEvents below to some loading state and then setting it to the actual userEvents after the fetch request is done
   const { userEvents, getUserEvents } = useGetUserEvents();
 
   const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
 
   const formModalRef = useRef(null);
-  useClickOutside(formModalRef, () => setShowFormModal(false));
+  useClickOutside(formModalRef, () => setShowEventModal(false));
 
   useEffect(() => {
     getUserEvents();
@@ -27,17 +27,17 @@ const UserEvents = () => {
         {true && (
           <button
             className="btn btn-outline btn-info btn-lg btn-wide"
-            onClick={() => setShowFormModal(true)}
+            onClick={() => setShowEventModal(true)}
           >
             Add a Connect
           </button>
         )}
       </div>
-      {showFormModal === true && (
+      {showEventModal === true && (
         <div ref={formModalRef} className="absolute top-10 z-30">
-          <FormModal
+          <EventModal
             getUserEvents={getUserEvents}
-            setShowFormModal={setShowFormModal}
+            setShowEventModal={setShowEventModal}
           />
         </div>
       )}

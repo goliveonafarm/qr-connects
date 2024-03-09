@@ -10,7 +10,6 @@ const Home = () => {
   const { submittingParticipantResponse, submitParticipantResponse } =
     useSubmitParticipantResponse();
   const { id } = useParams();
-  console.log(id);
 
   const handleSubmitParticipantResponse = async (responseData, id) => {
     await submitParticipantResponse({ responseData, id });
@@ -19,8 +18,30 @@ const Home = () => {
 
   useEffect(() => {
     getParticipantResponses();
-    console.log(participantResponses.length);
   }, []);
+
+  if (id) {
+    //check to see if id is already in the participantResponses
+    const isNotNewResponse = participantResponses.some(
+      (response) => response.eventId === id
+    );
+
+    console.log(
+      "participantResponses:",
+      participantResponses,
+      "id:",
+      id,
+      "isNotNewResponse:",
+      isNotNewResponse
+    );
+
+    if (!isNotNewResponse) {
+      console.log('this is a new response')
+      //handleSubmitParticipantResponse(["testing"], id);
+    }
+
+    console.log(participantResponses.length);
+  }
 
   return (
     <div>
@@ -42,7 +63,7 @@ const Home = () => {
         <button
           className="btn btn-outline btn-info btn-lg btn-wide"
           onClick={() => {
-            handleSubmitParticipantResponse(["testing"], id );
+            handleSubmitParticipantResponse(["testing"], id);
           }}
         >
           handleSubmitParticipantResponse
@@ -53,10 +74,9 @@ const Home = () => {
       <div>
         {participantResponses.map((response) => {
           return (
-            <ParticipantResponse
-              key={`participant-response-${response._id}`}
-              response={response}
-            />
+            <div key={`participant-response-${response._id}`} className="pb-3">
+              <ParticipantResponse response={response} />
+            </div>
           );
         })}
         {participantResponses.length === 0 && <>None</>}

@@ -76,3 +76,10 @@ export const updateParticipantResponse = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
+
+console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+'you left off at participant.controller.js')
+export const getParticipantEvents = async (req, res) => {
+    //taking a short break from this part
+    //do an aggregate mongo db function call here with selective transmition
+}

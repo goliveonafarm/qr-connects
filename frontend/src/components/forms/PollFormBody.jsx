@@ -2,7 +2,7 @@
 //incoroporate handleInputs to change formData
 import useDynamicInputs from "../../hooks/useDynamicInputs";
 
-const Poll = ({ handleInputs }) => {
+const PollFormBody = ({ handleInputs }) => {
   const { inputs, handleAddInput, handleChange, handleRemoveFirstEmpty } =
     useDynamicInputs();
 
@@ -51,4 +51,4 @@ const Poll = ({ handleInputs }) => {
   );
 };
 
-export default Poll;
+export default PollFormBody;

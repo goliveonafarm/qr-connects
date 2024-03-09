@@ -1,6 +1,6 @@
 //allows user to create a form that has input box for a food dish, and displays loaction / time
 //fields - location, date, time, dish
-const PotLuck = () => {
+const PotLuckFormBody = () => {
   return (
     <div>
       <div className="pb-1">Pot luck</div>
@@ -55,4 +55,4 @@ const PotLuck = () => {
   );
 };
 
-export default PotLuck;
+export default PotLuckFormBody;

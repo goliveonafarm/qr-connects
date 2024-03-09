@@ -1,15 +1,15 @@
 import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
 
-import PotluckForm from "./PotLuck";
-import AfterPartyForm from "./AfterParty";
-import SurveyForm from "./Survey";
-import PollForm from "./Poll";
-import PollType from "./PollType";
+import PotluckFormBody from "./PotLuckFormBody";
+import AfterPartyFormBody from "./AfterPartyFormBody";
+import SurveyFormBody from "./SurveyFormBody";
+import PollFormBody from "./PollFormBody";
+import EventTypeForm from "./EventTypeForm";
 
 import CheckBox from "./CheckBox";
 
-const FormModal = ({ setShowFormModal, getUserEvents }) => {
+const EventModal = ({ setShowEventModal, getUserEvents }) => {
   const { loading, submitUserEvent } = useSubmitUserEvent();
 
   const [inputs, setInputs] = useState({
@@ -28,7 +28,7 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
   const handleSubmit = async (e) => {
     console.log(inputs);
     e.preventDefault();
-    setShowFormModal(false);
+    setShowEventModal(false);
     await submitUserEvent(inputs);
     await getUserEvents();
   };
@@ -36,15 +36,15 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
   const renderForm = () => {
     switch (inputs.formType) {
       case "afterparty":
-        return <AfterPartyForm handleInputs={handleInputs} />;
+        return <AfterPartyFormBody handleInputs={handleInputs} />;
       case "potluck":
-        return <PotluckForm handleInputs={handleInputs} />;
+        return <PotluckFormBody handleInputs={handleInputs} />;
       case "survey":
-        return <SurveyForm handleInputs={handleInputs} />;
+        return <SurveyFormBody handleInputs={handleInputs} />;
       case "poll":
-        return <PollForm handleInputs={handleInputs} />;
+        return <PollFormBody handleInputs={handleInputs} />;
       default:
-        return <PollType handleInputs={handleInputs} />;
+        return <EventTypeForm handleInputs={handleInputs} />;
     }
   };
 
@@ -58,13 +58,12 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
           viewBox="0 0 512 512"
           fill="currentColor"
           className="cursor-pointer hover:text-blue-500"
-          onClick={() => setShowFormModal(false)}
+          onClick={() => setShowEventModal(false)}
         >
           <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
         </svg>
       </div>
 
-      {/* working here atm */}
       <CheckBox
         label="Show results to participants"
         variant="secondary"
@@ -109,4 +108,4 @@ const FormModal = ({ setShowFormModal, getUserEvents }) => {
   );
 };
 
-export default FormModal;
+export default EventModal;

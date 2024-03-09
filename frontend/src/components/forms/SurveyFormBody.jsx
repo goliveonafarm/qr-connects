@@ -1,7 +1,7 @@
 //set up code so more inputs can be dynamically generated using useDyanmicInput.js
 import useDynamicInputs from "../../hooks/useDynamicInputs";
 
-const Survey = ({ handleInputs }) => {
+const SurveyFormBody = ({ handleInputs }) => {
   const { inputs, handleAddInput, handleChange, handleRemoveFirstEmpty } =
     useDynamicInputs();
 
@@ -50,4 +50,4 @@ const Survey = ({ handleInputs }) => {
   );
 };
 
-export default Survey;
+export default SurveyFormBody;

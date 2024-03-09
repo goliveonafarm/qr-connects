@@ -1,4 +1,4 @@
-const PollType = ({ handleInputs }) => {
+const EventTypeForm = ({ handleInputs }) => {
   return (
     <div>
       <div className="pb-1">Connect type</div>
@@ -38,4 +38,4 @@ const PollType = ({ handleInputs }) => {
   );
 };
 
-export default PollType;
+export default EventTypeForm;

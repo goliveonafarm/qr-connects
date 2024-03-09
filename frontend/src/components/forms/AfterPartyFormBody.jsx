@@ -1,6 +1,6 @@
 //allows user to create form displaying location and time to meet with yes (thumbs up) or no (thumbs down) options
 //fields - location, time
-const AfterParty = ({ handleInputs }) => {
+const AfterPartyFormBody = ({ handleInputs }) => {
   const handleChange = (e) => {
     
   }
@@ -34,4 +34,4 @@ const AfterParty = ({ handleInputs }) => {
   );
 };
 
-export default AfterParty;
+export default AfterPartyFormBody;
