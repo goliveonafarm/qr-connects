@@ -3,21 +3,18 @@ import useGetUserEvents from "../../hooks/useGetUserEvents";
 import useClickOutside from "../../hooks/useClickOutside";
 import useDeleteUserEvent from "../../hooks/useDeleteUserEvent";
 import EventModal from "../../components/forms/EventModal";
-import UserEventCard from "../../components/forms/UserEventCard";
+import UserEventCardBody from "../../components/event-card-bodies/UserEventCardBody";
 
 const UserEvents = () => {
   const [showEventModal, setShowEventModal] = useState(false);
   //kinda left off here, when we run getusereevents was thinking about setting the userEvents below to some loading state and then setting it to the actual userEvents after the fetch request is done
-  const { userEvents, getUserEvents } = useGetUserEvents();
+  const { loadingUserEvents, userEvents } = useGetUserEvents();
+  console.log(userEvents)
 
   const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
 
   const formModalRef = useRef(null);
   useClickOutside(formModalRef, () => setShowEventModal(false));
-
-  useEffect(() => {
-    getUserEvents();
-  }, []);
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
@@ -36,19 +33,17 @@ const UserEvents = () => {
       {showEventModal === true && (
         <div ref={formModalRef} className="absolute top-10 z-30">
           <EventModal
-            getUserEvents={getUserEvents}
             setShowEventModal={setShowEventModal}
           />
         </div>
       )}
       <div className="z-0">
-        {userEvents.map((event) => {
+        {userEvents.map((userEvent) => {
           return (
-            <UserEventCard
+            <UserEventCardBody
               key={`user-event-card-${event._id}`}
-              event={event}
+              userEvent={userEvent}
               deleteUserEvent={deleteUserEvent}
-              getUserEvents={getUserEvents}
             />
           );
         })}

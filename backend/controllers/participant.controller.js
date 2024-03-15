@@ -2,11 +2,8 @@ import Response from "../models/response.model.js";
 import UserEvent from "../models/userEvent.model.js";
 
 export const getParticipantResponses = async (req, res) => {
-    console.log('reached getParticipantResponses')
-    try {//if check here for 
+    try {
         const { participantId } = req.cookies;
-        //const userId = req.userId._id;
-        console.log('is this running?')
 
         const participantResponses = await Response.find({ participantId });
         res.status(200).json({ participantResponses });
@@ -18,10 +15,10 @@ export const getParticipantResponses = async (req, res) => {
 
 export const createParticipantResponse = async (req, res) => {
     try {
-        console.log(req.body)
         const { eventId } = req.params;
         const { responseData } = req.body;
         const { participantId } = req.cookies;
+        console.log('eventId', eventId)
 
         const userEvent = await UserEvent.findById(eventId); // used for validation
 
@@ -32,7 +29,7 @@ export const createParticipantResponse = async (req, res) => {
 
 
         if (userEvent.formData.length !== responseData.length) {
-            return res.status(400).json({ message: "Invalid response data" });
+            //return res.status(400).json({ message: "Invalid response data" });
         }
 
         const repsonseCount = await Response.countDocuments({ participantId })
@@ -77,9 +74,91 @@ export const updateParticipantResponse = async (req, res) => {
     }
 }
 
-console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
-'you left off at participant.controller.js')
-export const getParticipantEvents = async (req, res) => {
-    //taking a short break from this part
-    //do an aggregate mongo db function call here with selective transmition
+
+export const getParticipantResponsesWithEvents = async (req, res) => {
+    try {
+        const participantId = req.cookies.participantId;
+        const participantResponsesWithEvents = await UserEvent.aggregate([
+            {
+                $lookup: {
+                    from: "responses",
+                    let: { eventId: "$_id" },
+                    pipeline: [
+                        {
+                            $match:
+                            {
+                                $expr:
+                                {
+                                    $and:
+                                        [
+                                            { $eq: ["$eventId", "$$eventId"] },
+                                            { $eq: ["$participantId", participantId] } // Ensure you define participantId before the aggregation
+                                        ]
+                                }
+                            }
+                        }
+                    ],
+                    as: "responses"
+                }
+            },
+            {
+                $match: {
+                    "responses.participantId": participantId
+                }
+            },
+            {
+                $addFields: {
+                    includedEventId: {
+                        $cond: { if: "$shareable", then: "$_id", else: null }
+                    }
+                }
+            },
+            {
+                $project: {
+                    includedEventId: 1,
+                    formType: 1,
+                    shareResults: 1,
+                    privateResults: 1,
+                    active: 1,
+                    formData: 1,
+                    responses: {
+                        $map: {
+                            input: "$responses",
+                            as: "response",
+                            in: {
+                                _id: "$$response._id",
+                                responseData: "$$response.responseData",
+                                participantId: "$$response.participantId"
+
+                            }
+                        }
+                    }
+                }
+            }
+        ]);
+        res.status(200).json({ participantResponsesWithEvents });
+    } catch (error) {
+        console.log("Error in response controller (getParticipantEvents)", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    } finally {
+
+    }
+}
+
+export const deleteParticipantResponse = async (req, res) => {
+    try {
+        const { responseId } = req.params;
+        const { participantId } = req.cookies;
+
+        const participantResponse = await Response.findById(responseId);
+        if (!participantResponse || participantResponse.participantId.toString() !== participantId.toString()) {
+            return res.status(400).json({ message: "Invalid response" });
+        }
+        await Response.deleteOne({ _id: responseId });
+
+        res.status(200).json({ message: "Response deleted successfully" });
+    } catch (error) {
+        console.log('Error in response controller (deleteParticipantResponse)', error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }

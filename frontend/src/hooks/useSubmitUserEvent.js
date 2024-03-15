@@ -9,8 +9,9 @@ const useSubmitUserEvent = () => {
         const success = handleInputErrors({ formType, formData });
         if (!success) return;
 
-        setLoading(true);
         try {
+            setLoading(true);
+            
             const res = await fetch('api/events/create', {
                 method: 'POST',
                 headers: {

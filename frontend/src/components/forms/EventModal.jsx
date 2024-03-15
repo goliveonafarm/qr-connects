@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
 
-import PotluckFormBody from "./PotLuckFormBody";
+import PotluckFormBody from "./PotluckFormBody";
 import AfterPartyFormBody from "./AfterPartyFormBody";
 import SurveyFormBody from "./SurveyFormBody";
 import PollFormBody from "./PollFormBody";
@@ -9,7 +9,7 @@ import EventTypeForm from "./EventTypeForm";
 
 import CheckBox from "./CheckBox";
 
-const EventModal = ({ setShowEventModal, getUserEvents }) => {
+const EventModal = ({ setShowEventModal }) => {
   const { loading, submitUserEvent } = useSubmitUserEvent();
 
   const [inputs, setInputs] = useState({
@@ -30,7 +30,6 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
     e.preventDefault();
     setShowEventModal(false);
     await submitUserEvent(inputs);
-    await getUserEvents();
   };
 
   const renderForm = () => {

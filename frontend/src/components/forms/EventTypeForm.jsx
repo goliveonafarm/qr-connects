@@ -15,7 +15,7 @@ const EventTypeForm = ({ handleInputs }) => {
           className="btn btn-outline btn-primary btn-lg btn-wide"
           onClick={() => handleInputs("formType", "potluck")}
         >
-          Pot Luck
+          Potluck
         </button>
       </div>
       <div className="pt-2">

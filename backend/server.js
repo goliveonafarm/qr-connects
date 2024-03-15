@@ -19,8 +19,8 @@ dotenv.config();
 
 // Rate Limiting
 const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 200 // limit each IP to 100 requests per windowMs
+    windowMs: 1 * 60 * 1000, // 1 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
 });
 
 app.use(limiter);
@@ -40,11 +40,6 @@ app.use(express.static(path.join(__dirname, '/frontend/dist')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-})
-
-app.get('/', (req, res) => {
-
-    res.send("Hello Washington!");
 });
 
 app.listen(PORT, () => {

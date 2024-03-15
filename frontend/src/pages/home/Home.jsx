@@ -1,59 +1,73 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useGetParticipantResponses from "../../hooks/useGetParticipantResponses";
 import useSubmitParticipantResponse from "../../hooks/useSubmitParticipantResponse";
+import useDeleteParticipantResponse from "../../hooks/useDeleteParticipantResponse.js";
 import ParticipantResponse from "../../components/ParticipantResponse";
+import useGetParticipantResponsesWithEvents from "../../hooks/useGetParticipantResponsesWithEvents.js";
+import { useNavigate } from "react-router-dom";
+import { get } from "mongoose";
 
 const Home = () => {
-  const { participantResponses, getParticipantResponses } =
-    useGetParticipantResponses();
+  let { id } = useParams();
+
   const { submittingParticipantResponse, submitParticipantResponse } =
     useSubmitParticipantResponse();
-  const { id } = useParams();
+
+  const { isDeletingParticipantResponse, deleteParticipantResponse } =
+    useDeleteParticipantResponse();
+
+  const { loadingParticipantResponsesWithEvents, participantResponsesWithEvents, getParticipantResponsesWithEvents } = useGetParticipantResponsesWithEvents();
+
+  const navigate = useNavigate();
 
   const handleSubmitParticipantResponse = async (responseData, id) => {
-    await submitParticipantResponse({ responseData, id });
-    await getParticipantResponses();
+    await submitParticipantResponse(responseData, id);
+    getParticipantResponsesWithEvents();
+
+  };
+
+  const handleDeleteParticipantResponse = async (id) => {
+    await deleteParticipantResponse(id);
+    getParticipantResponsesWithEvents();
+
   };
 
   useEffect(() => {
-    getParticipantResponses();
+    getParticipantResponsesWithEvents();
   }, []);
 
-  if (id) {
-    //check to see if id is already in the participantResponses
-    const isNotNewResponse = participantResponses.some(
-      (response) => response.eventId === id
-    );
+  //next we need to figure out what happens when an incorrect id is passed
+  useEffect(() => {
+    if (id) {
+      const found = participantResponses.find(
+        (response) => response.eventId === id
+      );
 
-    console.log(
-      "participantResponses:",
-      participantResponses,
-      "id:",
-      id,
-      "isNotNewResponse:",
-      isNotNewResponse
-    );
+      const handleSubmitNewResponse = async (responseData, id) => {
+        await submitParticipantResponse(responseData, id);
+      };
 
-    if (!isNotNewResponse) {
-      console.log('this is a new response')
-      //handleSubmitParticipantResponse(["testing"], id);
+      if (!found || participantResponses.length === 0) {
+        handleSubmitNewResponse([], id);
+        id = null;
+      }
+      navigate("/");
     }
+  }, [ participantResponsesWithEvents]);
 
-    console.log(participantResponses.length);
+  if (loadingParticipantResponsesWithEvents) {
+    return <div className="loading loading-spinner"></div>;
   }
 
   return (
     <div>
       <div className="pb-3">
+        <div className="loading loading-spinner"></div>hello world
         <button
           className="btn btn-outline btn-info btn-lg btn-wide"
           onClick={() => {
-            console.log(
-              participantResponses.forEach((response) =>
-                console.log(response.responseData)
-              )
-            );
+            getParticipantResponsesWithEvents();
+            console.log('participantResponsesWithEvents:', participantResponsesWithEvents);
           }}
         >
           log responses
@@ -63,23 +77,32 @@ const Home = () => {
         <button
           className="btn btn-outline btn-info btn-lg btn-wide"
           onClick={() => {
-            handleSubmitParticipantResponse(["testing"], id);
+            console.log(id);
+            handleSubmitParticipantResponse(
+              [`test data \ntimestamp:${Date.now()}`],
+              id
+            );
           }}
         >
-          handleSubmitParticipantResponse
-          {`\n([testing],65eb8e8a00951f82d1792b21)`}
+          submit test response
         </button>
       </div>
 
       <div>
-        {participantResponses.map((response) => {
+        {participantResponsesWithEvents.map((response) => {
+          console.log(response)
           return (
             <div key={`participant-response-${response._id}`} className="pb-3">
-              <ParticipantResponse response={response} />
+              <ParticipantResponse
+                response={response}
+                handleDeleteParticipantResponse={
+                  handleDeleteParticipantResponse
+                }
+              />
             </div>
           );
         })}
-        {participantResponses.length === 0 && <>None</>}
+        {participantResponsesWithEvents.length === 0 && <>None</>}
       </div>
     </div>
   );

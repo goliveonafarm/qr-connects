@@ -7,7 +7,6 @@ const CheckBox = ({ label, propValue, handleChange, variant }) => {
           defaultChecked
           className={`checkbox checkbox-${variant}`}
           onChange={(e) => {
-            console.log('checked:', e.target.checked)
             handleChange(propValue, e.target.checked)}}
         />
         <span className="label-text">{`${label}`}</span>

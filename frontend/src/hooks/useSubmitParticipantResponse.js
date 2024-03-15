@@ -5,15 +5,11 @@ import toast from "react-hot-toast";
 
 const useSubmitParticipantResponse = () => {
     const [submittingParticipantResponse, setSubmittingParticipantResponse] = useState(false);
-
-    const { eventId } = useParams();
-    const submitParticipantResponse = async ({ responseData, id }) => {
-
+    const submitParticipantResponse = async ( responseData, id ) => {
         const success = handleInputErrors({});
         if (!success) return;
-
-        setSubmittingParticipantResponse(true);
         try {
+            setSubmittingParticipantResponse(true);
             const res = await fetch(`api/participant/create/${id}`, {
                 method: 'POST',
                 headers: {
@@ -21,6 +17,7 @@ const useSubmitParticipantResponse = () => {
                 },
                 body: JSON.stringify({ responseData })
             });
+
             const data = await res.json();
             if (data.error) throw new Error(data.error);
         } catch (error) {
