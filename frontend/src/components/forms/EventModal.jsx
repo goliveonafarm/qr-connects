@@ -9,7 +9,7 @@ import EventTypeForm from "./EventTypeForm";
 
 import CheckBox from "./CheckBox";
 
-const EventModal = ({ setShowEventModal }) => {
+const EventModal = ({ setShowEventModal, getUserEvents }) => {
   const { loading, submitUserEvent } = useSubmitUserEvent();
 
   const [inputs, setInputs] = useState({
@@ -30,6 +30,7 @@ const EventModal = ({ setShowEventModal }) => {
     e.preventDefault();
     setShowEventModal(false);
     await submitUserEvent(inputs);
+    await getUserEvents();
   };
 
   const renderForm = () => {

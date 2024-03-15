@@ -4,7 +4,7 @@ const useGetUserEvents = () => {
     const [loadingUserEvents, setLoadingUserEvents] = useState(false);
     const [userEvents, setUserEvents] = useState([]);
 
-    useEffect(() => {
+
         const getUserEvents = async () => {
             setLoadingUserEvents(true);
             try {
@@ -24,10 +24,13 @@ const useGetUserEvents = () => {
                 setLoadingUserEvents(false);
             }
         }
+
+
+    useEffect(() => {
         getUserEvents();
     }, []);
 
 
-    return { loadingUserEvents, userEvents };
+    return { loadingUserEvents, userEvents, getUserEvents };
 }
 export default useGetUserEvents

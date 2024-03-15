@@ -8,13 +8,19 @@ import UserEventCardBody from "../../components/event-card-bodies/UserEventCardB
 const UserEvents = () => {
   const [showEventModal, setShowEventModal] = useState(false);
   //kinda left off here, when we run getusereevents was thinking about setting the userEvents below to some loading state and then setting it to the actual userEvents after the fetch request is done
-  const { loadingUserEvents, userEvents } = useGetUserEvents();
-  console.log(userEvents)
+  const { loadingUserEvents, userEvents, getUserEvents } = useGetUserEvents();
+  console.log(userEvents);
 
   const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
 
   const formModalRef = useRef(null);
   useClickOutside(formModalRef, () => setShowEventModal(false));
+
+  const handleDeleteEvent = async (eventId) => {
+    await deleteUserEvent(eventId);
+    await getUserEvents();
+  };
+
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
@@ -32,9 +38,8 @@ const UserEvents = () => {
       </div>
       {showEventModal === true && (
         <div ref={formModalRef} className="absolute top-10 z-30">
-          <EventModal
-            setShowEventModal={setShowEventModal}
-          />
+          <EventModal setShowEventModal={setShowEventModal}
+          getUserEvents={getUserEvents} />
         </div>
       )}
       <div className="z-0">
@@ -43,7 +48,7 @@ const UserEvents = () => {
             <UserEventCardBody
               key={`user-event-card-${event._id}`}
               userEvent={userEvent}
-              deleteUserEvent={deleteUserEvent}
+              deleteUserEvent={handleDeleteEvent}
             />
           );
         })}

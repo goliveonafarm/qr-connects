@@ -16,20 +16,23 @@ const Home = () => {
   const { isDeletingParticipantResponse, deleteParticipantResponse } =
     useDeleteParticipantResponse();
 
-  const { loadingParticipantResponsesWithEvents, participantResponsesWithEvents, getParticipantResponsesWithEvents } = useGetParticipantResponsesWithEvents();
+  const {
+    loadingParticipantResponsesWithEvents,
+    participantResponsesWithEvents,
+    getParticipantResponsesWithEvents,
+  } = useGetParticipantResponsesWithEvents();
 
   const navigate = useNavigate();
 
   const handleSubmitParticipantResponse = async (responseData, id) => {
     await submitParticipantResponse(responseData, id);
-    getParticipantResponsesWithEvents();
-
+    await getParticipantResponsesWithEvents();
   };
 
   const handleDeleteParticipantResponse = async (id) => {
+    console.log('delete')
     await deleteParticipantResponse(id);
-    getParticipantResponsesWithEvents();
-
+    await getParticipantResponsesWithEvents();
   };
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const Home = () => {
   //next we need to figure out what happens when an incorrect id is passed
   useEffect(() => {
     if (id) {
-      const found = participantResponses.find(
+      const found = participantResponsesWithEvents.find(
         (response) => response.eventId === id
       );
 
@@ -47,13 +50,13 @@ const Home = () => {
         await submitParticipantResponse(responseData, id);
       };
 
-      if (!found || participantResponses.length === 0) {
+      if (!found || participantResponsesWithEvents.length === 0) {
         handleSubmitNewResponse([], id);
         id = null;
       }
       navigate("/");
     }
-  }, [ participantResponsesWithEvents]);
+  }, [participantResponsesWithEvents]);
 
   if (loadingParticipantResponsesWithEvents) {
     return <div className="loading loading-spinner"></div>;
@@ -67,7 +70,10 @@ const Home = () => {
           className="btn btn-outline btn-info btn-lg btn-wide"
           onClick={() => {
             getParticipantResponsesWithEvents();
-            console.log('participantResponsesWithEvents:', participantResponsesWithEvents);
+            console.log(
+              "participantResponsesWithEvents:",
+              participantResponsesWithEvents
+            );
           }}
         >
           log responses
@@ -90,7 +96,7 @@ const Home = () => {
 
       <div>
         {participantResponsesWithEvents.map((response) => {
-          console.log(response)
+          console.log(response);
           return (
             <div key={`participant-response-${response._id}`} className="pb-3">
               <ParticipantResponse
