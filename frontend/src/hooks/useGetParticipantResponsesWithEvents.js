@@ -6,7 +6,7 @@ const useGetParticipantResponsesWithEvents = () => {
     const [participantResponsesWithEvents, setParticipantResponsesWithEvents] = useState([]);
 
     const getParticipantResponsesWithEvents = async () => {
-
+        console.log('loading')
         setLoadingParticipantResponsesWithEvents(true);
         try {
             const res = await fetch('api/participant/get', {
@@ -16,6 +16,7 @@ const useGetParticipantResponsesWithEvents = () => {
                 },
             });
             const data = await res.json();
+            console.log(data);
             if (data.error) throw new Error(data.error);
             setParticipantResponsesWithEvents(data.participantResponsesWithEvents);
         } catch (error) {

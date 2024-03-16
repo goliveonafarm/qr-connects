@@ -6,6 +6,9 @@ import ParticipantResponse from "../../components/ParticipantResponse";
 import useGetParticipantResponsesWithEvents from "../../hooks/useGetParticipantResponsesWithEvents.js";
 import { useNavigate } from "react-router-dom";
 import { get } from "mongoose";
+import EventCard from "../../components/EventCard.jsx";
+import barImage from "../../assets/barImage.png";
+import ParticipantResponseCardBody from "../../components/response-card-bodies/ParticipantResponseCardBody.jsx";
 
 const Home = () => {
   let { id } = useParams();
@@ -24,15 +27,9 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmitParticipantResponse = async (responseData, id) => {
-    await submitParticipantResponse(responseData, id);
-    await getParticipantResponsesWithEvents();
-  };
-
   const handleDeleteParticipantResponse = async (id) => {
-    console.log('delete')
+    console.log("delete ran, id:", id);
     await deleteParticipantResponse(id);
-    await getParticipantResponsesWithEvents();
   };
 
   useEffect(() => {
@@ -63,9 +60,9 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div style={{ textShadow: "1px 1px 2px black" }}>
       <div className="pb-3">
-        <div className="loading loading-spinner"></div>hello world
+        {/* <div className="loading loading-spinner"></div> */}
         <button
           className="btn btn-outline btn-info btn-lg btn-wide"
           onClick={() => {
@@ -79,31 +76,33 @@ const Home = () => {
           log responses
         </button>
       </div>
-      <div className="pb-3">
-        <button
-          className="btn btn-outline btn-info btn-lg btn-wide"
-          onClick={() => {
-            console.log(id);
-            handleSubmitParticipantResponse(
-              [`test data \ntimestamp:${Date.now()}`],
-              id
-            );
-          }}
-        >
-          submit test response
-        </button>
-      </div>
-
       <div>
         {participantResponsesWithEvents.map((response) => {
-          console.log(response);
           return (
-            <div key={`participant-response-${response._id}`} className="pb-3">
-              <ParticipantResponse
+            <div key={`participant-response-${response._id}`}>
+              {/* <div className="pb-3">
+                <ParticipantResponse
+                  response={response}
+                  handleDeleteParticipantResponse={
+                    handleDeleteParticipantResponse
+                  }
+                />
+              </div> */}
+
+              {/* <EventCard
+                src={barImage}
+                alt={"barImage"}
+                title={`Afterparty @ ${response.formData}`}
+                handleDebug={() => console.log(response)}
+                handleDelete={()=>handleDeleteParticipantResponse(response._id)}
+              >
+                {}
+              </EventCard> */}
+              <ParticipantResponseCardBody
                 response={response}
-                handleDeleteParticipantResponse={
-                  handleDeleteParticipantResponse
-                }
+                deleteParticipantResponse={handleDeleteParticipantResponse}
+                getParticipantResponsesWithEvents={getParticipantResponsesWithEvents}
+                
               />
             </div>
           );

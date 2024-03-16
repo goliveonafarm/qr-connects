@@ -20,6 +20,7 @@ dotenv.config();
 // Rate Limiting
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
+    //windowMs: 1 * 30 * 1000, // 30 seconds 
     max: 100 // limit each IP to 100 requests per windowMs
 });
 

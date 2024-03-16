@@ -1,6 +1,7 @@
 import pollImage from "../assets/pollImage.png";
 
 const ParticipantResponse = ({ response, handleDeleteParticipantResponse }) => {
+  console.log(response)
   return (
     <div className="card w-96 bg-base-100 shadow-xl image-full pb-3">
       <figure>

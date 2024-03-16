@@ -78,64 +78,55 @@ export const updateParticipantResponse = async (req, res) => {
 export const getParticipantResponsesWithEvents = async (req, res) => {
     try {
         const participantId = req.cookies.participantId;
+        console.log(participantId)
         const participantResponsesWithEvents = await UserEvent.aggregate([
+
             {
                 $lookup: {
                     from: "responses",
-                    let: { eventId: "$_id" },
-                    pipeline: [
-                        {
-                            $match:
-                            {
-                                $expr:
-                                {
-                                    $and:
-                                        [
-                                            { $eq: ["$eventId", "$$eventId"] },
-                                            { $eq: ["$participantId", participantId] } // Ensure you define participantId before the aggregation
-                                        ]
-                                }
-                            }
-                        }
-                    ],
+                    localField: "_id",
+                    foreignField: "eventId",
                     as: "responses"
                 }
             },
             {
+                $unwind: {
+                    path: "$responses",
+                    preserveNullAndEmptyArrays: true // Preserve events without responses
+                }
+            },
+            {
                 $match: {
-                    "responses.participantId": participantId
+                    // This match stage is to filter responses; adjust or remove according to your needs
+                     "responses.participantId": participantId 
                 }
             },
             {
                 $addFields: {
-                    includedEventId: {
-                        $cond: { if: "$shareable", then: "$_id", else: null }
+                    eventId: {
+                        $cond: { if: "$shareResults", then: "$_id", else: null }
                     }
                 }
             },
             {
                 $project: {
-                    includedEventId: 1,
+                    _id: "$responses._id", // Set the document's _id to be the response's _id
+                    eventId: "$_id",
+                    formData: 1,
                     formType: 1,
                     shareResults: 1,
                     privateResults: 1,
                     active: 1,
-                    formData: 1,
-                    responses: {
-                        $map: {
-                            input: "$responses",
-                            as: "response",
-                            in: {
-                                _id: "$$response._id",
-                                responseData: "$$response.responseData",
-                                participantId: "$$response.participantId"
-
-                            }
-                        }
-                    }
+                    shareable: 1,
+                    responseData: "$responses.responseData",
+                    // Any other event or response fields you need
                 }
             }
         ]);
+
+        const testResponse = await Response.find();
+        console.log('testResponse', testResponse)
+
         res.status(200).json({ participantResponsesWithEvents });
     } catch (error) {
         console.log("Error in response controller (getParticipantEvents)", error.message);
