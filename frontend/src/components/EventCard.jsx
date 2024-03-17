@@ -9,13 +9,14 @@ const EventCard = ({
   handleDebug,
 }) => {
   return (
-    <div className="card w-96 bg-base-100 shadow-xl image-full pb-3">
+    <div className="card w-96 bg-base-100 image-full pb-3">
       <figure>
-        <img src={src} alt={`${alt}`} className="blur-sm" />
+        <img src={src} alt={`${alt}`} className="blur-sm brightness-75" />
+
       </figure>
 
       <div className="card-body">
-        <h2 className="card-title text-4xl">{title}</h2>
+        <h2 className="card-title text-4xl text-success">{title}</h2>
         {children}
         <div>
           <div className="card-actions justify-end">
