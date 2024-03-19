@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 const QRCode = ({ path }) => {
   return (
     <QRCodeSVG
-      value={`https://qr-connects.onrender.com/${path}`}
+      value={`https://qr-connects.onrender.com/${encodeURIComponent(path)}`}
       size={256}
       bgColor="#ffffff"
       fgColor="#000000"

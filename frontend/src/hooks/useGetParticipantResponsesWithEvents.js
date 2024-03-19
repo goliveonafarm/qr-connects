@@ -3,10 +3,9 @@ import toast from 'react-hot-toast';
 
 const useGetParticipantResponsesWithEvents = () => {
     const [loadingParticipantResponsesWithEvents, setLoadingParticipantResponsesWithEvents] = useState(false);
-    const [participantResponsesWithEvents, setParticipantResponsesWithEvents] = useState([]);
+    const [participantResponsesWithEvents, setParticipantResponsesWithEvents] = useState(null);
 
     const getParticipantResponsesWithEvents = async () => {
-        console.log('loading')
         setLoadingParticipantResponsesWithEvents(true);
         try {
             const res = await fetch('api/participant/get', {

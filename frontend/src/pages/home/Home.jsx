@@ -33,26 +33,43 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getParticipantResponsesWithEvents();
-  }, []);
+    
+
+       const runThis = async () =>{ await getParticipantResponsesWithEvents()};
+       runThis();
+       console.log('useEffect 1 finished')
+    
+  }, [submittingParticipantResponse]);
 
   //next we need to figure out what happens when an incorrect id is passed
   useEffect(() => {
-    if (id) {
-      const found = participantResponsesWithEvents.find(
-        (response) => response.eventId === id
-      );
+    
 
+    const runThis = async =>  {
+    if (id && participantResponsesWithEvents !== null && !submittingParticipantResponse) {
+      console.log('participantResponsesWithEvents:', participantResponsesWithEvents)
+      const found = participantResponsesWithEvents.find((response) => {
+        return response.eventId.toString() === id;
+      });
+      
       const handleSubmitNewResponse = async (responseData, id) => {
-        await submitParticipantResponse(responseData, id);
+        return submitParticipantResponse(responseData, id);
       };
 
       if (!found || participantResponsesWithEvents.length === 0) {
-        handleSubmitNewResponse([], id);
-        id = null;
+        handleSubmitNewResponse([], id)
+        .then(()=>{
+          console.log('then')
+          id = null;
+          navigate("/");
+        });
       }
-      navigate("/");
     }
+  }
+
+  runThis();
+
+    console.log('useEffect 2 finished')
   }, [participantResponsesWithEvents]);
 
   if (loadingParticipantResponsesWithEvents) {
@@ -77,7 +94,7 @@ const Home = () => {
         </button>
       </div>
       <div>
-        {participantResponsesWithEvents.map((response) => {
+        {participantResponsesWithEvents && participantResponsesWithEvents.map((response) => {
           return (
             <div key={`participant-response-${response._id}`}>
               {/* <div className="pb-3">
@@ -107,7 +124,7 @@ const Home = () => {
             </div>
           );
         })}
-        {participantResponsesWithEvents.length === 0 && <>None</>}
+        {participantResponsesWithEvents && participantResponsesWithEvents.length === 0 && <>None</>}
       </div>
     </div>
   );
