@@ -46,7 +46,7 @@ const UserEvents = () => {
         {userEvents.map((userEvent) => {
           return (
             <UserEventCardBody
-              key={`user-event-card-${event._id}`}
+              key={`user-event-card-${userEvent._id}`}
               userEvent={userEvent}
               deleteUserEvent={handleDeleteEvent}
             />

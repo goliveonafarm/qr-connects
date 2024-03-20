@@ -35,9 +35,7 @@ const Home = () => {
   useEffect(() => {
     
 
-       const runThis = async () =>{ await getParticipantResponsesWithEvents()};
-       runThis();
-       console.log('useEffect 1 finished')
+        getParticipantResponsesWithEvents()
     
   }, [submittingParticipantResponse]);
 
@@ -47,7 +45,6 @@ const Home = () => {
 
     const runThis = async =>  {
     if (id && participantResponsesWithEvents !== null && !submittingParticipantResponse) {
-      console.log('participantResponsesWithEvents:', participantResponsesWithEvents)
       const found = participantResponsesWithEvents.find((response) => {
         return response.eventId.toString() === id;
       });
@@ -59,7 +56,6 @@ const Home = () => {
       if (!found || participantResponsesWithEvents.length === 0) {
         handleSubmitNewResponse([], id)
         .then(()=>{
-          console.log('then')
           id = null;
           navigate("/");
         });

@@ -6,6 +6,7 @@ const useGetParticipantResponsesWithEvents = () => {
     const [participantResponsesWithEvents, setParticipantResponsesWithEvents] = useState(null);
 
     const getParticipantResponsesWithEvents = async () => {
+        //console.log('entered getParticipantResponsesWithEvents');
         setLoadingParticipantResponsesWithEvents(true);
         try {
             const res = await fetch('api/participant/get', {

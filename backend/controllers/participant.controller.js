@@ -18,14 +18,12 @@ export const createParticipantResponse = async (req, res) => {
         const { eventId } = req.params;
         const { responseData } = req.body;
         const { participantId } = req.cookies;
-        console.log('eventId', eventId)
 
         const userEvent = await UserEvent.findById(eventId); // used for validation
 
         if (!userEvent) {
             return res.status(400).json({ message: "Invalid event" });
         }
-        console.log(userEvent)
 
 
         if (userEvent.formData.length !== responseData.length) {
@@ -78,7 +76,6 @@ export const updateParticipantResponse = async (req, res) => {
 export const getParticipantResponsesWithEvents = async (req, res) => {
     try {
         const participantId = req.cookies.participantId;
-        console.log(participantId)
         const participantResponsesWithEvents = await UserEvent.aggregate([
 
             {
@@ -125,7 +122,6 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
         ]);
 
         const testResponse = await Response.find();
-        console.log('testResponse', testResponse)
 
         res.status(200).json({ participantResponsesWithEvents });
     } catch (error) {
