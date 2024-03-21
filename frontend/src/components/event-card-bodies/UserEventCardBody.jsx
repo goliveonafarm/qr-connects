@@ -1,4 +1,5 @@
 //import image put in src below
+import useGetEventResponses from "../../hooks/useGetEventResponses";
 import pollImage from "../../assets/pollImage.png";
 import ReactDOM from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
@@ -10,9 +11,14 @@ import PollEventCardBody from "./PollEventCardBody";
 import capitalizeFirstLetterOfString from "../../../utils/capitalizeFirstLetter";
 
 const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
+  const { loadingEventResponses, eventResponses, getEventResponses } =
+    useGetEventResponses(userEvent._id);
+
   const handleDelete = async () => {
     await deleteUserEvent(userEvent._id);
   };
+
+  console.log(eventResponses);
 
   const renderForm = () => {
     switch (userEvent.formType) {
@@ -38,7 +44,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
           userEvent.formType
         )} at ${capitalizeFirstLetterOfString(userEvent.formData[0])}`}
         handleDelete={handleDelete}
-        handleDebug={()=>console.log(userEvent)}
+        handleDebug={() => console.log(userEvent)}
       >
         <div>
           Show participants results: {userEvent.shareResults ? "Yes" : "No"}
@@ -68,7 +74,16 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
             renderas="svg"
           />
         </div>
-
+        <div>
+          {eventResponses?.map((response) => {
+            return (
+              <div key={response._id}>
+                <div>Response ID- {response._id}</div>
+                <div>Response Data- {response.responseData}</div>
+              </div>
+            );
+          })}
+        </div>
         <div>Event ID- {userEvent._id}</div>
       </EventCard>
     </div>
