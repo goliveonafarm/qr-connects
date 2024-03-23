@@ -10,7 +10,7 @@ const QRCode = ({ path, _size }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative">
       <div className="mt-auto mb-auto border border-white p-1 bg-white">
         <QRCodeSVG
           value={`https://qr-connects.onrender.com/loading/${path}`}
@@ -21,7 +21,7 @@ const QRCode = ({ path, _size }) => {
           renderas="svg"
         />
       </div>
-      <div className="pl-2 mb-auto">
+      <div className="absolute top-0 right-0 bg-gray-800 p-2">
         <svg
           height={"30"}
           width={"30"}
