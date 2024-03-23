@@ -1,4 +1,5 @@
 //import image put in src below
+import { Link } from "react-router-dom";
 import useGetEventResponses from "../../hooks/useGetEventResponses";
 import pollImage from "../../assets/pollImage.png";
 import ReactDOM from "react-dom";
@@ -17,8 +18,6 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
   const handleDelete = async () => {
     await deleteUserEvent(userEvent._id);
   };
-
-  console.log(eventResponses);
 
   const renderForm = () => {
     switch (userEvent.formType) {
@@ -75,16 +74,12 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
           />
         </div>
         <div>
-          {eventResponses?.map((response) => {
-            return (
-              <div key={response._id}>
-                <div>Response ID- {response._id}</div>
-                <div>Response Data- {response.responseData}</div>
-              </div>
-            );
-          })}
+                    {renderForm()}
+
+            
         </div>
         <div>Event ID- {userEvent._id}</div>
+        <Link className="text-blue-700" to={`http://localhost:3000/loading/${userEvent._id}`}>Create response</Link>
       </EventCard>
     </div>
   );

@@ -17,6 +17,7 @@ const ParticipantResponseCardBody = ({
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
 
   const handleUpdateResponse = async (responseData, id) => {
+    console.log('updating: ', responseData, id)
     await updateResponse(id, responseData);
     await getParticipantResponsesWithEvents();
   };
@@ -29,7 +30,7 @@ const ParticipantResponseCardBody = ({
   const renderForm = () => {
     switch (response.formType) {
       case "afterparty":
-        return <AfterPartyResponseCardBody response={response} handleUpdateResponse={handleUpdateResponse}/>;
+        return <AfterPartyResponseCardBody response={response} handleUpdateResponse={handleUpdateResponse} updateResponse={updatingResponse}/>;
       case "potluck":
         return <PotluckResponseCardBody response={response} />;
       case "survey":

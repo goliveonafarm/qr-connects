@@ -16,7 +16,7 @@ export const getParticipantResponses = async (req, res) => {
 export const createParticipantResponse = async (req, res) => {
     try {
         const { eventId } = req.params;
-        const { responseData } = req.body;
+        const { responseData } = [];
         const { participantId } = req.cookies;
 
         const userEvent = await UserEvent.findById(eventId); // used for validation
@@ -25,9 +25,9 @@ export const createParticipantResponse = async (req, res) => {
             return res.status(400).json({ message: "Invalid event" });
         }
 
-
-        if (userEvent.formData.length !== responseData.length) {
-            //return res.status(400).json({ message: "Invalid response data" });
+        const participantResponse = await Response.findOne({ eventId, participantId });
+        if (participantResponse) {
+            return res.status(400).json({ message: "Response already exists" });
         }
 
         const repsonseCount = await Response.countDocuments({ participantId })
@@ -134,6 +134,7 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
 
 export const deleteParticipantResponse = async (req, res) => {
     try {
+        
         const { responseId } = req.params;
         const { participantId } = req.cookies;
 

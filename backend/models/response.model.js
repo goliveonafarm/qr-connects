@@ -11,7 +11,7 @@ const reponseSchema = new mongoose.Schema({
         required: true
     },
     responseData: {
-        type: [String],
+        type: {},
         //validate
     }
 }, { timestamps: true });

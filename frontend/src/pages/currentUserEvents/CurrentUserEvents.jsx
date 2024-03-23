@@ -9,7 +9,6 @@ const UserEvents = () => {
   const [showEventModal, setShowEventModal] = useState(false);
   //kinda left off here, when we run getusereevents was thinking about setting the userEvents below to some loading state and then setting it to the actual userEvents after the fetch request is done
   const { loadingUserEvents, userEvents, getUserEvents } = useGetUserEvents();
-  console.log(userEvents);
 
   const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
 
@@ -44,6 +43,7 @@ const UserEvents = () => {
       )}
       <div className="z-0">
         {userEvents.map((userEvent) => {
+          console.log("userEvent", userEvent)
           return (
             <UserEventCardBody
               key={`user-event-card-${userEvent._id}`}

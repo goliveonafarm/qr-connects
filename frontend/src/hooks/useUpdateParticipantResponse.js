@@ -5,6 +5,7 @@ const useUpdateParticipantResponse = () => {
     const [updatingResponse, setUpdatingResponse] = useState(false);
 
     const updateResponse = async (responseId, responseData) => {
+        console.log('responseData', responseData)
         const success = handleInputErrors(responseData);
         setUpdatingResponse(true);
         try {
