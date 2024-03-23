@@ -65,7 +65,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         {/* insert qr code here :) */}
         <div className="ml-auto mr-auto">
           <QRCodeSVG
-            value={`https://qr-connects.onrender.com/${userEvent._id}`}
+            value={`https://qr-connects.onrender.com/loading/${userEvent._id}`}
             size={256}
             bgColor="#ffffff"
             fgColor="#000000"

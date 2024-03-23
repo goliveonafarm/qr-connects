@@ -9,14 +9,15 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
   useEffect(() => {
     getEventResponses();
   }, []);
-
+console.log(eventResponses)
   return (
     <div>
       {eventResponses?.map((response) => (
         <div key={response._id}>
           <div>Response ID: {response._id}</div>
           <div className="text-lg">Name: {response.responseData?.name}</div>
-          <div>Attending: {response.responseData.attending ? "Yes" : "No"}</div>
+          <div>Attending: {response.responseData?.attending ? "Yes" : "No"}</div>
+
           -----------------
         </div>
       ))}
