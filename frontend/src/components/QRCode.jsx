@@ -6,14 +6,12 @@ const QRCode = ({ path, _size }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    console.log("yesh it ran");
     setIsModalOpen(!isModalOpen);
-    console.log("isModalOpen", isModalOpen);
   };
 
   return (
     <div className="flex">
-      <div className="mt-auto mb-auto">
+      <div className="mt-auto mb-auto border border-white p-1 bg-white">
         <QRCodeSVG
           value={`https://qr-connects.onrender.com/loading/${path}`}
           size={_size}
@@ -21,13 +19,12 @@ const QRCode = ({ path, _size }) => {
           fgColor="#000000"
           level="Q"
           renderas="svg"
-          className="pb-3"
         />
       </div>
-      <div className="mt-auto mb-auto">
+      <div className="pl-2 mb-auto">
         <svg
-          height={"50"}
-          width={"50"}
+          height={"30"}
+          width={"30"}
           className="fill-success cursor-pointer"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -37,11 +34,11 @@ const QRCode = ({ path, _size }) => {
         </svg>
         {/* Conditionally rendered modal dialog */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-opacity-50  flex  items-center">
-            <div className="modal-box rounded-lg shadow-lg relative">
+          <div className="absolute inset-0 flex  items-center">
+            <div className="modal-box rounded-lg shadow-lg">
               {/* Modal content */}
               <div className="flex">
-                <div>
+                <div className="border border-white p-2 bg-white">
                   <QRCodeSVG
                     value={`https://qr-connects.onrender.com/loading/${path}`}
                     size={256}
@@ -54,8 +51,8 @@ const QRCode = ({ path, _size }) => {
                 <div className="pl-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    height="25"
-                    width="25"
+                    height="30"
+                    width="30"
                     viewBox="0 0 512 512"
                     fill="currentColor"
                     className="cursor-pointer hover:text-blue-500"

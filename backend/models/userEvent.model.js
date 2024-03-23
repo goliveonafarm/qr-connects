@@ -27,6 +27,7 @@ const userEventSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    //this needs changed from string to object
     formData: {
         type: [String],
     }

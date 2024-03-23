@@ -20,30 +20,39 @@ const UserEvents = () => {
     await getUserEvents();
   };
 
-
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
-      <h1 className="text-4xl pb-5 pt-5">Your Connects</h1>
-      <div className="pb-5">
+      <div className="flex pb-5 pt-5">
+        <h1 className="text-4xl pr-3">Your Connects</h1>
         {/** Revisit later - change button logic if user reached max number of connects */}
         {true && (
           <button
-            className="btn btn-outline btn-info btn-lg btn-wide"
+            className="btn btn-outline btn-info"
             onClick={() => setShowEventModal(true)}
           >
-            Add a Connect
+            <svg
+              height={"30"}
+              width={"30"}
+              className="fill-info"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+            </svg>
           </button>
         )}
       </div>
       {showEventModal === true && (
         <div ref={formModalRef} className="absolute top-10 z-30">
-          <EventModal setShowEventModal={setShowEventModal}
-          getUserEvents={getUserEvents} />
+          <EventModal
+            setShowEventModal={setShowEventModal}
+            getUserEvents={getUserEvents}
+          />
         </div>
       )}
       <div className="z-0">
         {userEvents.map((userEvent) => {
-          console.log("userEvent", userEvent)
+          console.log("userEvent", userEvent);
           return (
             <UserEventCardBody
               key={`user-event-card-${userEvent._id}`}

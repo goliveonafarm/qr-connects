@@ -43,8 +43,8 @@ const ParticipantResponseCardBody = ({
 
   return (
     <EventCard
-      src={barImage}
-      alt={"Bar image"}
+
+      eventType={response.formType}
       title={`${capitalizeFirstLetterOfString(
         response.formType
       )} at ${capitalizeFirstLetterOfString(response.formData[0])}`}

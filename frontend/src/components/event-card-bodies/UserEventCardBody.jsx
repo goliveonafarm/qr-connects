@@ -1,9 +1,4 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import useGetEventResponses from "../../hooks/useGetEventResponses";
-import barImage from "../../assets/barImage.png";
-import picnicImage from "../../assets/picnicImage.png";
-import pollImage from "../../assets/pollImage.png";
 import EventCard from "../EventCard";
 import AfterPartyEventCardBody from "./AfterPartyEventCardBody";
 import PotluckEventCardBody from "./PotluckEventCardBody";
@@ -13,49 +8,19 @@ import capitalizeFirstLetterOfString from "../../../utils/capitalizeFirstLetter"
 import QRCode from "../QRCode";
 
 const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
-  const { loadingEventResponses, eventResponses, getEventResponses } =
-    useGetEventResponses(userEvent._id);
-
-  const [eventCardImage, setEventCardImage] = useState(null);
-  const [eventCardImageAlt, setEventCardImageAlt] = useState(null);
-
   const handleDelete = async () => {
     await deleteUserEvent(userEvent._id);
   };
 
-  useEffect(() => {
-    switch (userEvent.formType) {
-      case "afterparty":
-        setEventCardImage(barImage);
-        setEventCardImageAlt("Bar image");
-        break;
-      case "potluck":
-        setEventCardImage(picnicImage);
-        setEventCardImageAlt("Picnic image");
-        break;
-      case "poll":
-        setEventCardImage(pollImage);
-        setEventCardImageAlt("Poll image");
-        break;
-      // Add any other cases if necessary
-      default:
-        // Set default image or leave it null
-        break;
-    }
-  }, [userEvent.formType]);
-
   const renderForm = () => {
     switch (userEvent.formType) {
       case "afterparty":
-
         return <AfterPartyEventCardBody userEvent={userEvent} />;
       case "potluck":
-
         return <PotluckEventCardBody userEvent={userEvent} />;
       case "survey":
         return <SurveyEventCardBody userEvent={userEvent} />;
       case "poll":
-
         return <PollEventCardBody userEvent={userEvent} />;
       default:
         return <>There was no match for this Connect type for some reason...</>;
@@ -65,8 +30,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
   return (
     <div>
       <EventCard
-        src={eventCardImage}
-        alt={eventCardImageAlt}
+        eventType={userEvent.formType}
         title={`${capitalizeFirstLetterOfString(
           userEvent.formType
         )} at ${capitalizeFirstLetterOfString(userEvent.formData[0])}`}

@@ -54,8 +54,8 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
       <div className="flex justify-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          height="25"
-          width="25"
+          height="30"
+          width="30"
           viewBox="0 0 512 512"
           fill="currentColor"
           className="cursor-pointer hover:text-blue-500"

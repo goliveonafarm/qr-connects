@@ -29,7 +29,7 @@ const AfterPartyResponseCardBody = ({
   const handleChangeAttending = async (newAttendingValue) => {
     console.log("newAttendingValue", newAttendingValue);
     const newVal = newAttendingValue === isAttending ? null : newAttendingValue;
-    await handleUpdateResponse({ attending: newVal }, response._id);
+    await handleUpdateResponse({ ...formData, attending: newVal }, response._id);
   };
 
   return (
