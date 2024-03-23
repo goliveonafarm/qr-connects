@@ -43,23 +43,29 @@ const Home = () => {
           log responses
         </button> */}
       </div>
-      <div>
-        {participantResponsesWithEvents &&
-          participantResponsesWithEvents.map((response) => {
-            return (
-              <div key={`participant-response-${response._id}`}>
-                <ParticipantResponseCardBody
-                  response={response}
-                  deleteParticipantResponse={handleDeleteParticipantResponse}
-                  getParticipantResponsesWithEvents={
-                    getParticipantResponsesWithEvents
-                  }
-                />
-              </div>
-            );
-          })}
-        {participantResponsesWithEvents &&
-          participantResponsesWithEvents.length === 0 && <>None</>}
+      <div className="flex flex-wrap">
+        <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-3 gap-6">
+            {participantResponsesWithEvents &&
+              participantResponsesWithEvents.map((response) => {
+                return (
+                  <div key={`participant-response-${response._id}`}>
+                    <ParticipantResponseCardBody
+                      response={response}
+                      deleteParticipantResponse={
+                        handleDeleteParticipantResponse
+                      }
+                      getParticipantResponsesWithEvents={
+                        getParticipantResponsesWithEvents
+                      }
+                    />
+                  </div>
+                );
+              })}
+            {participantResponsesWithEvents &&
+              participantResponsesWithEvents.length === 0 && <>None</>}
+          </div>
+        </div>
       </div>
     </div>
   );

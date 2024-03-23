@@ -50,17 +50,20 @@ const UserEvents = () => {
           />
         </div>
       )}
-      <div className="z-0">
-        {userEvents.map((userEvent) => {
-          console.log("userEvent", userEvent);
-          return (
-            <UserEventCardBody
-              key={`user-event-card-${userEvent._id}`}
-              userEvent={userEvent}
-              deleteUserEvent={handleDeleteEvent}
-            />
-          );
-        })}
+      <div className="z-0 flex flex-wrap">
+        <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-3 gap-6">
+            {userEvents.map((userEvent) => {
+              return (
+                <UserEventCardBody
+                  key={`user-event-card-${userEvent._id}`}
+                  userEvent={userEvent}
+                  deleteUserEvent={handleDeleteEvent}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -4,13 +4,7 @@ import pollImage from "../assets/pollImage.png";
 import barImage from "../assets/barImage.png";
 import picnicImage from "../assets/picnicImage.png";
 
-const EventCard = ({
-  children,
-  title,
-  handleDelete,
-  handleDebug,
-  eventType,
-}) => {
+const EventCard = ({ children, handleDelete, handleDebug, eventType }) => {
   const [eventCardImage, setEventCardImage] = useState(null);
   const [eventCardImageAlt, setEventCardImageAlt] = useState(null);
 
@@ -36,7 +30,7 @@ const EventCard = ({
   }, [eventType]);
 
   return (
-    <div className="card w-96 bg-base-100 image-full pb-3">
+    <div className="card w-96 bg-base-100 image-full">
       <figure>
         <img
           src={eventCardImage}
@@ -46,8 +40,8 @@ const EventCard = ({
       </figure>
 
       <div className="card-body">
-        <div className="flex pb-3 ">
-        <div className="mr-auto">
+        <div className="flex">
+          <div className="mr-auto">
             <svg
               height="30"
               width="30"
@@ -77,15 +71,10 @@ const EventCard = ({
               <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
             </svg>
           </div>
-
-          
         </div>
-        <h2 className="card-title text-4xl text-success">{title}</h2>
         {children}
         <div>
-          <div className="card-actions justify-end">
-
-          </div>
+          <div className="card-actions justify-end"></div>
         </div>
       </div>
     </div>

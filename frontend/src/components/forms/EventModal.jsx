@@ -21,7 +21,6 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   });
 
   const handleInputs = (prop, newVal) => {
-    console.log("prop", prop, "newVal", newVal);
     setInputs({ ...inputs, [prop]: newVal });
   };
 

@@ -26,7 +26,7 @@ const AfterPartyFormBody = ({ handleInputs }) => {
             className="grow"
             placeholder="Location"
             onChange={(e) =>{ 
-              handleInputs('formData', e.target.value)}}
+              handleInputs('formData', {location: e.target.value})}}
           />
         </label>
       </form>

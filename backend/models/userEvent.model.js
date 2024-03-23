@@ -29,7 +29,7 @@ const userEventSchema = new mongoose.Schema({
     },
     //this needs changed from string to object
     formData: {
-        type: [String],
+        type: {},
     }
     //createdAt, updatedAt
 }, { timestamps: true });

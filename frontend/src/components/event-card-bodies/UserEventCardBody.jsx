@@ -31,12 +31,23 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
     <div>
       <EventCard
         eventType={userEvent.formType}
-        title={`${capitalizeFirstLetterOfString(
-          userEvent.formType
-        )} at ${capitalizeFirstLetterOfString(userEvent.formData[0])}`}
         handleDelete={handleDelete}
         handleDebug={() => console.log(userEvent)}
       >
+        {/* insert qr code here :) */}
+        <div className="ml-auto mr-auto">
+          <QRCode path={userEvent._id} _size={128} />
+        </div>
+        <div>{renderForm()}</div>
+        <div>
+          <Link
+            className="text-blue-700"
+            to={`http://localhost:3000/loading/${userEvent._id}`}
+          >
+            {`[...]oading/${userEvent._id}`}
+          </Link>
+        </div>
+
         <div>
           Show participants results: {userEvent.shareResults ? "Yes" : "No"}
         </div>
@@ -51,22 +62,6 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         </div>
 
         <div>Currently Active: {userEvent.active ? "Yes" : "No"}</div>
-
-        <div>Location: {userEvent.formData}</div>
-
-        {/* insert qr code here :) */}
-        <div className="ml-auto mr-auto">
-          <QRCode path={userEvent._id} _size={128} />
-        </div>
-        <div>{renderForm()}</div>
-        <div>
-          <Link
-            className="text-blue-700"
-            to={`http://localhost:3000/loading/${userEvent._id}`}
-          >
-            {`[...]oading/${userEvent._id}`}
-          </Link>
-        </div>
       </EventCard>
     </div>
   );
