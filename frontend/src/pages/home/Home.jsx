@@ -21,10 +21,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    
-
         getParticipantResponsesWithEvents()
-    
   }, []);
 
 

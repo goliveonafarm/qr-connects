@@ -1,33 +1,61 @@
-//import image put in src below
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useGetEventResponses from "../../hooks/useGetEventResponses";
+import barImage from "../../assets/barImage.png";
+import picnicImage from "../../assets/picnicImage.png";
 import pollImage from "../../assets/pollImage.png";
-import ReactDOM from "react-dom";
-import { QRCodeSVG } from "qrcode.react";
 import EventCard from "../EventCard";
 import AfterPartyEventCardBody from "./AfterPartyEventCardBody";
 import PotluckEventCardBody from "./PotluckEventCardBody";
 import SurveyEventCardBody from "./SurveyEventCardBody";
 import PollEventCardBody from "./PollEventCardBody";
 import capitalizeFirstLetterOfString from "../../../utils/capitalizeFirstLetter";
+import QRCode from "../QRCode";
 
 const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
   const { loadingEventResponses, eventResponses, getEventResponses } =
     useGetEventResponses(userEvent._id);
 
+  const [eventCardImage, setEventCardImage] = useState(null);
+  const [eventCardImageAlt, setEventCardImageAlt] = useState(null);
+
   const handleDelete = async () => {
     await deleteUserEvent(userEvent._id);
   };
 
+  useEffect(() => {
+    switch (userEvent.formType) {
+      case "afterparty":
+        setEventCardImage(barImage);
+        setEventCardImageAlt("Bar image");
+        break;
+      case "potluck":
+        setEventCardImage(picnicImage);
+        setEventCardImageAlt("Picnic image");
+        break;
+      case "poll":
+        setEventCardImage(pollImage);
+        setEventCardImageAlt("Poll image");
+        break;
+      // Add any other cases if necessary
+      default:
+        // Set default image or leave it null
+        break;
+    }
+  }, [userEvent.formType]);
+
   const renderForm = () => {
     switch (userEvent.formType) {
       case "afterparty":
+
         return <AfterPartyEventCardBody userEvent={userEvent} />;
       case "potluck":
+
         return <PotluckEventCardBody userEvent={userEvent} />;
       case "survey":
         return <SurveyEventCardBody userEvent={userEvent} />;
       case "poll":
+
         return <PollEventCardBody userEvent={userEvent} />;
       default:
         return <>There was no match for this Connect type for some reason...</>;
@@ -37,8 +65,8 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
   return (
     <div>
       <EventCard
-        src={pollImage}
-        alt={"pollImage"}
+        src={eventCardImage}
+        alt={eventCardImageAlt}
         title={`${capitalizeFirstLetterOfString(
           userEvent.formType
         )} at ${capitalizeFirstLetterOfString(userEvent.formData[0])}`}
@@ -60,26 +88,21 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
 
         <div>Currently Active: {userEvent.active ? "Yes" : "No"}</div>
 
-        <div>Data: {userEvent.formData}</div>
+        <div>Location: {userEvent.formData}</div>
 
         {/* insert qr code here :) */}
         <div className="ml-auto mr-auto">
-          <QRCodeSVG
-            value={`https://qr-connects.onrender.com/loading/${userEvent._id}`}
-            size={256}
-            bgColor="#ffffff"
-            fgColor="#000000"
-            level="Q"
-            renderas="svg"
-          />
+          <QRCode path={userEvent._id} _size={128} />
         </div>
+        <div>{renderForm()}</div>
         <div>
-                    {renderForm()}
-
-            
+          <Link
+            className="text-blue-700"
+            to={`http://localhost:3000/loading/${userEvent._id}`}
+          >
+            {`[...]oading/${userEvent._id}`}
+          </Link>
         </div>
-        <div>Event ID- {userEvent._id}</div>
-        <Link className="text-blue-700" to={`http://localhost:3000/loading/${userEvent._id}`}>Create response</Link>
       </EventCard>
     </div>
   );

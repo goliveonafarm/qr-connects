@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
 import EventCard from "../EventCard";
 import AfterPartyResponseCardBody from "./AfterPartyResponseCardBody";
 import PotluckResponseCardBody from "./PotluckResponseCardBody";
@@ -8,6 +6,7 @@ import PollResponseCardBody from "./PollResponseCardBody";
 import barImage from "../../assets/barImage.png";
 import capitalizeFirstLetterOfString from "../../../utils/capitalizeFirstLetter";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
+import QRCode from "../QRCode";
 
 const ParticipantResponseCardBody = ({
   response,
@@ -57,24 +56,18 @@ const ParticipantResponseCardBody = ({
         <div className="mr-auto ml-auto">
           {response.shareable && (
             <div className="ml-auto mr-auto">
-              <QRCodeSVG
-                value={`https://qr-connects.onrender.com/${response.eventId}`}
-                size={128}
-                bgColor="#ffffff"
-                fgColor="#000000"
-                level="Q"
-                renderas="svg"
-              />
+
+              <QRCode path={response.eventId} _size={128} />
             </div>
           )}
         </div>
       </div>
-      <div>
+      {/* <div>
         <div className="font-bold text-lg">Event info-</div>
 
         <div>Event Id?: {response.eventId}</div>
         <div>Response Id: {response._id}</div>
-      </div>
+      </div> */}
     </EventCard>
   );
 };
