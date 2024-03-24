@@ -1,4 +1,4 @@
-const PotluckFormBody = ({ handleInputs }) => {
+const PotluckFormBodie = ({ handleInputs }) => {
   return (
     <div>
       <div className="pb-1">Potluck</div>
@@ -74,4 +74,4 @@ const PotluckFormBody = ({ handleInputs }) => {
   );
 };
 
-export default PotluckFormBody;
+export default PotluckFormBodie;

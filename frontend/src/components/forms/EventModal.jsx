@@ -1,8 +1,8 @@
 import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
 
-//import PotluckFormBody from "./PotluckFormBody";
-import PotluckFormBody from "./PotluckFormBody";
+//import PotluckFormBodie from "./PotluckFormBodie";
+import PotluckFormBodie from "./PotluckFormBodie";
 import AfterPartyFormBody from "./AfterPartyFormBody";
 import SurveyFormBody from "./SurveyFormBody";
 import PollFormBody from "./PollFormBody";
@@ -44,7 +44,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
       case "afterparty":
         return <AfterPartyFormBody handleInputs={handleInputs} />;
       case "potluck":
-        return <PotluckFormBody handleInputs={handleInputs} />;
+        return <PotluckFormBodie handleInputs={handleInputs} />;
       case "survey":
         return <SurveyFormBody handleInputs={handleInputs} />;
       case "poll":
