@@ -1,8 +1,18 @@
+import { useEffect } from "react";
+import useGetEventResponses from "../../hooks/useGetEventResponses";
+import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
-const PotluckEventCardBody = () => {
+const PotluckEventCardBody = ({ userEvent }) => {
   return (
-    <div>PotLuckEventCardBody</div>
-  )
-}
+    <div>
+      <div>
+        {" "}
+        <h2 className="card-title text-4xl text-success">{`Potluck at ${capitalizeFirstLetter(
+          userEvent.formData.location
+        )}`}</h2>
+      </div>
+    </div>
+  );
+};
 
-export default PotluckEventCardBody
+export default PotluckEventCardBody;

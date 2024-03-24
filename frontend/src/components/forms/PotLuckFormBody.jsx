@@ -1,9 +1,7 @@
-//allows user to create a form that has input box for a food dish, and displays loaction / time
-//fields - location, date, time, dish
-const PotluckFormBody = () => {
+const PotluckFormBody = ({ handleInputs }) => {
   return (
     <div>
-      <div className="pb-1">Pot luck</div>
+      <div className="pb-1">Potluck</div>
       <form>
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <svg
@@ -18,7 +16,14 @@ const PotluckFormBody = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="text" className="grow" placeholder="Location" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Location"
+            onChange={(e) => {
+              handleInputs("formData", { location: e.target.value });
+            }}
+          />
         </label>
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <svg
@@ -33,7 +38,14 @@ const PotluckFormBody = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="text" className="grow" placeholder="Date" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Date"
+            onChange={(e) => {
+              handleInputs("formData", { date: e.target.value });
+            }}
+          />
         </label>
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <svg
@@ -48,7 +60,14 @@ const PotluckFormBody = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="text" className="grow" placeholder="Time" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Time"
+            onChange={(e) => {
+              handleInputs("formData", { time: e.target.value });
+            }}
+          />
         </label>
       </form>
     </div>

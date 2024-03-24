@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import useGetEventResponses from "../../hooks/useGetEventResponses";
+import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
 const AfterPartyEventCardBody = ({ userEvent }) => {
-  console.log(userEvent);
   const { loadingEventResponses, eventResponses, getEventResponses } =
     useGetEventResponses(userEvent._id);
 
@@ -10,12 +10,11 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
     getEventResponses();
   }, []);
 
-  console.log(eventResponses);
   if (loadingEventResponses) return <div>Loading...</div>;
   return (
     <div>
       <div>
-      <h2 className="card-title text-4xl text-success">{`Afterparty at ${userEvent.formData.location}`}</h2>
+      <h2 className="card-title text-4xl text-success">{`Afterparty at ${capitalizeFirstLetter(userEvent.formData.location)}`}</h2>
 
       </div>
       <div>
@@ -37,8 +36,3 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
 };
 
 export default AfterPartyEventCardBody;
-
-// title={`${capitalizeFirstLetterOfString(
-//   userEvent.formType
-// )} at ${capitalizeFirstLetterOfString(userEvent.formData[0])}`}
-// handleDelete={handleDelete}

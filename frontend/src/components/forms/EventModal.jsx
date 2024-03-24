@@ -2,6 +2,7 @@ import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
 
 //import PotluckFormBody from "./PotluckFormBody";
+import PotluckFormBody from "./PotluckFormBody";
 import AfterPartyFormBody from "./AfterPartyFormBody";
 import SurveyFormBody from "./SurveyFormBody";
 import PollFormBody from "./PollFormBody";
@@ -17,11 +18,17 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
     shareResults: true,
     privateResults: false,
     shareable: true,
-    formData: [],
+    formData: {},
   });
 
   const handleInputs = (prop, newVal) => {
-    setInputs({ ...inputs, [prop]: newVal });
+    setInputs((inputs) => ({
+      ...inputs,
+      [prop]:
+        prop === "formData"
+          ? { ...inputs[prop], ...newVal } // Only merge like this for formData
+          : newVal, // For all other props, just set the new value directly
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -37,8 +44,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
       case "afterparty":
         return <AfterPartyFormBody handleInputs={handleInputs} />;
       case "potluck":
-        //return <PotluckFormBody handleInputs={handleInputs} />;
-        return <></>
+        return <PotluckFormBody handleInputs={handleInputs} />;
       case "survey":
         return <SurveyFormBody handleInputs={handleInputs} />;
       case "poll":

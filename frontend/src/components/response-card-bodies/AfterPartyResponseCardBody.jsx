@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
-import useUpdateResponse from "../../hooks/useUpdateParticipantResponse";
-import convertToBool from "../../../utils/convertToBool";
+import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter"
 
 const AfterPartyResponseCardBody = ({
   response,
@@ -38,7 +36,7 @@ const AfterPartyResponseCardBody = ({
   return (
     <div>
       <div>
-        <h2 className="card-title text-4xl text-success text-center pb-3">{`Afterparty at ${response.formData.location}`}</h2>
+        <h2 className="card-title text-4xl text-success text-center pb-3">{`Afterparty at ${capitalizeFirstLetter(response.formData.location)}`}</h2>
       </div>
       <div>
         <div className="flex">
