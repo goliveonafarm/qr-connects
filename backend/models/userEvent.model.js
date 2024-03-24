@@ -15,7 +15,7 @@ const userEventSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    privateResults: {
+    hideNames: {//change to hideNames
         type: Boolean,
         default: false
     },

@@ -16,7 +16,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   const [inputs, setInputs] = useState({
     formType: null,
     shareResults: true,
-    privateResults: false,
+    hideNames: false,//change to hideNames
     shareable: true,
     formData: {},
   });
@@ -81,7 +81,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
         label="Share names in results to participants"
         variant="secondary"
         handleChange={handleInputs}
-        propValue={"privateResults"}
+        propValue={"hideNames"}
       />
       <CheckBox
         label="Let participants share QR code"

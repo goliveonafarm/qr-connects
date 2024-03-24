@@ -22,7 +22,6 @@ function App() {
             authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
           }
         ></Route>
-        {/* default route (404), i have to create the 404 first, ill come back*/}
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Toaster />

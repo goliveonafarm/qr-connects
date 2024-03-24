@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 const useSubmitUserEvent = () => {
     const [loading, setLoading] = useState(false);
 
-    const submitUserEvent = async ({ formType, shareResults, privateResults, shareable, formData }) => {
+    const submitUserEvent = async ({ formType, shareResults, hideNames, shareable, formData }) => {
 
         const success = handleInputErrors({ formType, formData });
         if (!success) return;
@@ -17,7 +17,7 @@ const useSubmitUserEvent = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ formType, shareResults, privateResults, shareable, formData })
+                body: JSON.stringify({ formType, shareResults, hideNames, shareable, formData })
             });
 
             const data = await res.json();

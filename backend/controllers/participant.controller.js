@@ -112,7 +112,7 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
                     formData: 1,
                     formType: 1,
                     shareResults: 1,
-                    privateResults: 1,
+                    hideNames: 1,//rename to hideNames
                     active: 1,
                     shareable: 1,
                     responseData: "$responses.responseData",

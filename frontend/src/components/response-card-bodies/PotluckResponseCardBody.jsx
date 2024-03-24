@@ -26,13 +26,14 @@ const PotluckResponseCardBody = ({
   return (
     <div>
       <div>
-        <h2 className="card-title text-4xl text-success text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
+        <div className="card-title text-4xl text-success text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
           response.formData.location
-        )}`}</h2>
+        )}`}</div>
       </div>
-      <div>Where: {response.formData.location}</div>
-      <div>When: {response.formData.date}</div>
-      <div>Time: {response.formData.time}</div>
+      <div className="flex text-xl">
+        <div className="mr-auto">When: {response.formData.date}</div>
+        <div className="ml-auto">Time: {response.formData.time}</div>
+      </div>
     </div>
   );
 };

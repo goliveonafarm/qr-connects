@@ -44,7 +44,15 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
             className="text-blue-700"
             to={`http://localhost:3000/loading/${userEvent._id}`}
           >
-            {`[...]oading/${userEvent._id}`}
+            {`localhost ${userEvent._id}`}
+          </Link>
+        </div>
+        <div>
+          <Link
+            className="text-blue-700"
+            to={`https://qr-connects.onrender.com/loading/${userEvent._id}`}
+          >
+            {`website ${userEvent._id}`}
           </Link>
         </div>
 
@@ -54,7 +62,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
 
         <div>
           Show names in results to participants:{" "}
-          {userEvent.privateResults ? "No" : "Yes"}
+          {userEvent.hideNames ? "No" : "Yes"}{/*changed to hideNames*/}
         </div>
 
         <div>

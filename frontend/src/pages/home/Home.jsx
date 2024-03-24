@@ -28,21 +28,7 @@ const Home = () => {
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
-      <div className="pb-3">
-        {/* <div className="loading loading-spinner"></div> */}
-        {/* <button
-          className="btn btn-outline btn-info btn-lg btn-wide"
-          onClick={() => {
-            getParticipantResponsesWithEvents();
-            console.log(
-              "participantResponsesWithEvents:",
-              participantResponsesWithEvents
-            );
-          }}
-        >
-          log responses
-        </button> */}
-      </div>
+      {/* <div className="loading loading-spinner"></div> */}
       <div className="flex flex-wrap">
         <div className="w-full">
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-3 gap-6">
