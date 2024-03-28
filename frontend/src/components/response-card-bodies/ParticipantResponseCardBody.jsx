@@ -5,7 +5,6 @@ import PotluckResponseCardBody from "./PotluckResponseCardBody";
 import SurveyResponseCardBody from "./SurveyResponseCardBody";
 import PollResponseCardBody from "./PollResponseCardBody";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
-import QRCode from "../QRCode";
 
 const ParticipantResponseCardBody = ({
   response,
@@ -15,7 +14,7 @@ const ParticipantResponseCardBody = ({
 
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
   const { isLoading, startLoading, stopLoading } = useMinimumLoading();
-
+  
   const handleUpdateResponse = async (responseData, id) => {
     await updateResponse(id, responseData);
   };
@@ -59,17 +58,10 @@ const ParticipantResponseCardBody = ({
         handleDelete={handleDelete}
         handleDebug={() => console.log(response)}
         isLoading={isLoading}
+        eventId={response.eventId}
 
       >
-        <div className="flex">
-          <div className="mr-auto ml-auto">
-            {response.shareable && (
-              <div className="ml-auto mr-auto">
-                <QRCode path={response.eventId} _size={128} />
-              </div>
-            )}
-          </div>
-        </div>
+
         {renderForm()}
       </EventCard>
     </div>

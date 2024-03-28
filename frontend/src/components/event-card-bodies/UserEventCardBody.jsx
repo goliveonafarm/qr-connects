@@ -4,8 +4,6 @@ import AfterPartyEventCardBody from "./AfterPartyEventCardBody";
 import PotluckEventCardBody from "./PotluckEventCardBody";
 import SurveyEventCardBody from "./SurveyEventCardBody";
 import PollEventCardBody from "./PollEventCardBody";
-import capitalizeFirstLetterOfString from "../../../utils/capitalizeFirstLetter";
-import QRCode from "../QRCode";
 
 const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
   const handleDelete = async () => {
@@ -33,11 +31,9 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         eventType={userEvent.formType}
         handleDelete={handleDelete}
         handleDebug={() => console.log(userEvent)}
+        eventId={userEvent._id}
       >
-        {/* insert qr code here :) */}
-        <div className="ml-auto mr-auto">
-          <QRCode path={userEvent._id} _size={128} />
-        </div>
+
         <div>{renderForm()}</div>
         <div>
           <Link
