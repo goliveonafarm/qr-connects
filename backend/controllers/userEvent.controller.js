@@ -2,7 +2,7 @@ import UserEvent from "../models/userEvent.model.js";
 
 export const createUserEvent = async (req, res) => {
     try {
-        const { formType, shareResults, hideName, shareable, formData } = req.body;
+        const { formType, shareResults, showNames, shareable, formData } = req.body;
         const userId = req.userId._id;
         const userEventCount = await UserEvent.countDocuments({ userId });
 
@@ -14,7 +14,7 @@ export const createUserEvent = async (req, res) => {
             userId,
             formType,
             shareResults,
-            hideName,
+            showNames,
             shareable,
             active: true,
             formData

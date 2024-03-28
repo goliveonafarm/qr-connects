@@ -12,7 +12,7 @@ const reponseSchema = new mongoose.Schema({
     },
     responseData: {
         type: {},
-        //validate
+        required: false
     }
 }, { timestamps: true });
 

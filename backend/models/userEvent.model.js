@@ -15,9 +15,9 @@ const userEventSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    hideNames: {//change to hideNames
+    showNames: {
         type: Boolean,
-        default: false
+        default: true
     },
     shareable: {
         type: Boolean,

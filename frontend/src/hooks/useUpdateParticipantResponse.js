@@ -5,7 +5,6 @@ const useUpdateParticipantResponse = () => {
     const [updatingResponse, setUpdatingResponse] = useState(false);
 
     const updateResponse = async (responseId, responseData) => {
-        console.log('responseData', responseData)
         const success = handleInputErrors(responseData);
         setUpdatingResponse(true);
         try {
@@ -19,9 +18,10 @@ const useUpdateParticipantResponse = () => {
 
             const data = await res.json();
             if (data.error) throw new Error(data.error);
+            return { success: true }
         } catch (error) {
             toast.error(error.message);
-            return null;
+            return { success: false };
         } finally {
             setUpdatingResponse(false);
         }

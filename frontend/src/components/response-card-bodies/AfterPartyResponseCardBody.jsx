@@ -1,44 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
+import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
 const AfterPartyResponseCardBody = ({
   response,
-  handleUpdateResponse,
-  updatingResponse,
+  startLoading,
+  stopLoading,
 }) => {
   const [formData, setFormData] = useState({
     attending: response.responseData?.attending || null,
     name: response.responseData?.name || "",
   });
 
-  const isAttending = response.responseData?.attending;
+  const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
 
-  const handleChange = (e) => {
+  const debouncedName = useDebounce(formData.name, 1000);
+
+  const handleChangeName = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    // Update response using the handleUpdateResponse function
-    await handleUpdateResponse(formData, response._id);
+  const handleChangeAttending = async (newAttendingValue) => {
+    const newVal =
+      newAttendingValue === formData.attending ? null : newAttendingValue;
+
+    submitChange("attending", newVal);
   };
 
-  const handleChangeAttending = async (newAttendingValue) => {
-    console.log("newAttendingValue", newAttendingValue);
-    const newVal = newAttendingValue === isAttending ? null : newAttendingValue;
-    await handleUpdateResponse(
-      { ...formData, attending: newVal },
-      response._id
-    );
+  const submitChange = async (prop, newVal) => {
+    startLoading();
+    const previousFormData = { ...formData };
+    setFormData((prevFormData) => ({ ...prevFormData, [prop]: newVal }));
+
+    try {
+      const { success } = await updateResponse(response._id, {
+        ...formData,
+        [prop]: newVal,
+      });
+      if (!success) throw new Error("Error updating response");
+    } catch (error) {
+      setFormData(previousFormData);
+    } finally {
+      stopLoading();
+    }
   };
+
+  useEffect(() => {
+    const runThis = async () => {
+      if (debouncedName != response.responseData?.name)
+        submitChange("name", debouncedName);
+    };
+
+    if (debouncedName != response.responseData?.name) runThis();
+  }, [debouncedName]);
 
   return (
     <div>
-      <div>
-        <h2 className="card-title text-4xl text-success text-center pb-3">{`Afterparty at ${capitalizeFirstLetter(
-          response.formData.location
-        )}`}</h2>
+      <div className="flex pb-3">
+        <h2 className="card-title text-4xl text-success mr-auto ml-auto">
+          {`Afterparty at ${capitalizeFirstLetter(response.formData.location)}`}
+        </h2>
       </div>
       <div>
         <div className="flex">
@@ -53,7 +76,7 @@ const AfterPartyResponseCardBody = ({
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
                 className={
-                  isAttending === "Attending"
+                  formData.attending === "Attending"
                     ? "fill-success hover:fill-blue-500"
                     : "hover:fill-blue-500"
                 }
@@ -70,7 +93,7 @@ const AfterPartyResponseCardBody = ({
                 width="50"
                 viewBox="0 0 512 512"
                 className={
-                  isAttending === "Not Attending"
+                  formData.attending === "Not Attending"
                     ? "fill-success hover:fill-blue-500"
                     : "hover:fill-blue-500"
                 }
@@ -81,32 +104,21 @@ const AfterPartyResponseCardBody = ({
           </div>
         </div>
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="flex gap-2">
-          <div>
-            <label className="input input-bordered flex items-center gap-2 text-xl">
-              <input
-                type="text"
-                className="grow"
-                placeholder="Name (optional)"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </label>
-          </div>
-          <div>
-            <button
-              type="submit"
-              //className="self-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors"
-            className="btn btn-success hover:bg-blue-700 transition-colors"
-            >
-              Confirm Name
-            </button>
-          </div>
-        </div>
-      </form>
+      <label className="input input-bordered flex items-center gap-2 text-xl">
+        <input
+          type="text"
+          className="grow"
+          placeholder="Name (optional)"
+          name="name"
+          value={formData.name}
+          onChange={handleChangeName}
+        />
+      </label>
+      <div className="flex">
+        <div className="mr-auto ml-auto">{`You: ${formData.name || "Anonymous"} - ${
+          formData.attending || "No attendance set"
+        }`}</div>
+      </div>
     </div>
   );
 };

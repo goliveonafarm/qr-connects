@@ -1,5 +1,6 @@
 import Response from "../models/response.model.js";
 import UserEvent from "../models/userEvent.model.js";
+import mongoose from "mongoose";
 
 export const getParticipantResponses = async (req, res) => {
     try {
@@ -8,7 +9,7 @@ export const getParticipantResponses = async (req, res) => {
         const participantResponses = await Response.find({ participantId });
         res.status(200).json({ participantResponses });
     } catch (error) {
-        console.log("Error in response controller (getParticipantResponses)", error.message)
+        console.log("Error in participant controller (getParticipantResponses)", error.message)
         res.status(500).json({ error: "Internal server error" });
     }
 }
@@ -67,11 +68,82 @@ export const updateParticipantResponse = async (req, res) => {
 
         res.json({ message: "Response updated", data: updatedResponse })
     } catch (error) {
-        console.log("Error in response controller (updateParticipantResponse)", error.message)
+        console.log("Error in participant controller (updateParticipantResponse)", error.message)
         res.status(500).json({ error: "Internal server error" });
     }
 }
 
+
+
+//to do next:
+//create a new function to get an event's responses.
+//it will only get an event's responses if the event's shareResults is true.
+//also need to check if showNames is true, if so ignore the participant's name in the response.
+//it's also unique to the participantId, so we'll need to pull that from req.cookies.
+export const getEventResponses = async (req, res) => {
+    console.log('entered')
+    try {
+        const { eventId } = req.params;
+        //aggregate to check if event is shareable and returns the event's responses
+        //also checks if event is showNames and returns the responses user names if true
+
+        const pipeline = [
+            {
+                $match: {
+                    _id: new mongoose.Types.ObjectId(eventId),
+                    shareResults: true
+                }
+            },
+            {
+                $lookup: {
+                    from: "responses",
+                    localField: "_id",
+                    foreignField: "eventId",
+                    as: "responses"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$responses",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    "responses.responseData.name": {
+                        $cond: {
+                            if: "$showNames",
+                            then: "$responses.responseData.name", // If showNames is true, keep the name
+                            else: "$$REMOVE" // If showNames is false, remove the name
+                        }
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    showNames: { $first: "$showNames" },
+                    responses: { $push: "$responses" }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    showNames: 1,
+                    responses: 1
+                }
+            }
+        ];
+
+        const eventResponses = await UserEvent.aggregate(pipeline);
+        console.log(eventResponses)
+        res.status(200).json({ eventResponses });
+    }
+    catch (error) {
+        console.log("Error in participant controller (getEventResponses)", error.message)
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
 
 export const getParticipantResponsesWithEvents = async (req, res) => {
     try {
@@ -95,24 +167,24 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
             {
                 $match: {
                     // This match stage is to filter responses; adjust or remove according to your needs
-                     "responses.participantId": participantId 
+                    "responses.participantId": participantId
                 }
             },
             {
                 $addFields: {
                     eventId: {
-                        $cond: { if: "$shareResults", then: "$_id", else: null }
+                        $cond: { if: "$shareable", then: "$_id", else: null }
                     }
                 }
             },
             {
                 $project: {
                     _id: "$responses._id", // Set the document's _id to be the response's _id
-                    eventId: "$_id",
+                    eventId: "$eventId",
                     formData: 1,
                     formType: 1,
                     shareResults: 1,
-                    hideNames: 1,//rename to hideNames
+                    showNames: 1,//rename to showNames
                     active: 1,
                     shareable: 1,
                     responseData: "$responses.responseData",
@@ -125,16 +197,15 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
 
         res.status(200).json({ participantResponsesWithEvents });
     } catch (error) {
-        console.log("Error in response controller (getParticipantEvents)", error.message);
+        console.log("Error in participant controller (getParticipantEvents)", error.message);
         res.status(500).json({ error: "Internal server error" });
-    } finally {
-
     }
 }
 
+
 export const deleteParticipantResponse = async (req, res) => {
     try {
-        
+
         const { responseId } = req.params;
         const { participantId } = req.cookies;
 
@@ -146,7 +217,7 @@ export const deleteParticipantResponse = async (req, res) => {
 
         res.status(200).json({ message: "Response deleted successfully" });
     } catch (error) {
-        console.log('Error in response controller (deleteParticipantResponse)', error.message);
+        console.log('Error in participant controller (deleteParticipantResponse)', error.message);
         res.status(500).json({ error: "Internal server error" });
     }
 }

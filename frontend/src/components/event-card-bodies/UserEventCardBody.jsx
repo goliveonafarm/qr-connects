@@ -62,7 +62,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
 
         <div>
           Show names in results to participants:{" "}
-          {userEvent.hideNames ? "No" : "Yes"}{/*changed to hideNames*/}
+          {userEvent.showNames ? "Yes" : "No"}{/*changed to showNames*/}
         </div>
 
         <div>

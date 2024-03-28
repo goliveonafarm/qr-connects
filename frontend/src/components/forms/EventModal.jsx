@@ -16,7 +16,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   const [inputs, setInputs] = useState({
     formType: null,
     shareResults: true,
-    hideNames: false,//change to hideNames
+    showNames: true,
     shareable: true,
     formData: {},
   });
@@ -29,6 +29,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           ? { ...inputs[prop], ...newVal } // Only merge like this for formData
           : newVal, // For all other props, just set the new value directly
     }));
+    console.log(inputs);
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +56,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   };
 
   return (
-    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-0  border  border-gray-200">
+    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  border-gray-200">
       <div className="flex justify-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -69,25 +70,28 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
         </svg>
       </div>
-
+      <div className="text-2xl">Let participants -</div>
       <CheckBox
-        label="Show results to participants"
+        label="See Results"
         variant="secondary"
         handleChange={handleInputs}
         propValue={"shareResults"}
+        isChecked={inputs.shareResults}
       />
 
       <CheckBox
-        label="Share names in results to participants"
+        label="See names in results"
         variant="secondary"
         handleChange={handleInputs}
-        propValue={"hideNames"}
+        propValue={"showNames"}
+        isChecked={inputs.showNames}
       />
       <CheckBox
-        label="Let participants share QR code"
+        label="Share QR-Connect"
         variant="secondary"
         handleChange={handleInputs}
         propValue={"shareable"}
+        isChecked={inputs.shareable}
       />
 
       {renderForm()}

@@ -1,3 +1,4 @@
+import useMinimumLoading from "../../hooks/useMinimumLoading";
 import EventCard from "../EventCard";
 import AfterPartyResponseCardBody from "./AfterPartyResponseCardBody";
 import PotluckResponseCardBody from "./PotluckResponseCardBody";
@@ -11,12 +12,12 @@ const ParticipantResponseCardBody = ({
   getParticipantResponsesWithEvents,
   deleteParticipantResponse,
 }) => {
+
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
+  const { isLoading, startLoading, stopLoading } = useMinimumLoading();
 
   const handleUpdateResponse = async (responseData, id) => {
-    console.log("updating: ", responseData, id);
     await updateResponse(id, responseData);
-    await getParticipantResponsesWithEvents();
   };
 
   const handleDelete = async () => {
@@ -30,8 +31,8 @@ const ParticipantResponseCardBody = ({
         return (
           <AfterPartyResponseCardBody
             response={response}
-            handleUpdateResponse={handleUpdateResponse}
-            updateResponse={updatingResponse}
+            startLoading={startLoading}
+            stopLoading={stopLoading}
           />
         );
       case "potluck":
@@ -52,22 +53,26 @@ const ParticipantResponseCardBody = ({
   };
 
   return (
-    <EventCard
-      eventType={response.formType}
-      handleDelete={handleDelete}
-      handleDebug={() => console.log(response)}
-    >
-      <div className="flex">
-        <div className="mr-auto ml-auto">
-          {response.shareable && (
-            <div className="ml-auto mr-auto">
-              <QRCode path={response.eventId} _size={128} />
-            </div>
-          )}
+    <div>
+      <EventCard
+        eventType={response.formType}
+        handleDelete={handleDelete}
+        handleDebug={() => console.log(response)}
+        isLoading={isLoading}
+
+      >
+        <div className="flex">
+          <div className="mr-auto ml-auto">
+            {response.shareable && (
+              <div className="ml-auto mr-auto">
+                <QRCode path={response.eventId} _size={128} />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      {renderForm()}
-    </EventCard>
+        {renderForm()}
+      </EventCard>
+    </div>
   );
 };
 

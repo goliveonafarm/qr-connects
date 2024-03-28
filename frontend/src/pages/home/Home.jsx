@@ -28,7 +28,6 @@ const Home = () => {
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
-      {/* <div className="loading loading-spinner"></div> */}
       <div className="flex flex-wrap">
         <div className="w-full">
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-3 gap-6">
@@ -49,7 +48,7 @@ const Home = () => {
                 );
               })}
             {participantResponsesWithEvents &&
-              participantResponsesWithEvents.length === 0 && <>None</>}
+              participantResponsesWithEvents.length === 0 && <>You have no events</>}
           </div>
         </div>
       </div>
