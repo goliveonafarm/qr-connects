@@ -9,7 +9,8 @@ const userEventSchema = new mongoose.Schema({
     formType: {
         type: String,
         required: true,
-        enum: ['potluck', 'poll', 'afterparty', 'survey']
+        enum: ['potluck', 'poll', 'afterparty'],
+        maxlength: 11
     },
     shareResults: {
         type: Boolean,
@@ -27,13 +28,18 @@ const userEventSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    //this needs changed from string to object
     formData: {
-        type: {},
+        location: { type: String, maxlength: 100 },
+        name: { type: String, maxlength: 100 },
+        time: { type: Date },
+        date: { type: Date }
     }
-    //createdAt, updatedAt
 }, { timestamps: true });
 
 const UserEvent = mongoose.model('UserEvent', userEventSchema);
 
 export default UserEvent;
+
+function arrayLimit(val) {
+    return val.length <= 10;
+}

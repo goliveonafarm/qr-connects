@@ -22,7 +22,6 @@ const useSubmitUserEvent = () => {
 
             const data = await res.json();
             if (data.error) throw new Error(data.error);
-            console.log(data)
         } catch (error) {
             console.log('Error in useSubmitUserEvent', error.message)
             toast.error(error.message)

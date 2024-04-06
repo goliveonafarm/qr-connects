@@ -1,4 +1,5 @@
 import UserEvent from "../models/userEvent.model.js";
+import Response from "../models/response.model.js";
 
 export const createUserEvent = async (req, res) => {
     try {
@@ -52,6 +53,8 @@ export const deleteUserEvent = async (req, res) => {
         }
 
         await UserEvent.deleteOne({ _id: eventId });
+
+        await Response.deleteMany({ eventId: eventId });
         
         res.status(200).json({ message: "Event deleted successfully" });
     } catch (error) {

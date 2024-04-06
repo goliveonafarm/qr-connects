@@ -55,7 +55,7 @@ const EventCard = ({
                 height="25"
                 width="25"
                 fill="currentColor"
-                className="fill-info cursor-pointer hover:fill-purple-500"
+                className="fill-white cursor-pointer hover:fill-blue-700"
                 onClick={async () => {
                   handleDebug();
                 }}
@@ -87,7 +87,7 @@ const EventCard = ({
                 width="50"
                 viewBox="0 0 512 512"
                 fill="currentColor"
-                className="fill-info cursor-pointer hover:fill-purple-500"
+                className="fill-white cursor-pointer hover:fill-blue-700"
                 onClick={async () => {
                   await handleDelete();
                 }}

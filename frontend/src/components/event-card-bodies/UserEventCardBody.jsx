@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import EventCard from "../EventCard";
 import AfterPartyEventCardBody from "./AfterPartyEventCardBody";
 import PotluckEventCardBody from "./PotluckEventCardBody";
-import SurveyEventCardBody from "./SurveyEventCardBody";
 import PollEventCardBody from "./PollEventCardBody";
 
 const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
@@ -16,8 +15,6 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         return <AfterPartyEventCardBody userEvent={userEvent} />;
       case "potluck":
         return <PotluckEventCardBody userEvent={userEvent} />;
-      case "survey":
-        return <SurveyEventCardBody userEvent={userEvent} />;
       case "poll":
         return <PollEventCardBody userEvent={userEvent} />;
       default:
@@ -33,8 +30,8 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         handleDebug={() => console.log(userEvent)}
         eventId={userEvent._id}
       >
-
         <div>{renderForm()}</div>
+        <div>Create connect {`(debugging purposes) -`}</div>
         <div>
           <Link
             className="text-blue-700"
@@ -52,20 +49,13 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
           </Link>
         </div>
 
-        <div>
+        {/* <div>
           Show participants results: {userEvent.shareResults ? "Yes" : "No"}
-        </div>
-
-        <div>
           Show names in results to participants:{" "}
-          {userEvent.showNames ? "Yes" : "No"}{/*changed to showNames*/}
-        </div>
-
-        <div>
+          {userEvent.showNames ? "Yes" : "No"}
           Participants can share QR: {userEvent.shareable ? "Yes" : "No"}
-        </div>
-
-        <div>Currently Active: {userEvent.active ? "Yes" : "No"}</div>
+          Currently Active: {userEvent.active ? "Yes" : "No"}
+        </div> */}
       </EventCard>
     </div>
   );

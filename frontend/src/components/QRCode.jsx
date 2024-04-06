@@ -12,11 +12,11 @@ const QRCode = ({ path, _size }) => {
   return (
     <div>
       <div className="relative flex">
-        <div className="mt-auto mb-auto border border-cyan-400">
+        <div className="mt-auto mb-auto border border-white">
           <QRCodeSVG
             value={`https://qr-connects.onrender.com/loading/${path}`}
             size={96}
-            bgColor="#26c6da"
+            bgColor="#ffffff"
             fgColor="#000000"
             level="Q"
             renderas="svg"
@@ -26,7 +26,7 @@ const QRCode = ({ path, _size }) => {
           <svg
             height={"30"}
             width={"30"}
-            className="cursor-pointer fill-info hover:fill-purple-500"
+            className="cursor-pointer fill-success hover:fill-blue-700"
 
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
@@ -60,7 +60,7 @@ const QRCode = ({ path, _size }) => {
                   width="30"
                   viewBox="0 0 512 512"
                   fill="currentColor"
-                  className="cursor-pointer fill-info hover:fill-purple-500"
+                  className="cursor-pointer fill-white hover:fill-blue-700"
                   onClick={toggleModal}
                 >
                   <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />

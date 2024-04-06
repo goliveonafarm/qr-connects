@@ -4,7 +4,7 @@ const EventTypeForm = ({ handleInputs }) => {
       <div className="pb-1">Connect type</div>
       <div>
         <button
-          className="btn btn-outline btn-secondary btn-lg btn-wide"
+          className="btn btn-outline btn-lg btn-wide"
           onClick={() => handleInputs("formType", "afterparty")}
         >
           After Party
@@ -12,7 +12,7 @@ const EventTypeForm = ({ handleInputs }) => {
       </div>
       <div className="pt-2">
         <button
-          className="btn btn-outline btn-primary btn-lg btn-wide"
+          className="btn btn-outline btn-lg btn-wide"
           onClick={() => handleInputs("formType", "potluck")}
         >
           Potluck
@@ -20,15 +20,7 @@ const EventTypeForm = ({ handleInputs }) => {
       </div>
       <div className="pt-2">
         <button
-          className="btn btn-outline btn-accent btn-lg btn-wide"
-          onClick={() => handleInputs("formType", "survey")}
-        >
-          Survey
-        </button>
-      </div>
-      <div className="pt-2">
-        <button
-          className="btn btn-outline btn-info btn-lg btn-wide"
+          className="btn btn-outline btn-lg btn-wide"
           onClick={() => handleInputs("formType", "poll")}
         >
           Poll

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
-
-//import PotluckFormBodie from "./PotluckFormBodie";
 import PotluckFormBodie from "./PotluckFormBodie";
 import AfterPartyFormBody from "./AfterPartyFormBody";
-import SurveyFormBody from "./SurveyFormBody";
 import PollFormBody from "./PollFormBody";
 import EventTypeForm from "./EventTypeForm";
 
@@ -29,11 +26,9 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           ? { ...inputs[prop], ...newVal } // Only merge like this for formData
           : newVal, // For all other props, just set the new value directly
     }));
-    console.log(inputs);
   };
 
   const handleSubmit = async (e) => {
-    console.log(inputs);
     e.preventDefault();
     setShowEventModal(false);
     await submitUserEvent(inputs);
@@ -46,8 +41,6 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
         return <AfterPartyFormBody handleInputs={handleInputs} />;
       case "potluck":
         return <PotluckFormBodie handleInputs={handleInputs} />;
-      case "survey":
-        return <SurveyFormBody handleInputs={handleInputs} />;
       case "poll":
         return <PollFormBody handleInputs={handleInputs} />;
       default:
@@ -56,7 +49,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   };
 
   return (
-    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  border-gray-200">
+    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  ">
       <div className="flex justify-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -107,13 +100,25 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           </div>
         </div>
       )}
-
-      <button
-        className="btn btn-outline btn-success"
-        onClick={() => console.log(inputs)}
-      >
-        Check form values
-      </button>
+      <div className="pt-2">
+        <button
+          className="btn btn-outline btn-success btn-xs"
+          onClick={() => {
+            console.log(
+              `Form values:`,
+              inputs,
+              `\n`,
+              `formData.length: `,
+              inputs.formData.length,
+              `\n`,
+              `formData: `,
+              inputs.formData
+            );
+          }}
+        >
+          Check form values
+        </button>
+      </div>
     </div>
   );
 };
