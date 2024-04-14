@@ -22,7 +22,3 @@ const reponseSchema = new mongoose.Schema({
 const Response = mongoose.model('Response', reponseSchema);
 
 export default Response;
-
-function arrayLimit(val) {
-    return val.length <= 10;
-}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useSubmitUserEvent from "../../hooks/useSubmitUserEvent";
+import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 import PotluckFormBodie from "./PotluckFormBodie";
 import AfterPartyFormBody from "./AfterPartyFormBody";
 import PollFormBody from "./PollFormBody";
@@ -63,9 +64,13 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
         </svg>
       </div>
-      <div className="text-2xl">Let participants -</div>
+      <div className="pt-2 pb-3 text-4xl">
+        {capitalizeFirstLetter(inputs.formType)}
+      </div>
+      {renderForm()}
+      <div className="pt-2 text-2xl">Allow participants to -</div>
       <CheckBox
-        label="See Results"
+        label="See results"
         variant="secondary"
         handleChange={handleInputs}
         propValue={"shareResults"}
@@ -87,7 +92,6 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
         isChecked={inputs.shareable}
       />
 
-      {renderForm()}
       {inputs.formType !== null && (
         <div className="mt-5">
           <div>

@@ -34,28 +34,12 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         <div>Create connect {`(debugging purposes) -`}</div>
         <div>
           <Link
-            className="text-blue-700"
-            to={`http://localhost:3000/loading/${userEvent._id}`}
+            className="text-blue-500"
+            to={`/loading/${userEvent._id}`}
           >
-            {`localhost ${userEvent._id}`}
+            {`id - ${userEvent._id}`}
           </Link>
         </div>
-        <div>
-          <Link
-            className="text-blue-700"
-            to={`https://qr-connects.onrender.com/loading/${userEvent._id}`}
-          >
-            {`website ${userEvent._id}`}
-          </Link>
-        </div>
-
-        {/* <div>
-          Show participants results: {userEvent.shareResults ? "Yes" : "No"}
-          Show names in results to participants:{" "}
-          {userEvent.showNames ? "Yes" : "No"}
-          Participants can share QR: {userEvent.shareable ? "Yes" : "No"}
-          Currently Active: {userEvent.active ? "Yes" : "No"}
-        </div> */}
       </EventCard>
     </div>
   );
