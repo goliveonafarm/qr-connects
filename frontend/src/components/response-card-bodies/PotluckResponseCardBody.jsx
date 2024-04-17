@@ -23,6 +23,9 @@ const PotluckResponseCardBody = ({
     await handleUpdateResponse(formData, response._id);
   };
 
+  const formattedDate = new Date(response.formData.date).toDateString();
+  console.log(formattedDate);
+
   return (
     <div>
       <div>
@@ -30,9 +33,9 @@ const PotluckResponseCardBody = ({
           response.formData.location
         )}`}</div>
       </div>
-      <div className="flex text-xl">
-        <div className="mr-auto">When: {response.formData.date}</div>
-        <div className="ml-auto">Time: {response.formData.time}</div>
+      <div className="text-2xl">
+        {`${new Date(response.formData.date).toDateString()}`} @{" "}
+        {`${response.formData.time.hour}:${response.formData.time.minute} ${response.formData.time.period}`}
       </div>
     </div>
   );

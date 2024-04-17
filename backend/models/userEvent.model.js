@@ -1,5 +1,33 @@
 import mongoose from "mongoose";
 
+const timeSchema = new mongoose.Schema({
+    hour: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 12,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
+    },
+    minute: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 59,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
+    },
+    period: {
+        type: String,
+        required: true,
+        enum: ['AM', 'PM']
+    }
+}, { _id: false });
+
 const userEventSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -31,7 +59,7 @@ const userEventSchema = new mongoose.Schema({
     formData: {
         location: { type: String, maxlength: 100 },
         name: { type: String, maxlength: 100 },
-        time: { type: Date },
+        time: timeSchema,
         date: { type: Date }
     }
 }, { timestamps: true });
