@@ -65,11 +65,11 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   return (
     <div>
       <div>
-        <div className="card-title text-4xl text-success text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
+        <div className="card-title text-4xl text-green-400 text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
           response.formData.location
         )}`}</div>
       </div>
-      <div className="text-2xl">
+      <div className="text-2xl text-white">
         {`${new Date(response.formData.date).toDateString()}`} @{" "}
         {`${response.formData.time.hour}:${response.formData.time.minute} ${response.formData.time.period}`}
       </div>

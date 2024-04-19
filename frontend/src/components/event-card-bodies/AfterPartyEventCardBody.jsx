@@ -14,7 +14,7 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
   return (
     <div>
       <div>
-      <h2 className="card-title text-4xl text-success">{`Afterparty at ${capitalizeFirstLetter(userEvent.formData.location)}`}</h2>
+      <h2 className="card-title text-4xl text-green-400">{`Afterparty at ${capitalizeFirstLetter(userEvent.formData.location)}`}</h2>
 
       </div>
       <div>

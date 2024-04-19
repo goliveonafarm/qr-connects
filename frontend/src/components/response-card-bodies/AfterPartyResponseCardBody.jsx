@@ -59,7 +59,7 @@ const AfterPartyResponseCardBody = ({
   return (
     <div>
       <div className="flex pb-3">
-        <h2 className="card-title text-4xl text-success text-center">
+        <h2 className="card-title text-4xl text-green-400 text-center">
           {`Afterparty at ${capitalizeFirstLetter(response.formData.location)}`}
         </h2>
       </div>
