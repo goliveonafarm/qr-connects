@@ -37,8 +37,8 @@ const ParticipantResponseCardBody = ({
         return (
           <PotluckResponseCardBody
             response={response}
-            handleUpdateResponse={handleUpdateResponse}
-            updateResponse={updatingResponse}
+            startLoading={startLoading}
+            stopLoading={stopLoading}
           />
         );
       case "poll":
