@@ -50,7 +50,6 @@ const AfterPartyResponseCardBody = ({
   };
 
   useEffect(() => {
-    console.log('ran')
     const runThis = async () => {
       if (debouncedName != response.responseData?.name || keyPressed) {
         submitChange("name", debouncedName);
@@ -118,14 +117,13 @@ const AfterPartyResponseCardBody = ({
         />
       </label>
       <div className="flex">
-        <div className="mr-auto ml-auto text-white">{`You: ${
-          formData.name || "Anonymous"
-        } - ${
+        <div className="mr-auto ml-auto text-white">{`${  formData?.attending === true   ? '' :'You:'}
+           ${
           formData.attending === true
-            ? "Attending"
+            ? ""
             : formData.attending === false
             ? "Not Attending"
-            : "No Response"
+            : "No attendance set"
         }`}</div>
       </div>
     </div>

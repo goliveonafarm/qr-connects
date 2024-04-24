@@ -15,7 +15,10 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   const debouncedName = useDebounce(formData.name, 1000);
   const debouncedDish = useDebounce(formData.dish, 1000);
 
+  const [keyPressed, setKeyPressed] = useState(false);
+
   const handleChange = (e) => {
+    setKeyPressed(true);
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -47,17 +50,14 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
 
   useEffect(() => {
     const runThis = async () => {
-      if (debouncedName != response.responseData?.name)
+      if (debouncedName != response.responseData?.name || keyPressed) {
         submitChange("name", debouncedName);
-      if (debouncedDish != response.responseData?.dish)
+      }
+      if (debouncedDish != response.responseData?.dish || keyPressed) {
         submitChange("dish", debouncedDish);
+      }
     };
-
-    if (
-      debouncedName != response.responseData?.name ||
-      debouncedDish != response.responseData?.dish
-    )
-      runThis();
+    runThis();
   }, [debouncedName, debouncedDish]);
 
   const formattedDate = new Date(response.formData.date).toDateString();
@@ -136,19 +136,17 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
         />
       </label>
       <div className="flex">
-        <div className="mr-auto ml-auto text-white">{`You: ${
-          formData.name || "Anonymous"
-        } - ${
+        <div className="mr-auto ml-auto text-white">{` ${
+          formData?.attending === true 
+            ? ""
+            : "You:"
+        }
+        ${
           formData.attending === true
-            ? "Attending"
+            ? ""
             : formData.attending === false
-            ? "Not Attending"
-            : "No Response"
-        }`}</div>
-      </div>
-      <div className="flex">
-        <div className="mr-auto ml-auto text-white">{`Your Dish: ${
-          formData.dish || "N/A"
+            ? "Not attending"
+            : "No attendance set"
         }`}</div>
       </div>
     </div>

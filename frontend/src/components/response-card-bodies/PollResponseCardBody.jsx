@@ -10,16 +10,15 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
   });
 
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
+  
   const debouncedName = useDebounce(formData.name, 1000);
 
-  // Debounce name changes to avoid too frequent updates
-  useEffect(() => {
-    if (debouncedName !== response.responseData?.name) {
-      submitChange("name", debouncedName);
-    }
-  }, [debouncedName]);
+  const [keyPressed, setKeyPressed] = useState(false)
 
-  const handleChange = (e) => {
+
+
+  const handleChangeName = (e) => {
+    setKeyPressed(true)
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -46,6 +45,16 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
       stopLoading();
     }
   };
+
+  useEffect(() => {
+    const runThis = async () => {
+      if (debouncedName != response.responseData?.name || keyPressed) {
+        submitChange("name", debouncedName);
+      }
+    };
+    runThis();
+  }, [debouncedName]);
+
 
   return (
     <div>
@@ -74,6 +83,16 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
           </div>
         ))}
       </div>
+      <label className="input input-bordered flex items-center gap-2 text-xl">
+        <input
+          type="text"
+          className="grow text-success  placeholder-white"
+          placeholder="Name (optional)"
+          name="name"
+          value={formData.name}
+          onChange={handleChangeName}
+        />
+      </label>
     </div>
   );
 };
