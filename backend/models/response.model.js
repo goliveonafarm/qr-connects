@@ -14,7 +14,7 @@ const reponseSchema = new mongoose.Schema({
     responseData: {
         attending: Boolean,
         name: { type: String, maxlength: 100 },
-        option: { type: Number, min: 0, max: 9 },
+        vote: { type: Number, min: 0, max: 5 },
         dish: { type: String, maxlength: 100 },
     }
 }, { timestamps: true });

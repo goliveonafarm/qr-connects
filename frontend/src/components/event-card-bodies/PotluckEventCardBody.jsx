@@ -6,7 +6,6 @@ const PotluckEventCardBody = ({ userEvent }) => {
   return (
     <div>
       <div>
-        {" "}
         <h2 className="card-title text-4xl text-green-400">{`Potluck at ${capitalizeFirstLetter(
           userEvent.formData.location
         )}`}</h2>

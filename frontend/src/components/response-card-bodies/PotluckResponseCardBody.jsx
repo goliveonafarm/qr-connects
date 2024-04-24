@@ -87,7 +87,7 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
                 viewBox="0 0 512 512"
                 className={
                   formData.attending === true
-                    ? "fill-success hover:fill-blue-500"
+                    ? "fill-green-400 hover:fill-blue-500"
                     : "fill-white hover:fill-blue-500"
                 }
               >
@@ -105,7 +105,7 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
                 viewBox="0 0 512 512"
                 className={
                   formData.attending === false
-                    ? "fill-success hover:fill-blue-500"
+                    ? "fill-green-400 hover:fill-blue-500"
                     : "fill-white hover:fill-blue-500"
                 }
               >

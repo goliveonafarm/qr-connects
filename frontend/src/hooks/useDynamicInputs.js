@@ -1,11 +1,12 @@
-import { set } from "mongoose";
 import { useState } from "react"
 
 const useDynamicInputs = () => {
     const [inputs, setInputs] = useState(['']);
 
     const handleAddInput = () => {
+        if (inputs.length >= 5) return;
         setInputs([...inputs, ""]);
+
     };
 
     const handleChange = (index, value) => {

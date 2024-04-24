@@ -10,10 +10,9 @@ const ParticipantResponseCardBody = ({
   getParticipantResponsesWithEvents,
   deleteParticipantResponse,
 }) => {
-
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
   const { isLoading, startLoading, stopLoading } = useMinimumLoading();
-  
+
   const handleUpdateResponse = async (responseData, id) => {
     await updateResponse(id, responseData);
   };
@@ -28,6 +27,7 @@ const ParticipantResponseCardBody = ({
       case "afterparty":
         return (
           <AfterPartyResponseCardBody
+            key={response._id}
             response={response}
             startLoading={startLoading}
             stopLoading={stopLoading}
@@ -36,13 +36,21 @@ const ParticipantResponseCardBody = ({
       case "potluck":
         return (
           <PotluckResponseCardBody
+            key={response._id}
             response={response}
             startLoading={startLoading}
             stopLoading={stopLoading}
           />
         );
       case "poll":
-        return <PollResponseCardBody response={response} />;
+        return (
+          <PollResponseCardBody
+            key={response._id}
+            response={response}
+            startLoading={startLoading}
+            stopLoading={stopLoading}
+          />
+        );
       default:
         return <>There's an error in this connect type??...</>;
     }
@@ -56,9 +64,7 @@ const ParticipantResponseCardBody = ({
         handleDebug={() => console.log(response)}
         isLoading={isLoading}
         eventId={response.eventId}
-
       >
-
         {renderForm()}
       </EventCard>
     </div>

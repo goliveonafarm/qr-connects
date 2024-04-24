@@ -30,15 +30,13 @@ const EventCard = ({
         setEventCardImage(pollImage);
         setEventCardImageAlt("Poll image");
         break;
-      // Add any other cases if necessary
       default:
-        // Set default image or leave it null
         break;
     }
   }, [eventType]);
 
   return (
-    <div>
+    <div key={eventId}>
       <div className="card w-96 image-full">
         <figure>
           <img
