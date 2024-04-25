@@ -69,7 +69,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
             className="flex pb-1 text-xl"
           >
             <input
-              className="radio radio-lg"
+              className="radio radio-lg radio-success"
               type="radio"
               id={`id-option-${response._id}-${index}`}
               value={index}
