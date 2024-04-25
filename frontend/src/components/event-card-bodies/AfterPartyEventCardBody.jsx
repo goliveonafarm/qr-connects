@@ -29,7 +29,7 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
   return (
     <div>
       <div>
-        <h2 className="card-title text-4xl text-green-400">{`Afterparty at ${capitalizeFirstLetter(
+        <h2 className="card-title text-3xl text-green-400">{`Afterparty at ${capitalizeFirstLetter(
           userEvent.formData.location
         )}`}</h2>
       </div>
@@ -38,9 +38,7 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
           <div>{`${responseSummary?.total || 0} Invite${
             responseSummary?.total === 1 ? `` : `s`
           } sent`}</div>
-          <div>{`${responseSummary?.attending || 0} Attending${
-            responseSummary?.total === 1 ? `` : `s`
-          }`}</div>
+          <div>{`${responseSummary?.attending || 0} Attending`}</div>
         </div>
       </div>
     </div>

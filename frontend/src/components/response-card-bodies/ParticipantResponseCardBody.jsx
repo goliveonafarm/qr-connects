@@ -52,7 +52,7 @@ const ParticipantResponseCardBody = ({
           />
         );
       default:
-        return <>There's an error in this connect type??...</>;
+        return <>For some reason there is no match for that event type..</>;
     }
   };
 

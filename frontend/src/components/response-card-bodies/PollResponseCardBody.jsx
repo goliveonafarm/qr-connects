@@ -59,7 +59,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
   return (
     <div>
       <div className="flex flex-col pb-2">
-        <div className="card-title text-4xl text-green-400 text-center">{`${response.formData.name}`}</div>
+        <div className="card-title text-3xl text-green-400 text-center">{`${response.formData.name}`}</div>
       </div>
       <div className="flex flex-col">
         {/* map through the questions and display each option (vote) with a radio button*/}

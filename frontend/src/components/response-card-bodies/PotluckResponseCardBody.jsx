@@ -65,7 +65,7 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   return (
     <div>
       <div>
-        <div className="card-title text-4xl text-green-400 text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
+        <div className="card-title text-3xl text-green-400 text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
           response.formData.location
         )}`}</div>
       </div>

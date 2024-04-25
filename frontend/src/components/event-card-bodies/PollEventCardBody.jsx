@@ -37,7 +37,7 @@ const PollEventCardBody = ({ userEvent }) => {
   return (
     <div>
       <div>
-        <h2 className="card-title text-4xl text-green-400 pb-2">{`${capitalizeFirstLetter(
+        <h2 className="card-title text-3xl text-green-400 pb-2">{`${capitalizeFirstLetter(
           userEvent.formData.name
         )}`}</h2>
         <div className=" border-y-2">
