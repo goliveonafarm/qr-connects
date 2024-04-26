@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import useDeleteParticipantResponse from "../../hooks/useDeleteParticipantResponse.js";
 import useGetParticipantResponsesWithEvents from "../../hooks/useGetParticipantResponsesWithEvents.js";
-import { get } from "mongoose";
 import ParticipantResponseCardBody from "../../components/response-card-bodies/ParticipantResponseCardBody.jsx";
 
 const Home = () => {
+  console.log('ran here home')
   const { isDeletingParticipantResponse, deleteParticipantResponse } =
     useDeleteParticipantResponse();
 
@@ -19,8 +19,13 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log('first ran')
     getParticipantResponsesWithEvents();
   }, []);
+
+  useEffect(() => {
+    console.log(participantResponsesWithEvents)
+  }, [participantResponsesWithEvents]);
 
   if (loadingParticipantResponsesWithEvents) {
     return <div className="loading loading-spinner"></div>;

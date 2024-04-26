@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
+import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
@@ -13,14 +14,24 @@ const AfterPartyResponseCardBody = ({
     name: response.responseData?.name || "",
   });
 
+  const [responseSummary, setResponseSummary] = useState({
+    total: 0,
+    attending: 0,
+  });
+
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
+  const {
+    loadingParticipantEventResponses,
+    participantEventResponses,
+    getParticipantEventResponses,
+  } = useGetParticipantEventResponses(response.eventId);
 
   const debouncedName = useDebounce(formData.name, 1000);
 
-  const [keyPressed, setKeyPressed] = useState(false)
+  const [keyPressed, setKeyPressed] = useState(false);
 
   const handleChangeName = (e) => {
-    setKeyPressed(true)
+    setKeyPressed(true);
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -42,6 +53,7 @@ const AfterPartyResponseCardBody = ({
         [prop]: newVal,
       });
       if (!success) throw new Error("Error updating response");
+      getParticipantEventResponses();
     } catch (error) {
       setFormData(previousFormData);
     } finally {
@@ -57,6 +69,19 @@ const AfterPartyResponseCardBody = ({
     };
     runThis();
   }, [debouncedName]);
+
+  useEffect(() => {
+    const total = participantEventResponses?.length;
+    const attending = participantEventResponses?.reduce(
+      (acc, curr) => acc + (curr.attending ? 1 : 0),
+      0
+    );
+    setResponseSummary({ total, attending });
+  }, [participantEventResponses]);
+
+  useEffect(() => {
+    getParticipantEventResponses();
+  }, []);
 
   return (
     <div>
@@ -116,15 +141,25 @@ const AfterPartyResponseCardBody = ({
           onChange={handleChangeName}
         />
       </label>
-      <div className="flex">
-        <div className="mr-auto ml-auto text-white">{`${  formData?.attending === true   ? '' :'You:'}
+      <div className="flex pb-2">
+        <div className="mr-auto ml-auto text-white">{`${
+          formData?.attending === true ? "" : "You:"
+        }
            ${
-          formData.attending === true
-            ? ""
-            : formData.attending === false
-            ? "Not Attending"
-            : "No attendance set"
-        }`}</div>
+             formData.attending === true
+               ? ""
+               : formData.attending === false
+               ? "Not Attending"
+               : "No attendance set"
+           }`}</div>
+      </div>
+      <div className=" border-y-2">
+        <div className="text-lg">
+          <div>{`${responseSummary?.total || 0} Invite${
+            responseSummary?.total === 1 ? `` : `s`
+          } sent`}</div>
+          <div>{`${responseSummary?.attending || 0} Attending`}</div>
+        </div>
       </div>
     </div>
   );

@@ -73,25 +73,20 @@ export const updateParticipantResponse = async (req, res) => {
     }
 }
 
-
-
-//to do next:
-//create a new function to get an event's responses.
-//it will only get an event's responses if the event's shareResults is true.
-//also need to check if showNames is true, if so ignore the participant's name in the response.
-//it's also unique to the participantId, so we'll need to pull that from req.cookies.
 export const getEventResponses = async (req, res) => {
-    console.log('entered')
     try {
         const { eventId } = req.params;
-        //aggregate to check if event is shareable and returns the event's responses
-        //also checks if event is showNames and returns the responses user names if true
+        
+        // First, fetch the basic event details to check if shareResults is enabled
+        const event = await UserEvent.findById(eventId, 'shareResults showNames');
+        if (!event || !event.shareResults) {
+            return res.status(200).json({ responses: [] });
+        }
 
         const pipeline = [
             {
                 $match: {
-                    _id: new mongoose.Types.ObjectId(eventId),
-                    shareResults: true
+                    _id: new mongoose.Types.ObjectId(eventId)
                 }
             },
             {
@@ -109,38 +104,44 @@ export const getEventResponses = async (req, res) => {
                 }
             },
             {
-                $addFields: {
-                    "responses.responseData.name": {
-                        $cond: {
-                            if: "$showNames",
-                            then: "$responses.responseData.name", // If showNames is true, keep the name
-                            else: "$$REMOVE" // If showNames is false, remove the name
+                $replaceRoot: { newRoot: "$responses" }
+            },
+            {
+                $project: {
+                    responseData: {
+                        attending: 1,
+                        vote: 1,
+                        dish: 1,
+                        name: {
+                            $cond: {
+                                if: event.showNames, // Use the showNames value fetched earlier
+                                then: "$responseData.name",
+                                else: "$$REMOVE"
+                            }
                         }
                     }
                 }
             },
             {
                 $group: {
-                    _id: "$_id",
-                    showNames: { $first: "$showNames" },
-                    responses: { $push: "$responses" }
+                    _id: null,
+                    responses: { $push: "$responseData" }
                 }
             },
             {
                 $project: {
-                    _id: 1,
-                    showNames: 1,
+                    _id: 0,
                     responses: 1
                 }
             }
         ];
 
-        const eventResponses = await UserEvent.aggregate(pipeline);
-        console.log(eventResponses)
-        res.status(200).json({ eventResponses });
+        const result = await UserEvent.aggregate(pipeline);
+        const responses = result[0] ? result[0].responses : [];
+        res.status(200).json({ responses });
     }
     catch (error) {
-        console.log("Error in participant controller (getEventResponses)", error.message)
+        console.log("Error in participant controller (getEventResponses)", error.message);
         res.status(500).json({ error: "Internal server error" });
     }
 }

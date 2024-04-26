@@ -5,6 +5,7 @@ const useGetEventResponses = (eventId) => {
     const [eventResponses, setEventResponses] = useState(null)
 
     const getEventResponses = async () => {
+        console.log('called...')
         setLoadingEventResponses(true)
         try {
             const res = await fetch(`api/responses/${eventId}`, {
@@ -15,7 +16,6 @@ const useGetEventResponses = (eventId) => {
             });
             const data = await res.json();
             if (data.error) throw new Error(data.error);
-
             setEventResponses(data.responses);
         }
         catch (error) {

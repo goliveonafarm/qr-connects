@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import useClickOutside from "../hooks/useClickOutside";
-import { set } from "mongoose";
 import { useAuthContext } from "../context/AuthContext";
 import useLogout from "../hooks/useLogout";
 

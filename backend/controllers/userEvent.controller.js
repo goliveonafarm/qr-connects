@@ -55,10 +55,26 @@ export const deleteUserEvent = async (req, res) => {
         await UserEvent.deleteOne({ _id: eventId });
 
         await Response.deleteMany({ eventId: eventId });
-        
+
         res.status(200).json({ message: "Event deleted successfully" });
     } catch (error) {
         console.log("Error in userEvent controller", error.message)
         res.status(500).json({ error: "Internal server error" });
     }
+}
+
+export const getEventResponses = async (req, res) => {
+    //revisit later then
+    //copy over response.controller.js?
+    try {
+        const { eventId } = req.params;
+        const userId = req.userId._id;
+
+        const responses = await Response.find({ eventId });
+
+        res.status(200).json({responses});
+    } catch (error) {
+        console.log("Error in userEvent controller", error.message)
+        res.status(500).json({ error: "Internal server error" });
+    } 
 }

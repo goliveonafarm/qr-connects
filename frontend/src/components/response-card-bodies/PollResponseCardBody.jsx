@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
+import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
 import useDebounce from "../../hooks/useDebounce";
-import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
 const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
   const [formData, setFormData] = useState({
@@ -9,22 +9,27 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
     name: response.responseData?.name || "",
   });
 
+  const [optionVotes, setOptionVotes] = useState([]);
+
+  const {
+    loadingParticipantEventResponses,
+    participantEventResponses,
+    getParticipantEventResponses,
+  } = useGetParticipantEventResponses(response.eventId);
+
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
-  
+
   const debouncedName = useDebounce(formData.name, 1000);
 
-  const [keyPressed, setKeyPressed] = useState(false)
-
-
+  const [keyPressed, setKeyPressed] = useState(false);
 
   const handleChangeName = (e) => {
-    setKeyPressed(true)
+    setKeyPressed(true);
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   const handleChangeVote = async (newVoteValue) => {
-    console.log(newVoteValue);
     submitChange("vote", newVoteValue);
   };
 
@@ -39,6 +44,8 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
         [prop]: newVal,
       });
       if (!success) throw new Error("Error updating response");
+      getParticipantEventResponses();
+
     } catch (error) {
       setFormData(previousFormData);
     } finally {
@@ -55,6 +62,26 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
     runThis();
   }, [debouncedName]);
 
+  useEffect(() => {
+    getParticipantEventResponses();
+  }, []);
+
+  useEffect(() => {
+    if (participantEventResponses) {
+      const votes = new Array(response.formData.options.length).fill(0);
+      participantEventResponses.forEach((response) => {
+        if (typeof response.vote === "number") {
+          const voteIndex = response.vote;
+          if (voteIndex >= 0 && voteIndex < votes.length) {
+            votes[voteIndex]++;
+          }
+        }
+      });
+      setOptionVotes(votes);
+    }
+  }, [participantEventResponses]);
+
+  const totalVotes = optionVotes.reduce((a, b) => a + b, 0);
 
   return (
     <div>
@@ -83,6 +110,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
           </div>
         ))}
       </div>
+      <div className="pb-2">
       <label className="input input-bordered flex items-center gap-2 text-xl">
         <input
           type="text"
@@ -93,6 +121,21 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
           onChange={handleChangeName}
         />
       </label>
+      </div>
+      {response.shareResults && (
+        <div className=" border-y-2">
+          <h4 className="text-md">{`${totalVotes} total vote${
+            totalVotes > 1 ? "s" : ""
+          }`}</h4>
+          <div className="border-t border-gray-300 my-1"></div>
+          {response.formData.options?.map((option, index) => (
+            <div key={index} className="flex text-xl">
+              <div className="pr-2">{`${optionVotes[index] || 0}`}</div>
+              <div>{`${option.text}`}</div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

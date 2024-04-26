@@ -1,9 +1,4 @@
-//allows user to create form displaying location and time to meet with yes (thumbs up) or no (thumbs down) options
-//fields - location, time
 const AfterPartyFormBody = ({ handleInputs }) => {
-  const handleChange = (e) => {
-    
-  }
   return (
     <div>
       <div className="pb-1 pt-1">Meet up later at:</div>

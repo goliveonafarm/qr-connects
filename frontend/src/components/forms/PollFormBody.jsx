@@ -1,6 +1,6 @@
 //TO DO!!!!!!!!!!!!!!!!
 //incoroporate handleInputs to change formData
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useDynamicInputs from "../../hooks/useDynamicInputs";
 
 const PollFormBody = ({ handleInputs }) => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
+import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
@@ -10,7 +11,17 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
     name: response.responseData?.name || "",
   });
 
+  const [responseSummary, setResponseSummary] = useState({
+    total: 0,
+    attending: 0,
+  });
+
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
+  const {
+    loadingParticipantEventResponses,
+    participantEventResponses,
+    getParticipantEventResponses,
+  } = useGetParticipantEventResponses(response.eventId);
 
   const debouncedName = useDebounce(formData.name, 1000);
   const debouncedDish = useDebounce(formData.dish, 1000);
@@ -41,6 +52,7 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
         [prop]: newVal,
       });
       if (!success) throw new Error("Error updating response");
+      getParticipantEventResponses();
     } catch (error) {
       setFormData(previousFormData);
     } finally {
@@ -60,7 +72,20 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
     runThis();
   }, [debouncedName, debouncedDish]);
 
+  useEffect(() => {
+    const total = participantEventResponses?.length;
+    const attending = participantEventResponses?.reduce(
+      (acc, curr) => acc + (curr.attending ? 1 : 0),
+      0
+    );
+    setResponseSummary({ total, attending });
+  }, [participantEventResponses]);
+
   const formattedDate = new Date(response.formData.date).toDateString();
+
+  useEffect(() => {
+    getParticipantEventResponses();
+  }, []);
 
   return (
     <div>
@@ -135,11 +160,9 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
           onChange={handleChange}
         />
       </label>
-      <div className="flex">
+      <div className="flex pb-2">
         <div className="mr-auto ml-auto text-white">{` ${
-          formData?.attending === true 
-            ? ""
-            : "You:"
+          formData?.attending === true ? "" : "You:"
         }
         ${
           formData.attending === true
@@ -148,6 +171,14 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
             ? "Not attending"
             : "No attendance set"
         }`}</div>
+      </div>
+      <div className=" border-y-2">
+        <div className="text-lg">
+          <div>{`${responseSummary?.total || 0} Invite${
+            responseSummary?.total === 1 ? `` : `s`
+          } sent`}</div>
+          <div>{`${responseSummary?.attending || 0} Attending`}</div>
+        </div>
       </div>
     </div>
   );
