@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import QRCode from "./QRCode";
 import pollImage from "../assets/pollImage.png";
@@ -12,6 +11,7 @@ const EventCard = ({
   eventType,
   isLoading,
   eventId,
+  cardSize,
 }) => {
   const [eventCardImage, setEventCardImage] = useState(null);
   const [eventCardImageAlt, setEventCardImageAlt] = useState(null);
@@ -37,7 +37,7 @@ const EventCard = ({
 
   return (
     <div key={`card-${eventId}`}>
-      <div className="card image-full" style={{ minHeight: '500px' }}>
+      <div className="card image-full" style={{ minHeight: `${cardSize}px` }}>
         <figure>
           <img
             src={eventCardImage}

@@ -13,7 +13,7 @@ const QRCode = ({ path, _size }) => {
       <div className="relative flex">
         <div className="border border-white">
           <QRCodeSVG
-            value={`https://qr-connects.onrender.com/loading/${path}`}
+            value={`https://qr-connects.com/}`}
             size={96}
             bgColor="#ffffff"
             fgColor="#000000"
@@ -41,7 +41,7 @@ const QRCode = ({ path, _size }) => {
             <div className="flex">
               <div className="border border-white p-2 bg-white">
                 <QRCodeSVG
-                  value={`https://qr-connects.onrender.com/loading/${path}`}
+                  value={`https://qr-connects.com/loading/${path}`}
                   size={256}
                   bgColor="#ffffff"
                   fgColor="#000000"

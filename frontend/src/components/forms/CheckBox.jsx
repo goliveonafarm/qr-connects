@@ -1,4 +1,4 @@
-const CheckBox = ({ label, propValue, handleChange, variant, isChecked }) => {
+const CheckBox = ({ label, propValue, handleChange, variant, isChecked, disabled }) => {
   return (
     <div className="form-control">
  
@@ -6,9 +6,9 @@ const CheckBox = ({ label, propValue, handleChange, variant, isChecked }) => {
         <input
           type="checkbox"
           checked={isChecked}
+          disabled={disabled}
           className={`checkbox checkbox-${variant}`}
           onChange={(e) => {
-            console.log(e.target.checked);
             handleChange(propValue, e.target.checked)}}
         />
         <span className="label-text ml-2">{`${label}`}</span>

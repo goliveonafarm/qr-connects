@@ -7,24 +7,29 @@ import CurrentUserEvents from "./pages/currentUserEvents/CurrentUserEvents";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
+import Drawer from "./components/Drawer";
+
+//left off here need auth context
 
 function App() {
   const { authUser } = useAuthContext();
   return (
     <div className="p-4 h-screen">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/loading/:eventId?" element={<Loading />}></Route>
-        <Route
-          path="/connects"
-          element={
-            authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
-          }
-        ></Route>
-        {/* default route (404), i have to create the 404 first, ill come back*/}
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
+      <Drawer>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/loading/:eventId?" element={<Loading />}></Route>
+          <Route
+            path="/connects"
+            element={
+              authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
+            }
+          ></Route>
+          {/* default route (404), i have to create the 404 first, ill come back*/}
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </Drawer>
       <Toaster />
     </div>
   );

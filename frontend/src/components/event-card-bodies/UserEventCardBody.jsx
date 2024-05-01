@@ -29,9 +29,10 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         handleDelete={handleDelete}
         handleDebug={() => console.log(userEvent)}
         eventId={userEvent._id}
+        cardSize={400}
       >
         <div>{renderForm()}</div>
-        <div>Create connect {`(debugging purposes) -`}</div>
+        {/* <div>Create connect {`(debugging purposes) -`}</div>
         <div>
           <Link
             className="text-blue-500"
@@ -39,7 +40,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
           >
             {`id - ${userEvent._id}`}
           </Link>
-        </div>
+        </div> */}
       </EventCard>
     </div>
   );

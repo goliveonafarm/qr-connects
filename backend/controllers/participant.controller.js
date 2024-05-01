@@ -75,8 +75,15 @@ export const updateParticipantResponse = async (req, res) => {
 
 export const getEventResponses = async (req, res) => {
     try {
-        const { eventId } = req.params;
-        
+        const { responseId } = req.params;
+
+        const response = await Response.findById(responseId);
+        if(!response) {
+            return res.status(400).json({ message: "Invalid response" });
+        }
+
+        const eventId = response.eventId;
+
         // First, fetch the basic event details to check if shareResults is enabled
         const event = await UserEvent.findById(eventId, 'shareResults showNames');
         if (!event || !event.shareResults) {
@@ -150,7 +157,6 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
     try {
         const participantId = req.cookies.participantId;
         const participantResponsesWithEvents = await UserEvent.aggregate([
-
             {
                 $lookup: {
                     from: "responses",
@@ -184,17 +190,12 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
                     eventId: "$eventId",
                     formData: 1,
                     formType: 1,
-                    shareResults: 1,
-                    showNames: 1,//rename to showNames
                     active: 1,
-                    shareable: 1,
                     responseData: "$responses.responseData",
                     // Any other event or response fields you need
                 }
             }
         ]);
-
-        const testResponse = await Response.find();
 
         res.status(200).json({ participantResponsesWithEvents });
     } catch (error) {
@@ -202,7 +203,6 @@ export const getParticipantResponsesWithEvents = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
-
 
 export const deleteParticipantResponse = async (req, res) => {
     try {

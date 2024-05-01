@@ -5,7 +5,7 @@ import participantProtectRoutes from '../middleware/participantProtectRoutes.js'
 const router = express.Router();
 
 router.post('/create/:eventId', participantProtectRoutes, createParticipantResponse)
-router.get('/get/:eventId', participantProtectRoutes, getEventResponses)
+router.get('/get/:responseId', participantProtectRoutes, getEventResponses)
 router.put('/update/:responseId', participantProtectRoutes, updateParticipantResponse)
 router.delete('/delete/:responseId', participantProtectRoutes, deleteParticipantResponse)
 router.get('/', participantProtectRoutes, getParticipantResponses)

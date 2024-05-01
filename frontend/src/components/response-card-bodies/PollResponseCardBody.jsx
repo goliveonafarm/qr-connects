@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
+import CardTotalsPreview from "../CardTotalsPreview";
 import useDebounce from "../../hooks/useDebounce";
 
 const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
@@ -15,7 +16,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
     loadingParticipantEventResponses,
     participantEventResponses,
     getParticipantEventResponses,
-  } = useGetParticipantEventResponses(response.eventId);
+  } = useGetParticipantEventResponses(response._id);
 
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
 
@@ -45,7 +46,6 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
       });
       if (!success) throw new Error("Error updating response");
       getParticipantEventResponses();
-
     } catch (error) {
       setFormData(previousFormData);
     } finally {
@@ -81,22 +81,22 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
     }
   }, [participantEventResponses]);
 
-  const totalVotes = optionVotes.reduce((a, b) => a + b, 0);
+  const cardTitle = `${response.formData.name}`;
 
   return (
     <div>
       <div className="flex flex-col pb-2">
-        <div className="card-title text-3xl text-green-400 text-center">{`${response.formData.name}`}</div>
+        <div className="card-title text-3xl text-green-400 text-center">{cardTitle}</div>
       </div>
       <div className="flex flex-col">
         {/* map through the questions and display each option (vote) with a radio button*/}
         {response.formData.options?.map((option, index) => (
           <div
             key={`key-option-${response._id}-${index}`}
-            className="flex pb-1 text-xl"
+            className="flex pb-1 text-md"
           >
             <input
-              className="radio radio-lg radio-success"
+              className="radio radio-success"
               type="radio"
               id={`id-option-${response._id}-${index}`}
               value={index}
@@ -111,30 +111,25 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
         ))}
       </div>
       <div className="pb-2">
-      <label className="input input-bordered flex items-center gap-2 text-xl">
-        <input
-          type="text"
-          className="grow text-success  placeholder-white"
-          placeholder="Name (optional)"
-          name="name"
-          value={formData.name}
-          onChange={handleChangeName}
-        />
-      </label>
+        <label className="input input-bordered flex items-center gap-2 text-xl">
+          <input
+            type="text"
+            className="grow text-success  placeholder-white"
+            placeholder="Name (optional)"
+            name="name"
+            value={formData.name}
+            onChange={handleChangeName}
+          />
+        </label>
       </div>
-      {response.shareResults && (
-        <div className=" border-y-2">
-          <h4 className="text-md">{`${totalVotes} total vote${
-            totalVotes > 1 ? "s" : ""
-          }`}</h4>
-          <div className="border-t border-gray-300 my-1"></div>
-          {response.formData.options?.map((option, index) => (
-            <div key={index} className="flex text-xl">
-              <div className="pr-2">{`${optionVotes[index] || 0}`}</div>
-              <div>{`${option.text}`}</div>
-            </div>
-          ))}
-        </div>
+
+      {participantEventResponses?.length > 0 && (
+        <CardTotalsPreview
+          responses={participantEventResponses}
+          formData={response.formData}
+          formType="poll"
+          title={cardTitle}
+        />
       )}
     </div>
   );

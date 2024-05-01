@@ -31,6 +31,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setShowEventModal(false);
     await submitUserEvent(inputs);
     await getUserEvents();
@@ -83,6 +84,7 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
         handleChange={handleInputs}
         propValue={"showNames"}
         isChecked={inputs.showNames}
+        disabled={!inputs.shareResults}
       />
       <CheckBox
         label="Share QR-Connect"

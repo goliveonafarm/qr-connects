@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
+import CardTotalsPreview from "../CardTotalsPreview";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
@@ -14,17 +15,12 @@ const AfterPartyResponseCardBody = ({
     name: response.responseData?.name || "",
   });
 
-  const [responseSummary, setResponseSummary] = useState({
-    total: 0,
-    attending: 0,
-  });
-
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
   const {
     loadingParticipantEventResponses,
     participantEventResponses,
     getParticipantEventResponses,
-  } = useGetParticipantEventResponses(response.eventId);
+  } = useGetParticipantEventResponses(response._id);
 
   const debouncedName = useDebounce(formData.name, 1000);
 
@@ -71,23 +67,18 @@ const AfterPartyResponseCardBody = ({
   }, [debouncedName]);
 
   useEffect(() => {
-    const total = participantEventResponses?.length;
-    const attending = participantEventResponses?.reduce(
-      (acc, curr) => acc + (curr.attending ? 1 : 0),
-      0
-    );
-    setResponseSummary({ total, attending });
-  }, [participantEventResponses]);
-
-  useEffect(() => {
     getParticipantEventResponses();
   }, []);
+
+  const cardTitle = `Afterparty at ${capitalizeFirstLetter(
+    response.formData.location
+  )}`;
 
   return (
     <div>
       <div className="flex pb-3">
         <h2 className="card-title text-3xl text-green-400 text-center">
-          {`Afterparty at ${capitalizeFirstLetter(response.formData.location)}`}
+          {cardTitle}
         </h2>
       </div>
       <div>
@@ -153,14 +144,14 @@ const AfterPartyResponseCardBody = ({
                : "No attendance set"
            }`}</div>
       </div>
-      <div className=" border-y-2">
-        <div className="text-lg">
-          <div>{`${responseSummary?.total || 0} Invite${
-            responseSummary?.total === 1 ? `` : `s`
-          } sent`}</div>
-          <div>{`${responseSummary?.attending || 0} Attending`}</div>
-        </div>
-      </div>
+      {participantEventResponses.length > 0 && (
+        <CardTotalsPreview
+          responses={participantEventResponses}
+          formData={response.formData}
+          formType={"afterparty"}
+          title={cardTitle}
+        />
+      )}
     </div>
   );
 };

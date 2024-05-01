@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const useGetParticipantResponsesWithEvents = () => {
-    console.log('entered')
     const [loadingParticipantResponsesWithEvents, setLoadingParticipantResponsesWithEvents] = useState(false);
     const [participantResponsesWithEvents, setParticipantResponsesWithEvents] = useState(null);
     
     const getParticipantResponsesWithEvents = async (id) => {
-        console.log('start getPartiResW/Events')
         setLoadingParticipantResponsesWithEvents(true);
         try {
             const res = await fetch('api/participant/get', {
@@ -29,8 +27,6 @@ const useGetParticipantResponsesWithEvents = () => {
     }
 
     useEffect(() => {
-        console.log('called...')
-
         getParticipantResponsesWithEvents();
     }, []);
 

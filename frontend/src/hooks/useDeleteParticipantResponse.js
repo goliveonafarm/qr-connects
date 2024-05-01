@@ -2,7 +2,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const useDeleteParticipantResponse = () => {
-  console.log('ran useDelete')
   const [isDeletingParticipantResponse, setIsDeletingParticipantResponse] =
     useState(false);
 

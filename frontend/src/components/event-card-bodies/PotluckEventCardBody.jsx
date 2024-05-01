@@ -1,47 +1,35 @@
 import { useState, useEffect } from "react";
 import useGetEventResponses from "../../hooks/useGetEventResponses";
+import CardTotalsPreview from "../CardTotalsPreview";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
 const PotluckEventCardBody = ({ userEvent }) => {
   const { loadingEventResponses, eventResponses, getEventResponses } =
     useGetEventResponses(userEvent._id);
 
-  const [responseSummary, setResponseSummary] = useState({
-    total: 0,
-    attending: 0,
-  });
-
   useEffect(() => {
     getEventResponses();
   }, []);
 
-  useEffect(() => {
-    const total = eventResponses?.length;
-    const attending = eventResponses?.reduce(
-      (acc, curr) => acc + (curr.responseData?.attending ? 1 : 0),
-      0
-    );
+  const responses = eventResponses?.map((response) => response.responseData);
 
-    setResponseSummary({ total, attending });
-  }, [eventResponses]);
+  const cardTitle = `Potluck at ${capitalizeFirstLetter(
+    userEvent.formData.location
+  )}`; 
 
   if (loadingEventResponses) return <div>Loading...</div>;
   return (
     <div>
       <div>
-        <h2 className="card-title text-3xl text-green-400">{`Potluck at ${capitalizeFirstLetter(
-          userEvent.formData.location
-        )}`}</h2>
+        <h2 className="card-title text-3xl text-green-400">{cardTitle}</h2>
       </div>
-      {responseSummary && (
-        <div className=" border-y-2">
-          <div className="text-lg">
-            <div>{`${responseSummary?.total || 0} Invite${
-              responseSummary?.total === 1 ? `` : `s`
-            } sent`}</div>
-            <div>{`${responseSummary?.attending || 0} Attending`}</div>
-          </div>
-        </div>
+      {responses?.length > 0 && (
+        <CardTotalsPreview
+          responses={responses}
+          formData={userEvent.formData}
+          formType="potluck"
+          title={cardTitle}
+        />
       )}
     </div>
   );

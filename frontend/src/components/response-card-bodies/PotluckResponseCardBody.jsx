@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
+import CardTotalsPreview from "../CardTotalsPreview";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
@@ -11,17 +12,12 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
     name: response.responseData?.name || "",
   });
 
-  const [responseSummary, setResponseSummary] = useState({
-    total: 0,
-    attending: 0,
-  });
-
   const { updatingResponse, updateResponse } = useUpdateParticipantResponse();
   const {
     loadingParticipantEventResponses,
     participantEventResponses,
     getParticipantEventResponses,
-  } = useGetParticipantEventResponses(response.eventId);
+  } = useGetParticipantEventResponses(response._id);
 
   const debouncedName = useDebounce(formData.name, 1000);
   const debouncedDish = useDebounce(formData.dish, 1000);
@@ -72,27 +68,20 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
     runThis();
   }, [debouncedName, debouncedDish]);
 
-  useEffect(() => {
-    const total = participantEventResponses?.length;
-    const attending = participantEventResponses?.reduce(
-      (acc, curr) => acc + (curr.attending ? 1 : 0),
-      0
-    );
-    setResponseSummary({ total, attending });
-  }, [participantEventResponses]);
-
   const formattedDate = new Date(response.formData.date).toDateString();
 
   useEffect(() => {
     getParticipantEventResponses();
   }, []);
 
+  const cardTitle = `Potluck at ${capitalizeFirstLetter(
+    response.formData.location
+  )}`;
+
   return (
     <div>
       <div>
-        <div className="card-title text-3xl text-green-400 text-center pb-3">{`Potluck at ${capitalizeFirstLetter(
-          response.formData.location
-        )}`}</div>
+        <div className="card-title text-3xl text-green-400 text-center pb-3">{cardTitle}</div>
       </div>
       <div className="text-2xl text-white">
         {`${new Date(response.formData.date).toDateString()}`} @{" "}
@@ -172,14 +161,12 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
             : "No attendance set"
         }`}</div>
       </div>
-      <div className=" border-y-2">
-        <div className="text-lg">
-          <div>{`${responseSummary?.total || 0} Invite${
-            responseSummary?.total === 1 ? `` : `s`
-          } sent`}</div>
-          <div>{`${responseSummary?.attending || 0} Attending`}</div>
-        </div>
-      </div>
+      <CardTotalsPreview
+        responses={participantEventResponses}
+        formData={response.formData}
+        formType="potluck"
+        title={cardTitle}
+      />
     </div>
   );
 };
