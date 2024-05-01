@@ -12,7 +12,6 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
   }, []);
 
   const responses = eventResponses?.map((response) => response.responseData);
-
   const cardTitle = `Afterparty at ${capitalizeFirstLetter(
     userEvent.formData.location
   )}`;
@@ -23,13 +22,20 @@ const AfterPartyEventCardBody = ({ userEvent }) => {
       <div>
         <h2 className="card-title text-3xl text-green-400">{cardTitle}</h2>
       </div>
-      {responses?.length > 0 && (
+      {responses?.length > 0 ? (
         <CardTotalsPreview
           responses={responses}
           formData={userEvent.formData}
           formType="afterparty"
           title={cardTitle}
         />
+      ) : (
+        <div className="text-2xl">
+          <div>There are no responses for this card yet</div>
+          <div>
+            Click on the QR-Code above and scan on a device to get started
+          </div>
+        </div>
       )}
     </div>
   );

@@ -81,7 +81,9 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   return (
     <div>
       <div>
-        <div className="card-title text-3xl text-green-400 text-center pb-3">{cardTitle}</div>
+        <div className="card-title text-3xl text-green-400 text-center pb-3">
+          {cardTitle}
+        </div>
       </div>
       <div className="text-2xl text-white">
         {`${new Date(response.formData.date).toDateString()}`} @{" "}
@@ -161,12 +163,14 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
             : "No attendance set"
         }`}</div>
       </div>
-      <CardTotalsPreview
-        responses={participantEventResponses}
-        formData={response.formData}
-        formType="potluck"
-        title={cardTitle}
-      />
+      {participantEventResponses.length > 0 && (
+        <CardTotalsPreview
+          responses={participantEventResponses}
+          formData={response.formData}
+          formType="potluck"
+          title={cardTitle}
+        />
+      )}
     </div>
   );
 };

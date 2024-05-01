@@ -86,29 +86,32 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
   return (
     <div>
       <div className="flex flex-col pb-2">
-        <div className="card-title text-3xl text-green-400 text-center">{cardTitle}</div>
+        <div className="card-title text-3xl text-green-400 text-center">
+          {cardTitle}
+        </div>
       </div>
       <div className="flex flex-col">
         {/* map through the questions and display each option (vote) with a radio button*/}
-        {response.formData.options?.map((option, index) => (
-          <div
-            key={`key-option-${response._id}-${index}`}
-            className="flex pb-1 text-md"
-          >
-            <input
-              className="radio radio-success"
-              type="radio"
-              id={`id-option-${response._id}-${index}`}
-              value={index}
-              checked={formData.vote === index}
-              name={`vote-${response._id}`}
-              onChange={(e) => {
-                handleChangeVote(parseInt(e.target.value));
-              }}
-            />
-            <label className="pl-2">{option.text}</label>
-          </div>
-        ))}
+        {formData.vote === null &&
+          response.formData.options?.map((option, index) => (
+            <div
+              key={`key-option-${response._id}-${index}`}
+              className="flex pb-1 text-md"
+            >
+              <input
+                className="radio radio-success"
+                type="radio"
+                id={`id-option-${response._id}-${index}`}
+                value={index}
+                checked={formData.vote === index}
+                name={`vote-${response._id}`}
+                onChange={(e) => {
+                  handleChangeVote(parseInt(e.target.value));
+                }}
+              />
+              <label className="pl-2">{option.text}</label>
+            </div>
+          ))}
       </div>
       <div className="pb-2">
         <label className="input input-bordered flex items-center gap-2 text-xl">
@@ -122,15 +125,26 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
           />
         </label>
       </div>
-
-      {participantEventResponses?.length > 0 && (
-        <CardTotalsPreview
-          responses={participantEventResponses}
-          formData={response.formData}
-          formType="poll"
-          title={cardTitle}
-        />
-      )}
+      <div>
+        <div className="pb-1">
+          <button
+            className="btn btn-success btn-sm"
+            onClick={() => {
+              handleChangeVote(null);
+            }}
+          >
+            Change submission
+          </button>
+        </div>
+        {formData.vote !== null && participantEventResponses?.length > 0 && (
+          <CardTotalsPreview
+            responses={participantEventResponses}
+            formData={response.formData}
+            formType="poll"
+            title={cardTitle}
+          />
+        )}
+      </div>
     </div>
   );
 };

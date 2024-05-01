@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { useDrawerContext } from "../context/DrawerContext";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
-const CardTotalsPreview = ({ responses, formData, formType, title }) => {
+const CardTotalsPreview = ({
+  responses,
+  formData,
+  formType,
+  title,
+}) => {
   const [responseSummary, setResponseSummary] = useState({
     total: 0,
     attending: 0,
@@ -11,6 +16,8 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
 
   const { isDrawerOpen, toggleDrawer, updateDrawerContent } =
     useDrawerContext();
+
+    console.log(responses, formData, formType)
 
   useEffect(() => {
     if (formType === "afterparty" || formType === "potluck") {
@@ -47,7 +54,9 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
             <div>{`${responseSummary?.total || 0} Invite${
               responseSummary?.total === 1 ? `` : `s`
             } sent`}</div>
-            <div className="text-lg">{`${responseSummary?.attending || 0} Attending`}</div>
+            <div className="text-lg">{`${
+              responseSummary?.attending || 0
+            } Attending`}</div>
           </div>
         );
       case "potluck":
@@ -56,14 +65,16 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
             <div>{`${responseSummary?.total || 0} Invite${
               responseSummary?.total === 1 ? `` : `s`
             } sent`}</div>
-            <div className="text-lg">{`${responseSummary?.attending || 0} Attending`}</div>
+            <div className="text-lg">{`${
+              responseSummary?.attending || 0
+            } Attending`}</div>
           </div>
         );
       case "poll":
         return (
           <div>
             <div>
-              {`${totalVotes} total vote${
+              {`${totalVotes} total submission${
                 totalVotes > 1 || totalVotes === 0 ? "s" : ""
               }`}
             </div>
@@ -97,19 +108,19 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
           );
         case "potluck":
           return (
-              <div>
-                {response.attending === true && !response.dish && `Attending (no dish)`}
-                {response.attending === false && `Not attending`}
-                {response.attending === null && `Invite Pending`}
-                {response.attending === true && response.dish && (
-                  `${capitalizeFirstLetter(response.dish)}`
-                )}
+            <div>
+              {response.attending === true &&
+                !response.dish &&
+                `Attending (no dish)`}
+              {response.attending === false && `Not attending`}
+              {response.attending === null && `Invite Pending`}
+              {response.attending === true &&
+                response.dish &&
+                `${capitalizeFirstLetter(response.dish)}`}
             </div>
           );
         case "poll":
-          console.log(response.vote);
-          console.log();
-          return <div>{formData.options[response.vote].text}</div>;
+          return <div>{formData.options[response.vote]?.text}</div>;
       }
     };
 
@@ -119,15 +130,20 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
         <div className="border-t border-gray-300 my-1"></div>
         <div className="pb-5">{renderForm()}</div>
         <div className="text-2xl font-bold">Results</div>
-        <div className="border-t border-gray-300 my-1"></div>
         {responses.map((response, index) => {
+          if (response.vote === null)
+            return (
+              <div>
+                <div className="border-t border-gray-300 my-1"></div>
+                <div>
+                  No results yet. Someone will need to submit this QR-Connect first
+                </div>
+              </div>
+            );
           return (
-            <div key={index} className="flex text-lg">
-              <div>{response.name || "Anonymous"}</div>
-              <div>&nbsp;</div>
-              <div>-</div>
-              <div>&nbsp;</div>
-
+            <div key={index} className=" text-lg">
+              <div className="border-t border-gray-300 my-1"></div>
+              <div>{response.name || "Anonymous"} -</div>
               {formatResponse(response)}
             </div>
           );

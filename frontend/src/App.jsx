@@ -9,8 +9,6 @@ import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
 import Drawer from "./components/Drawer";
 
-//left off here need auth context
-
 function App() {
   const { authUser } = useAuthContext();
   return (
@@ -26,7 +24,6 @@ function App() {
               authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
             }
           ></Route>
-          {/* default route (404), i have to create the 404 first, ill come back*/}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Drawer>

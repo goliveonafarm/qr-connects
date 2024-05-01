@@ -32,15 +32,11 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         cardSize={400}
       >
         <div>{renderForm()}</div>
-        {/* <div>Create connect {`(debugging purposes) -`}</div>
         <div>
-          <Link
-            className="text-blue-500"
-            to={`/loading/${userEvent._id}`}
-          >
-            {`id - ${userEvent._id}`}
+          <Link className="text-blue-500" to={`/loading/${userEvent._id}`}>
+            -
           </Link>
-        </div> */}
+        </div>
       </EventCard>
     </div>
   );
