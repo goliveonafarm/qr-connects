@@ -113,7 +113,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
             </div>
           ))}
       </div>
-      <div className="pb-2">
+      <div className="pb-2 pt-2">
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <input
             type="text"
