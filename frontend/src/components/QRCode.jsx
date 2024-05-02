@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
-const QRCode = ({ path, _size }) => {
+const QRCode = ({ path }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bgColor, setBgColor] = useState("#ffffff");
 
@@ -13,7 +13,10 @@ const QRCode = ({ path, _size }) => {
     <div>
       <div
         className="relative flex cursor-pointer"
-        onClick={() => toggleModal()}
+        onClick={() => {
+          toggleModal();
+          console.log(path);
+        }}
         onKeyUp={(e) => e.key === "Enter" && toggleModal()}
         tabIndex={0}
       >

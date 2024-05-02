@@ -127,16 +127,7 @@ const CardTotalsPreview = ({ responses, formData, formType, title }) => {
         <div className="pb-5">{renderForm()}</div>
         <div className="text-2xl font-bold">Results</div>
         {responses.map((response, index) => {
-          if (response.vote === null)
-            return (
-              <div>
-                <div className="border-t border-gray-300 my-1"></div>
-                <div>
-                  No results yet. Someone will need to submit this QR-Connect
-                  first
-                </div>
-              </div>
-            );
+          if (response.vote === null) return null;
           return (
             <div key={index} className=" text-lg">
               <div className="border-t border-gray-300 my-1"></div>
