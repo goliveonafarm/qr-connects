@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { useDrawerContext } from "../context/DrawerContext";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
-const CardTotalsPreview = ({
-  responses,
-  formData,
-  formType,
-  title,
-}) => {
+const CardTotalsPreview = ({ responses, formData, formType, title }) => {
   const [responseSummary, setResponseSummary] = useState({
     total: 0,
     attending: 0,
@@ -16,8 +11,6 @@ const CardTotalsPreview = ({
 
   const { isDrawerOpen, toggleDrawer, updateDrawerContent } =
     useDrawerContext();
-
-    console.log(responses, formData, formType)
 
   useEffect(() => {
     if (formType === "afterparty" || formType === "potluck") {
@@ -79,9 +72,9 @@ const CardTotalsPreview = ({
               }`}
             </div>
             <div className="border-t border-gray-300 my-1"></div>
-            <div>
+            <div className=" overflow-y-auto ">
               {formData.options.map((option, index) => (
-                <div key={index} className="flex">
+                <div key={index} className="flex max-w-sm">
                   <div className="pr-2">{`${
                     responseSummary.optionVotes[index] || 0
                   }`}</div>
@@ -125,7 +118,10 @@ const CardTotalsPreview = ({
     };
 
     return (
-      <div className="">
+      <div
+        className="text-slate-300"
+        style={{ textShadow: "1px 1px 2px black" }}
+      >
         <div className="text-2xl font-bold">{title}</div>
         <div className="border-t border-gray-300 my-1"></div>
         <div className="pb-5">{renderForm()}</div>
@@ -136,7 +132,8 @@ const CardTotalsPreview = ({
               <div>
                 <div className="border-t border-gray-300 my-1"></div>
                 <div>
-                  No results yet. Someone will need to submit this QR-Connect first
+                  No results yet. Someone will need to submit this QR-Connect
+                  first
                 </div>
               </div>
             );
@@ -156,7 +153,7 @@ const CardTotalsPreview = ({
     <div className="border-y-2">
       <div className="">{renderForm()}</div>
       <button
-        className="text-blue-500 underline hover:text-blue-700 cursor-pointer"
+        className="text-blue-500 underline hover:text-blue-700 cursor-pointer pb-1"
         style={{ textShadow: "1px 1px 2px black" }}
         onClick={() => {
           updateDrawerContent(DrawerContent());

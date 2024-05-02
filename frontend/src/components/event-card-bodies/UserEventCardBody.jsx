@@ -29,12 +29,12 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         handleDelete={handleDelete}
         handleDebug={() => console.log(userEvent)}
         eventId={userEvent._id}
-        cardSize={400}
+        cardSize={464}
       >
         <div>{renderForm()}</div>
         <div>
-          <Link className="text-blue-500" to={`/loading/${userEvent._id}`}>
-            -
+          <Link className="text-blue-500 underline hover:text-blue-700 cursor-pointer" to={`/loading/${userEvent._id}`}>
+            Click to create an QR-Connect for your own event
           </Link>
         </div>
       </EventCard>

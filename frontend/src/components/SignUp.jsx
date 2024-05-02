@@ -12,15 +12,18 @@ const SignUp = ({ showLoginCB, clear }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    clear();
-    await signUp(inputs);
+    await signUp(inputs).then((res) =>{
+      if (res.success){
+        clear();
+      }
+    })
   };
 
   return (
     <div className="relative z-50 flex flex-col items-center justify-center min-w-96 mx-auto">
-      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border  border-gray-200">
+      <div className="w-full p-5 rounded-lg shadow-md bg-primary-content border border-gray-200">
         <h1 className="text-3xl font-semibold text-center text-gray-300">
-          Sign Up<span className="text-blue-500">QR-Connects</span>
+          Sign up for&nbsp;<span className="text-blue-500">QR-Connects</span>
         </h1>
 
         <form onSubmit={handleSubmit}>
@@ -84,13 +87,22 @@ const SignUp = ({ showLoginCB, clear }) => {
 
           <button
             onClick={showLoginCB}
-            className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
+            className="text-sm hover:underline hover:text-blue-600 inline-block pb-1"
           >
             Already have an account?
           </button>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2">Sign Up</button>
+            <button
+              className="btn btn-block btn-sm btn-primary"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmit(e);
+                }
+              }}
+            >
+              Sign Up
+            </button>
           </div>
         </form>
       </div>

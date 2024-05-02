@@ -2,6 +2,7 @@ import { useDrawerContext } from "../context/DrawerContext";
 
 const Drawer = ({ children }) => {
   const { isDrawerOpen, toggleDrawer, drawerContent } = useDrawerContext();
+
   return (
     <div className="drawer">
       <input

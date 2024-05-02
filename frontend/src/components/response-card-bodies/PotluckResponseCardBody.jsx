@@ -79,13 +79,13 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   )}`;
 
   return (
-    <div>
-      <div>
-        <div className="card-title text-3xl text-green-400 text-center pb-3">
+    <div className="w-full ">
+      <div className="pb-3 overflow-y-auto">
+        <div className="card-title text-3xl text-green-400 text-left max-w-sm pb-3  ">
           {cardTitle}
         </div>
       </div>
-      <div className="text-2xl text-white">
+      <div className="text-2xl text-white text-center pb-2">
         {`${new Date(response.formData.date).toDateString()}`} @{" "}
         {`${response.formData.time.hour}:${response.formData.time.minute} ${response.formData.time.period}`}
       </div>
@@ -131,26 +131,31 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
           </div>
         </div>
       </div>
-      <label className="input input-bordered flex items-center gap-2 text-xl">
-        <input
-          type="text"
-          className="grow text-success  placeholder-white"
-          placeholder="Name (optional)"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </label>
-      <label className="input input-bordered flex items-center gap-2 text-xl">
-        <input
-          type="text"
-          className="grow text-success  placeholder-white"
-          placeholder="Dish (optional)"
-          name="dish"
-          value={formData.dish}
-          onChange={handleChange}
-        />
-      </label>
+      <div className="pb-1">
+        <label className="input input-bordered flex items-center gap-2 text-xl">
+          <input
+            type="text"
+            className="grow text-success placeholder-white"
+            placeholder="Name (optional)"
+            name="name"
+            autoComplete="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label className="input input-bordered flex items-center gap-2 text-xl">
+          <input
+            type="text"
+            className="grow text-success  placeholder-white"
+            placeholder="Dish (optional)"
+            name="dish"
+            value={formData.dish}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
       <div className="flex pb-2">
         <div className="mr-auto ml-auto text-white">{` ${
           formData?.attending === true ? "" : "You:"

@@ -27,8 +27,10 @@ export const useLogin = () => {
 
             localStorage.setItem('event-user', JSON.stringify(data));
             setAuthUser(data);
+            return { success: true }            
         } catch (error) {
             toast.error(error.message);
+
         } finally {
             setLoading(false);
         }

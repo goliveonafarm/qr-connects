@@ -1,7 +1,13 @@
-const CheckBox = ({ label, propValue, handleChange, variant, isChecked, disabled }) => {
+const CheckBox = ({
+  label,
+  propValue,
+  handleChange,
+  variant,
+  isChecked,
+  disabled,
+}) => {
   return (
     <div className="form-control">
- 
       <label className="cursor-pointer label flex justify-start  ">
         <input
           type="checkbox"
@@ -9,7 +15,13 @@ const CheckBox = ({ label, propValue, handleChange, variant, isChecked, disabled
           disabled={disabled}
           className={`checkbox checkbox-${variant}`}
           onChange={(e) => {
-            handleChange(propValue, e.target.checked)}}
+            handleChange(propValue, e.target.checked);
+          }}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              handleChange(propValue, !e.target.checked);
+            }
+          }}
         />
         <span className="label-text ml-2">{`${label}`}</span>
       </label>

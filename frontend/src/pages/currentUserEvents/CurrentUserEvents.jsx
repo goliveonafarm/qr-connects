@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import useGetUserEvents from "../../hooks/useGetUserEvents";
 import useClickOutside from "../../hooks/useClickOutside";
 import useDeleteUserEvent from "../../hooks/useDeleteUserEvent";
@@ -22,18 +22,18 @@ const UserEvents = () => {
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
-      <div className="flex pb-5 pt-5">
+      <div className="flex pb-5">
         <h1 className="text-4xl pr-3">Your Connects</h1>
         {/** Revisit later - change button logic if user reached max number of connects */}
         {true && (
           <button
-            className="btn btn-outline btn-info"
+            className="btn btn-outline btn-success"
             onClick={() => setShowEventModal(true)}
           >
             <svg
               height={"30"}
               width={"30"}
-              className="fill-info"
+              className="fill-green-500"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
             >

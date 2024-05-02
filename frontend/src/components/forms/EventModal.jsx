@@ -51,9 +51,10 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
   };
 
   return (
-    <div className="modal-box w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0  border  ">
-      <div className="flex justify-end pb-3">
+    <div className="modal-box w-full bg-clip-padding backdrop-filter border border-gray-500">
+      <div className="flex justify-end">
         <svg
+          tabIndex={0}
           xmlns="http://www.w3.org/2000/svg"
           height="30"
           width="30"
@@ -61,11 +62,16 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           fill="currentColor"
           className="cursor-pointer hover:text-blue-500"
           onClick={() => setShowEventModal(false)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              setShowEventModal(false);
+            }
+          }}
         >
           <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
         </svg>
       </div>
-      <div className="pt-2 pb-3 text-4xl">
+      <div className="pb-3 text-4xl">
         {capitalizeFirstLetter(inputs.formType)}
       </div>
       {renderForm()}
@@ -106,25 +112,6 @@ const EventModal = ({ setShowEventModal, getUserEvents }) => {
           </div>
         </div>
       )}
-      <div className="pt-2">
-        <button
-          className="btn btn-outline btn-success btn-xs"
-          onClick={() => {
-            console.log(
-              `Form values:`,
-              inputs,
-              `\n`,
-              `formData.length: `,
-              inputs.formData.length,
-              `\n`,
-              `formData: `,
-              inputs.formData
-            );
-          }}
-        >
-          Check form values
-        </button>
-      </div>
     </div>
   );
 };

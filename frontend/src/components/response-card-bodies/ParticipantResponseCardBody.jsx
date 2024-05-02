@@ -59,7 +59,7 @@ const ParticipantResponseCardBody = ({
         isLoading={isLoading}
         eventId={response.eventId}
         key={`key-${response.eventId}`}
-        cardSize={566}
+        cardSize={562}
       >
         {renderForm()}
       </EventCard>

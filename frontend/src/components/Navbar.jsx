@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="relative w-full flex flex-wrap items-center"
+      className="relative w-full flex flex-wrap items-center pb-5"
       onKeyDown={(e) => handleKeyDown(e)}
     >
       <div className="navbar bg-base-200">
@@ -64,38 +64,34 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <div className="flex-none md:hidden">
-          {" "}
-          {/* Show this button on small screens */}
-          <button className="btn btn-square btn-ghost">
-            {/* Icon for menu toggle, e.g., hamburger icon */}
-            VAL
-          </button>
-        </div>
+
         <div className="flex md:items-center md:space-x-2">
-          {" "}
           {/* Hide on small screens, show on medium and up */}
           {!authUser ? (
-            <>
-              <button
-                className="btn btn-xs btn-outline btn-secondary"
-                onClick={showLoginCB}
-              >
-                Login
-              </button>
-              <button
-                className="btn btn-xs btn-outline btn-accent"
-                onClick={showSignupCB}
-              >
-                Sign Up
-              </button>
-            </>
+            <div className="flex">
+              <div className="pr-1">
+                <button
+                  className="btn btn-sm btn-success"
+                  onClick={showLoginCB}
+                >
+                  Login
+                </button>
+              </div>
+              <div>
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={showSignupCB}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
           ) : (
             //revisit this later - make this whole section hidden on md for accordian above
             <>
               <span className="hidden md:flex pr-5">@{authUser.username}</span>
               <button
-                className="btn btn-xs btn-outline btn-accent"
+                className="btn btn-sm btn-success"
                 onClick={async () => await logout()}
               >
                 Logout

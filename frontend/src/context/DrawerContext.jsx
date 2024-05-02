@@ -11,6 +11,9 @@ export const DrawerProvider = ({ children }) => {
   const [drawerContent, setDrawerContent] = useState(null);
 
   const toggleDrawer = () => {
+    if(isDrawerOpen){
+      setDrawerContent(null);
+    }
     setDrawerOpen(!isDrawerOpen);
   };
   const updateDrawerContent = (content) => {

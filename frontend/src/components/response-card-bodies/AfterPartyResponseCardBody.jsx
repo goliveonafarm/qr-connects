@@ -75,11 +75,11 @@ const AfterPartyResponseCardBody = ({
   )}`;
 
   return (
-    <div>
-      <div className="flex pb-3">
-        <h2 className="card-title text-3xl text-green-400 text-center">
+    <div className="w-full ">
+      <div className="pb-3 overflow-y-auto">
+        <div className="card-title text-3xl text-green-400 text-left max-w-sm">
           {cardTitle}
-        </h2>
+        </div>
       </div>
       <div>
         <div className="flex">
@@ -128,6 +128,7 @@ const AfterPartyResponseCardBody = ({
           className="grow text-success  placeholder-white"
           placeholder="Name (optional)"
           name="name"
+          autoComplete="name"
           value={formData.name}
           onChange={handleChangeName}
         />

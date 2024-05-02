@@ -84,19 +84,19 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
   const cardTitle = `${response.formData.name}`;
 
   return (
-    <div>
-      <div className="flex flex-col pb-2">
-        <div className="card-title text-3xl text-green-400 text-center">
+    <div className="w-full ">
+      <div className="flex flex-col pb-3 overflow-y-auto ">
+        <div className="card-title text-3xl text-green-400 text-left max-w-sm">
           {cardTitle}
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="overflow-y-auto ">
         {/* map through the questions and display each option (vote) with a radio button*/}
         {formData.vote === null &&
           response.formData.options?.map((option, index) => (
             <div
               key={`key-option-${response._id}-${index}`}
-              className="flex pb-1 text-md"
+              className="flex pb-1 text-md max-w-sm"
             >
               <input
                 className="radio radio-success"
@@ -109,7 +109,7 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
                   handleChangeVote(parseInt(e.target.value));
                 }}
               />
-              <label className="pl-2">{option.text}</label>
+              <label  htmlFor={`id-option-${response._id}-${index}`} className="pl-2">{option.text}</label>
             </div>
           ))}
       </div>
@@ -120,22 +120,25 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
             className="grow text-success  placeholder-white"
             placeholder="Name (optional)"
             name="name"
+            autoComplete="name"
             value={formData.name}
             onChange={handleChangeName}
           />
         </label>
       </div>
       <div>
-        <div className="pb-1">
-          <button
-            className="btn btn-success btn-sm"
-            onClick={() => {
-              handleChangeVote(null);
-            }}
-          >
-            Change submission
-          </button>
-        </div>
+        {formData.vote !== null && (
+          <div className="pb-1">
+            <button
+              className="btn btn-success btn-sm"
+              onClick={() => {
+                handleChangeVote(null);
+              }}
+            >
+              Change submission
+            </button>
+          </div>
+        )}
         {formData.vote !== null && participantEventResponses?.length > 0 && (
           <CardTotalsPreview
             responses={participantEventResponses}

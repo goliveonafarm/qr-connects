@@ -14,6 +14,7 @@ const QRCode = ({ path, _size }) => {
       <div
         className="relative flex cursor-pointer"
         onClick={() => toggleModal()}
+        onKeyUp={(e) => e.key === "Enter" && toggleModal()}
         tabIndex={0}
       >
         <div
@@ -34,7 +35,7 @@ const QRCode = ({ path, _size }) => {
           <svg
             height={"30"}
             width={"30"}
-            className="fill-blue-700 hover:fill-white"
+            className="fill-blue-500 hover:fill-blue-700"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
           >
@@ -42,7 +43,6 @@ const QRCode = ({ path, _size }) => {
           </svg>
         </div>
       </div>
-      {/* large QR code here */}
       {isModalOpen && (
         <div className="absolute right-0 left-0 top-0 flex  items-center">
           <div className="bg-primary-content border border-gray-500 p-5 rounded-lg shadow-lg">
@@ -66,6 +66,7 @@ const QRCode = ({ path, _size }) => {
                   fill="currentColor"
                   className="cursor-pointer fill-white hover:fill-blue-700"
                   onClick={toggleModal}
+                  onKeyUp={(e) => e.key === "Enter" && toggleModal()}
                 >
                   <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
                 </svg>
