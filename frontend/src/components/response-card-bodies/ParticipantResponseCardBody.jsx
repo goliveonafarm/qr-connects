@@ -55,7 +55,6 @@ const ParticipantResponseCardBody = ({
       <EventCard
         eventType={response.formType}
         handleDelete={handleDelete}
-        handleDebug={() => console.log(response)}
         isLoading={isLoading}
         eventId={response.eventId}
         key={`key-${response.eventId}`}

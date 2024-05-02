@@ -1,14 +1,9 @@
-//TO DO!!!!!!!!!!!!!!!!
-//incoroporate handleInputs to change formData
 import { useEffect } from "react";
 import useDynamicInputs from "../../hooks/useDynamicInputs";
 
 const PollFormBody = ({ handleInputs }) => {
   const { inputs, handleAddInput, handleChange, handleRemoveFirstEmpty } =
     useDynamicInputs();
-
-  //form data is stored into inputs, when there is a change,
-  //inputs needs to override formData.options in handleInputs
 
   useEffect(() => {
     const formattedOptions = inputs.map((optionText) => ({ text: optionText }));
@@ -24,12 +19,11 @@ const PollFormBody = ({ handleInputs }) => {
             type="text"
             className="grow"
             placeholder={`Poll Question`}
-            onChange={(e) => handleInputs("formData", {name: e.target.value})}
+            onChange={(e) => handleInputs("formData", { name: e.target.value })}
           />
         </label>
       </div>
       <div className="text-2xl">Options -</div>
-
       {inputs.map((input, index) => (
         <div key={`survey-question-${index}`} className="pb-2">
           <label className="input input-bordered flex items-center gap-2 text-xl">
@@ -43,7 +37,6 @@ const PollFormBody = ({ handleInputs }) => {
           </label>
         </div>
       ))}
-
       <div className="flex justify-end pt-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

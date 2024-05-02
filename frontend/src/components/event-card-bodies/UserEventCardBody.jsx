@@ -27,7 +27,6 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
       <EventCard
         eventType={userEvent.formType}
         handleDelete={handleDelete}
-        handleDebug={() => console.log(userEvent)}
         eventId={userEvent._id}
         cardSize={464}
       >
