@@ -33,7 +33,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         <div>{renderForm()}</div>
         <div>
           <Link className="text-blue-500 underline hover:text-blue-700 cursor-pointer" to={`/loading/${userEvent._id}`}>
-            Click to create an QR-Connect for your own event
+            Click to create a Connect for your own event
           </Link>
         </div>
       </EventCard>

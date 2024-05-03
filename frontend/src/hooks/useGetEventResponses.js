@@ -7,7 +7,7 @@ const useGetEventResponses = (eventId) => {
     const getEventResponses = async () => {
         setLoadingEventResponses(true)
         try {
-            const res = await fetch(`api/responses/${eventId}`, {
+            const res = await fetch(`api/events/responses/${eventId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

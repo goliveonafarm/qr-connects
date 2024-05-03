@@ -12,16 +12,35 @@ const SignUp = ({ showLoginCB, clear }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signUp(inputs).then((res) =>{
-      if (res.success){
+    await signUp(inputs).then((res) => {
+      if (res.success) {
         clear();
       }
-    })
+    });
   };
 
   return (
     <div className="relative z-50 flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-5 rounded-lg shadow-md bg-primary-content border border-gray-200">
+        <div className="flex justify-end">
+          <svg
+            tabIndex={0}
+            xmlns="http://www.w3.org/2000/svg"
+            height="30"
+            width="30"
+            viewBox="0 0 512 512"
+            fill="currentColor"
+            className="cursor-pointer hover:text-blue-500"
+            onClick={() => clear()}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                clear();
+              }
+            }}
+          >
+            <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
+          </svg>
+        </div>
         <h1 className="text-3xl font-semibold text-center text-gray-300">
           Sign up for&nbsp;<span className="text-blue-500">QR-Connects</span>
         </h1>
@@ -41,6 +60,8 @@ const SignUp = ({ showLoginCB, clear }) => {
               className="grow"
               placeholder="Username"
               autoComplete="username"
+              id="input-username"
+              name="username"
               value={inputs.username}
               onChange={(e) =>
                 setInputs({ ...inputs, username: e.target.value })
@@ -65,7 +86,9 @@ const SignUp = ({ showLoginCB, clear }) => {
               type="password"
               className="grow"
               placeholder="Password"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              id="input-new-password"
+              name="new-password"
               value={inputs.password}
               onChange={(e) =>
                 setInputs({ ...inputs, password: e.target.value })
@@ -78,6 +101,9 @@ const SignUp = ({ showLoginCB, clear }) => {
               type="password"
               className="grow"
               placeholder="Confirm Password"
+              autoComplete="new-password"
+              id="input-confirm-password"
+              name="confirm-password"
               value={inputs.confirmPassword}
               onChange={(e) =>
                 setInputs({ ...inputs, confirmPassword: e.target.value })

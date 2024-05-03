@@ -1,6 +1,5 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import useGetUserEvents from "../../hooks/useGetUserEvents";
-import useClickOutside from "../../hooks/useClickOutside";
 import useDeleteUserEvent from "../../hooks/useDeleteUserEvent";
 import EventModal from "../../components/forms/EventModal";
 import UserEventCardBody from "../../components/event-card-bodies/UserEventCardBody";
@@ -11,9 +10,6 @@ const UserEvents = () => {
   const { loadingUserEvents, userEvents, getUserEvents } = useGetUserEvents();
 
   const { isDeletingEvent, deleteUserEvent } = useDeleteUserEvent();
-
-  const formModalRef = useRef(null);
-  useClickOutside(formModalRef, () => setShowEventModal(false));
 
   const handleDeleteEvent = async (eventId) => {
     await deleteUserEvent(eventId);
@@ -43,7 +39,7 @@ const UserEvents = () => {
         )}
       </div>
       {showEventModal === true && (
-        <div ref={formModalRef} className="absolute top-10 z-30">
+        <div className="absolute top-10 z-30">
           <EventModal
             setShowEventModal={setShowEventModal}
             getUserEvents={getUserEvents}

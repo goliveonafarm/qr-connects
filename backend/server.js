@@ -6,7 +6,6 @@ import rateLimit from 'express-rate-limit';
 
 import authRoutes from './routes/auth.routes.js';
 import userEventRoutes from './routes/userEvent.routes.js';
-import responseRoutes from './routes/response.routes.js';
 import participantRoutes from './routes/participant.routes.js';
 import connectToMongoDB from './db/connectToMongoDB.js';
 
@@ -19,9 +18,9 @@ dotenv.config();
 
 // Rate Limiting
 const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minutes
+    windowMs: 2 * 60 * 1000, // 2 minutes
     //windowMs: 1 * 30 * 1000, // 30 seconds 
-    max: 250 // limit each IP to 100 requests per windowMs
+    max: 300 // limit each IP to 100 requests per windowMs
 });
 
 app.use(limiter);
@@ -34,7 +33,6 @@ app.use(cookieParser()); // to parse the incoming request cookies
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/events", userEventRoutes);
-app.use("/api/responses", responseRoutes);
 app.use("/api/participant", participantRoutes);
 
 app.use(express.static(path.join(__dirname, '/frontend/dist')));

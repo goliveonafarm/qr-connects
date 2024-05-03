@@ -64,11 +64,15 @@ export const deleteUserEvent = async (req, res) => {
 }
 
 export const getEventResponses = async (req, res) => {
-    //revisit later then
-    //copy over response.controller.js?
     try {
         const { eventId } = req.params;
         const userId = req.userId._id;
+
+        const userEvent = await UserEvent.findById(eventId);
+
+        if (!userEvent || userEvent.userId.toString() !== userId.toString()) {
+            return res.status(400).json({ message: "Invalid event" });
+        }
 
         const responses = await Response.find({ eventId });
 

@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import useClickOutside from "../hooks/useClickOutside";
 import { useAuthContext } from "../context/AuthContext";
 import useLogout from "../hooks/useLogout";
 
@@ -12,8 +11,6 @@ const Navbar = () => {
 
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-
-  const authModalRef = useRef(null);
 
   const clearAuthModals = () => {
     setShowLogin(false);
@@ -38,8 +35,6 @@ const Navbar = () => {
       e.preventDefault();
     }
   };
-
-  useClickOutside(authModalRef, clearAuthModals);
 
   return (
     <div
@@ -100,7 +95,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <div className="absolute top-0 right-5 mt-10" ref={authModalRef}>
+      <div className="absolute top-0 right-5 mt-10">
         <div>
           {showLogin && (
             <Login

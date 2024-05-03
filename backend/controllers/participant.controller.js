@@ -2,18 +2,6 @@ import Response from "../models/response.model.js";
 import UserEvent from "../models/userEvent.model.js";
 import mongoose from "mongoose";
 
-export const getParticipantResponses = async (req, res) => {
-    try {
-        const { participantId } = req.cookies;
-
-        const participantResponses = await Response.find({ participantId });
-        res.status(200).json({ participantResponses });
-    } catch (error) {
-        console.log("Error in participant controller (getParticipantResponses)", error.message)
-        res.status(500).json({ error: "Internal server error" });
-    }
-}
-
 export const createParticipantResponse = async (req, res) => {
     try {
         const { eventId } = req.params;
