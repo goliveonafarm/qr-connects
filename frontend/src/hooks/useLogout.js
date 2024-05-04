@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { set } from "mongoose";
 import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const useLogout = () => {
     const [loading, setLoading] = useState(false);
@@ -20,6 +20,7 @@ const useLogout = () => {
 
             localStorage.removeItem('event-user');
             setAuthUser(null);
+            toast.success('Logout successful');
         } catch (error) {
             toast.error(error.message)
         } finally {

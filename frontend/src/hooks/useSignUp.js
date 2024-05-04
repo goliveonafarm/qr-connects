@@ -25,6 +25,7 @@ const useSignUp = () => {
 
             localStorage.setItem('event-user', JSON.stringify(data))
             setAuthUser(data);
+            toast.success('Signup successful');
             return { success: true }
         } catch (error) {
             toast.error(error.message)

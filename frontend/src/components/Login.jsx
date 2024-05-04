@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import toast from "react-hot-toast";
 
 const Login = ({ showSignupCB, clear }) => {
   const [username, setUsername] = useState("");
