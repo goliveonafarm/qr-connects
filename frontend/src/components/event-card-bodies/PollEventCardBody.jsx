@@ -34,10 +34,10 @@ const PollEventCardBody = ({ userEvent }) => {
       ) : (
         <div className="text-2xl">
           <div className="border-t border-gray-300 my-1"></div>
-
-          <div>There are no responses for this card yet</div>
+          <div>There are no responses for this Connect yet.</div>
           <div>
-            Click on the QR-Code above and scan on a device to get started
+            Click on the QR-Code above and scan on a device or click below to
+            get started.
           </div>
         </div>
       )}
