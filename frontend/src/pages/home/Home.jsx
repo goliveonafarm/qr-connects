@@ -34,7 +34,7 @@ const Home = () => {
     !loadingParticipantResponsesWithEvents
   )
     return (
-      <div>
+      <div className="container mx-auto">
         <div className="text-2xl">You have no events...</div>
 
         <div className="flex pb-5">
