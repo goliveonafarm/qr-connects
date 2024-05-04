@@ -15,7 +15,6 @@ const QRCode = ({ path }) => {
         className="relative flex cursor-pointer"
         onClick={() => {
           toggleModal();
-          console.log(path);
         }}
         onKeyUp={(e) => e.key === "Enter" && toggleModal()}
         tabIndex={0}

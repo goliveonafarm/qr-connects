@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import useDeleteParticipantResponse from "../../hooks/useDeleteParticipantResponse.js";
 import useGetParticipantResponsesWithEvents from "../../hooks/useGetParticipantResponsesWithEvents.js";
+import QRCode from "../../components/QRCode.jsx";
 import ParticipantResponseCardBody from "../../components/response-card-bodies/ParticipantResponseCardBody.jsx";
 
 const Home = () => {
@@ -21,12 +23,34 @@ const Home = () => {
     getParticipantResponsesWithEvents();
   }, []);
 
-  useEffect(() => {
-  }, [participantResponsesWithEvents]);
+  useEffect(() => {}, [participantResponsesWithEvents]);
 
   if (loadingParticipantResponsesWithEvents) {
     return <div className="loading loading-spinner"></div>;
   }
+
+  if (
+    participantResponsesWithEvents?.length === 0 &&
+    !loadingParticipantResponsesWithEvents
+  )
+    return (
+      <div>
+        <div className="text-2xl">You have no events...</div>
+
+        <div className="flex pb-5">
+          <div className="text-lg">
+            You can click &nbsp;
+            <Link to="/loading/6633166bbc59512e45d07d36" className="text-blue-500 hover:text-blue-700 underline">
+              here
+            </Link>
+            &nbsp; or scan the qr code below to try it out {`(no login required)`}
+          </div>
+        </div>
+          <div className="flex">
+            <QRCode path="/loading/6633166bbc59512e45d07d36" />
+          </div>
+      </div>
+    );
 
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
@@ -49,8 +73,6 @@ const Home = () => {
                   </div>
                 );
               })}
-            {participantResponsesWithEvents &&
-              participantResponsesWithEvents.length === 0 && <>You have no events</>}
           </div>
         </div>
       </div>
