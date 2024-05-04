@@ -34,21 +34,27 @@ const Home = () => {
     !loadingParticipantResponsesWithEvents
   )
     return (
-      <div className="container mx-auto">
-        <div className="text-2xl">You have no events...</div>
+      <div className="container mx-auto text-center">
+        <div className="text-2xl">You have no Connects</div>
 
-        <div className="flex pb-5">
-          <div className="text-lg">
-            You can click &nbsp;
-            <Link to="/loading/6633166bbc59512e45d07d36" className="text-blue-500 hover:text-blue-700 underline">
+        <div className="flex pb-5 ">
+          <div className="text-lg mr-auto ml-auto">
+            You can click&nbsp;
+            <Link
+              to="/loading/6633166bbc59512e45d07d36"
+              className="text-blue-500 hover:text-blue-700 underline"
+            >
               here
             </Link>
-            &nbsp; or scan the qr code below to try it out {`(no login required)`}
+            &nbsp;or scan the qr code below to try it out
+            {`(no login required)`}
           </div>
         </div>
-          <div className="flex">
+        <div className=" flex">
+          <div className="ml-auto mr-auto">
             <QRCode path="/loading/6633166bbc59512e45d07d36" />
           </div>
+        </div>
       </div>
     );
 
