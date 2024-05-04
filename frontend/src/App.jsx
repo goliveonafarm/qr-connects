@@ -1,5 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/home/Home";
 import Loading from "./pages/loading/Loading";
 import NotFound from "./pages/not-found/NotFound";
@@ -12,8 +13,8 @@ import Drawer from "./components/Drawer";
 function App() {
   const { authUser } = useAuthContext();
   return (
-    <div className="p-4 h-screen">
-      <Drawer>
+    <div className="flex flex-col min-h-screen">
+      <Drawer className="justify-between">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -27,7 +28,8 @@ function App() {
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Drawer>
-      <Toaster />
+      <Toaster className=""/>
+        <Footer />
     </div>
   );
 }
