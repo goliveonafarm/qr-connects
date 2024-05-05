@@ -25,6 +25,7 @@ const Login = ({ showSignupCB, clear }) => {
       >
         <div className="flex justify-end">
           <button
+            aria-label="Close Login"
             onClick={() => clear()}
             onKeyUp={(e) => {
               if (e.key === "Enter") {

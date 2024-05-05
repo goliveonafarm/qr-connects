@@ -25,6 +25,7 @@ const SignUp = ({ showLoginCB, clear }) => {
       <div className="w-full p-5 rounded-lg shadow-md bg-primary-content border border-gray-200">
         <div className="flex justify-end">
           <button
+            aria-label="Close Sign Up"
             onClick={() => clear()}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
@@ -104,14 +105,12 @@ const SignUp = ({ showLoginCB, clear }) => {
               }
             />
           </label>
-
           <button
             onClick={showLoginCB}
-            className="text-sm hover:underline hover:text-blue-600 inline-block pb-1"
+            className="text-sm hover:underline hover:text-blue-700 inline-block pb-1"
           >
             Already have an account?
           </button>
-
           <div>
             <button
               className="btn btn-block btn-sm btn-primary"

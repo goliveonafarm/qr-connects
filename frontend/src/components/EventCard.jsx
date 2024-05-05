@@ -57,6 +57,7 @@ const EventCard = ({
 
             <div>
               <button
+                aria-label="Delete Event"
                 onClick={async () => {
                   let result = window.confirm(
                     `Are you sure you want to delete this event?\n\nDeleting this event will also delete all responses associated with it.`
