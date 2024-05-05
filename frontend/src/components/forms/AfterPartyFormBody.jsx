@@ -5,23 +5,20 @@ const AfterPartyFormBody = ({ handleInputs }) => {
       <form>
         <label className="input input-bordered flex items-center gap-2 text-xl">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
             className="w-4 h-4 opacity-70"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
           >
-            <path
-              fillRule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clipRule="evenodd"
-            />
+            <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
           </svg>
           <input
             type="text"
             className="grow"
             placeholder="Location"
-            onChange={(e) =>{ 
-              handleInputs('formData', {location: e.target.value})}}
+            onChange={(e) => {
+              handleInputs("formData", { location: e.target.value });
+            }}
           />
         </label>
       </form>

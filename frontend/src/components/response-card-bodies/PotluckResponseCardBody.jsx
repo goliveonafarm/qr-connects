@@ -3,6 +3,7 @@ import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantRespon
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
 import ThumbsUp from "../icons/ThumbsUp";
 import ThumbsDown from "../icons/ThumbsDown";
+import Input from "../forms/Input";
 import CardTotalsPreview from "../CardTotalsPreview";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
@@ -109,29 +110,20 @@ const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
         </div>
       </div>
       <div className="pb-1">
-        <label className="input input-bordered flex items-center gap-2 text-xl">
-          <input
-            type="text"
-            className="grow text-success placeholder-white"
-            placeholder="Name (optional)"
-            name="name"
-            autoComplete="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </label>
+        <Input
+          placeholder="Name (optional)"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
       </div>
       <div>
-        <label className="input input-bordered flex items-center gap-2 text-xl">
-          <input
-            type="text"
-            className="grow text-success  placeholder-white"
-            placeholder="Dish (optional)"
-            name="dish"
-            value={formData.dish}
-            onChange={handleChange}
-          />
-        </label>
+        <Input
+          placeholder="Dish (optional)"
+          name="dish"
+          value={formData.dish}
+          onChange={handleChange}
+        />
       </div>
       <div className="flex pb-2">
         <div className="mr-auto ml-auto text-white">{` ${

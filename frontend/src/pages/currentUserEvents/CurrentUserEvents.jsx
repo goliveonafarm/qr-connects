@@ -19,12 +19,12 @@ const UserEvents = () => {
   return (
     <div style={{ textShadow: "1px 1px 2px black" }}>
       <div className="flex pb-5">
-        <h1 className="text-4xl pr-3">Your Connects</h1>
-        {/** Revisit later - change button logic if user reached max number of connects */}
+        <div className="text-4xl pr-3">Your Connects</div>
         {true && (
           <button
             className="btn btn-outline btn-success"
             onClick={() => setShowEventModal(true)}
+            aria-label="Add a new Connect"
           >
             <svg
               height={"30"}

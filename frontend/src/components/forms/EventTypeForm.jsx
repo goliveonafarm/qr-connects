@@ -1,7 +1,7 @@
 const EventTypeForm = ({ handleInputs }) => {
   return (
     <div>
-      <div className="pb-1">Connect type</div>
+      <div className="pb-1">Choose connect type:</div>
       <div>
         <button
           className="btn btn-outline btn-lg btn-wide"

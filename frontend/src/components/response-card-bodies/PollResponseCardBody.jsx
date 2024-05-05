@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
 import CardTotalsPreview from "../CardTotalsPreview";
+import Input from "../forms/Input";
 import useDebounce from "../../hooks/useDebounce";
 
 const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
@@ -91,7 +92,6 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
         </div>
       </div>
       <div className="overflow-y-auto ">
-        {/* map through the questions and display each option (vote) with a radio button*/}
         {formData.vote === null &&
           response.formData.options?.map((option, index) => (
             <div
@@ -109,22 +109,22 @@ const PollResponseCardBody = ({ response, startLoading, stopLoading }) => {
                   handleChangeVote(parseInt(e.target.value));
                 }}
               />
-              <label  htmlFor={`id-option-${response._id}-${index}`} className="pl-2">{option.text}</label>
+              <label
+                htmlFor={`id-option-${response._id}-${index}`}
+                className="pl-2"
+              >
+                {option.text}
+              </label>
             </div>
           ))}
       </div>
       <div className="pb-2 pt-2">
-        <label className="input input-bordered flex items-center gap-2 text-xl">
-          <input
-            type="text"
-            className="grow text-success  placeholder-white"
-            placeholder="Name (optional)"
-            name="name"
-            autoComplete="name"
-            value={formData.name}
-            onChange={handleChangeName}
-          />
-        </label>
+        <Input
+          placeholder="Name (optional)"
+          name="name"
+          value={formData.name}
+          onChange={handleChangeName}
+        />
       </div>
       <div>
         {formData.vote !== null && (

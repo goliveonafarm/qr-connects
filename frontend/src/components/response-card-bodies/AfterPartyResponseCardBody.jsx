@@ -4,6 +4,7 @@ import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventR
 import CardTotalsPreview from "../CardTotalsPreview";
 import ThumbsUp from "../icons/ThumbsUp";
 import ThumbsDown from "../icons/ThumbsDown";
+import Input from "../forms/Input";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 
@@ -100,17 +101,12 @@ const AfterPartyResponseCardBody = ({
           </div>
         </div>
       </div>
-      <label className="input input-bordered flex items-center gap-2 text-xl">
-        <input
-          type="text"
-          className="grow text-success  placeholder-white"
-          placeholder="Name (optional)"
-          name="name"
-          autoComplete="name"
-          value={formData.name}
-          onChange={handleChangeName}
-        />
-      </label>
+      <Input
+        placeholder="Name (optional)"
+        name="name"
+        value={formData.name}
+        onChange={handleChangeName}
+      />
       <div className="flex pb-2">
         <div className="mr-auto ml-auto text-white">{`${
           formData?.attending === true ? "" : "You:"
