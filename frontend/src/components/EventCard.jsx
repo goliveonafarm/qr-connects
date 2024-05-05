@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import QRCode from "./QRCode";
+import CircleXmark from "./icons/CircleXmark";
 import pollImage from "../assets/pollImage.png";
 import barImage from "../assets/barImage.png";
 import picnicImage from "../assets/picnicImage.png";
@@ -52,21 +53,10 @@ const EventCard = ({
               )}
             </div>
 
-            <div>
-              {eventId && (
-                  <QRCode path={eventId} _size={128} />
-              )}
-            </div>
+            <div>{eventId && <QRCode path={eventId} _size={128} />}</div>
 
             <div>
-              <svg
-                tabIndex={0}
-                xmlns="http://www.w3.org/2000/svg"
-                height="50"
-                width="50"
-                viewBox="0 0 512 512"
-                fill="currentColor"
-                className="fill-white cursor-pointer hover:fill-blue-700"
+              <button
                 onClick={async () => {
                   let result = window.confirm(
                     `Are you sure you want to delete this event?\n\nDeleting this event will also delete all responses associated with it.`
@@ -86,8 +76,8 @@ const EventCard = ({
                   }
                 }}
               >
-                <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
-              </svg>
+                <CircleXmark _size={50} />
+              </button>
             </div>
           </div>
           {children}
