@@ -37,7 +37,7 @@ const EventCard = ({
 
   return (
     <div key={`card-${eventId}`} 
-     style={{ height: `562px`, width: `369px`}}
+     style={{ height: `562px`, width: `380px`}}
     
     >
       <div className="card image-full h-full">
