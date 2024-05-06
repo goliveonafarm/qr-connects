@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useUpdateParticipantResponse from "../../hooks/useUpdateParticipantResponse";
 import useGetParticipantEventResponses from "../../hooks/useGetParticipantEventResponses";
-import ThumbsUp from "../icons/ThumbsUp";
-import ThumbsDown from "../icons/ThumbsDown";
-import Input from "../forms/Input";
 import CardTotalsPreview from "../CardTotalsPreview";
 import useDebounce from "../../hooks/useDebounce";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
+import Input from "../forms/Input";
+import ThumbsUp from "../icons/ThumbsUp";
+import ThumbsDown from "../icons/ThumbsDown";
 
 const PotluckResponseCardBody = ({ response, startLoading, stopLoading }) => {
   const [formData, setFormData] = useState({

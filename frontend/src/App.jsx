@@ -16,20 +16,22 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Drawer className="justify-between">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/loading/:eventId?" element={<Loading />}></Route>
-          <Route
-            path="/connects"
-            element={
-              authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
-            }
-          ></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
+        <div className="container p-5">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/loading/:eventId?" element={<Loading />}></Route>
+            <Route
+              path="/connects"
+              element={
+                authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
+              }
+            ></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </div>
       </Drawer>
-      <Toaster className=""/>
-        <Footer />
+      <Toaster className="" />
+      <Footer />
     </div>
   );
 }

@@ -20,7 +20,7 @@ const TimeSelector = ({ handleInputs }) => {
 
   return (
     <div className="flex space-x-2">
-      {/* Hour Selector */}
+      {/* Hour */}
       <select
         className="select select-bordered w-full max-w-xs"
         value={selectedTime.hour}
@@ -31,7 +31,7 @@ const TimeSelector = ({ handleInputs }) => {
         ))}
       </select>
 
-      {/* Minute Selector */}
+      {/* Minute */}
       <select
         className="select select-bordered w-full max-w-xs"
         value={selectedTime.minute}
@@ -42,7 +42,7 @@ const TimeSelector = ({ handleInputs }) => {
         ))}
       </select>
 
-      {/* Period Selector */}
+      {/* AM / PM */}
       <select
         className="select select-bordered w-full max-w-xs"
         value={selectedTime.period}
