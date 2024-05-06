@@ -14,14 +14,14 @@ function App() {
   const { authUser } = useAuthContext();
   return (
     <div className="flex flex-col min-h-screen">
-      <Drawer className="justify-between">
+      <Drawer className="">
         <Navbar />
-        <div className="container p-5">
+        <div className="p-5">
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/loading/:eventId?" element={<Loading />}></Route>
             <Route
-              path="/connects"
+              path="/events"
               element={
                 authUser ? <CurrentUserEvents /> : <Navigate replace to="/" />
               }

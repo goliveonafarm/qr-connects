@@ -28,7 +28,7 @@ const UserEventCardBody = ({ userEvent, deleteUserEvent }) => {
         eventType={userEvent.formType}
         handleDelete={handleDelete}
         eventId={userEvent._id}
-        cardSize={464}
+        cardSize={562}
       >
         <div>{renderForm()}</div>
         <div>

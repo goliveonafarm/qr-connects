@@ -36,8 +36,11 @@ const EventCard = ({
   }, [eventType]);
 
   return (
-    <div key={`card-${eventId}`}>
-      <div className="card image-full" style={{ minHeight: `${cardSize}px` }}>
+    <div key={`card-${eventId}`} 
+     style={{ height: `562px`, width: `369px`}}
+    
+    >
+      <div className="card image-full h-full">
         <figure>
           <img
             src={eventCardImage}

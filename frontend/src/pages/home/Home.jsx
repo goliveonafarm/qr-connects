@@ -5,7 +5,7 @@ import useGetParticipantResponsesWithEvents from "../../hooks/useGetParticipantR
 import QRCode from "../../components/QRCode.jsx";
 import ParticipantResponseCardBody from "../../components/response-card-bodies/ParticipantResponseCardBody.jsx";
 
-const Home = () => {
+const Connects = () => {
   const { isDeletingParticipantResponse, deleteParticipantResponse } =
     useDeleteParticipantResponse();
 
@@ -59,31 +59,26 @@ const Home = () => {
     );
 
   return (
-    <div style={{ textShadow: "1px 1px 2px black" }}>
-      <div className="flex flex-wrap">
-        <div className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-3 gap-6">
-            {participantResponsesWithEvents &&
-              participantResponsesWithEvents.map((response) => {
-                return (
-                  <div key={`participant-response-${response._id}`}>
-                    <ParticipantResponseCardBody
-                      response={response}
-                      deleteParticipantResponse={
-                        handleDeleteParticipantResponse
-                      }
-                      getParticipantResponsesWithEvents={
-                        getParticipantResponsesWithEvents
-                      }
-                    />
-                  </div>
-                );
-              })}
-          </div>
-        </div>
+    <div style={{ textShadow: "1px 1px 2px black" }} className="flex">
+
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        {participantResponsesWithEvents &&
+          participantResponsesWithEvents.map((response) => {
+            return (
+              <div key={`participant-response-${response._id}`}>
+                <ParticipantResponseCardBody
+                  response={response}
+                  deleteParticipantResponse={handleDeleteParticipantResponse}
+                  getParticipantResponsesWithEvents={
+                    getParticipantResponsesWithEvents
+                  }
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Connects;
